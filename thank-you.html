@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Успешна поръчка — Shared с Хората</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --cream: #FAF8F3; --warm-white: #FFFFFF; --ink: #141210; --ink-soft: #3a3530; --ink-muted: #7a746e; --gold: #C8942A; --gold-light: #E8B84B; --border: #E5E0D8; --nav-h: 72px; --sage: #5A7060; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: rgba(250,248,243,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 900; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+    .nav-links a { text-decoration: none; font-size: 0.88rem; font-weight: 500; letter-spacing: 0.03em; color: var(--ink-soft); text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .lang-toggle { display: flex; background: var(--border); border-radius: 20px; overflow: hidden; }
+    .lang-toggle button { border: none; background: none; padding: 5px 12px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; cursor: pointer; color: var(--ink-muted); transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+    .lang-toggle button.active { background: var(--ink); color: var(--cream); border-radius: 20px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--ink); border-radius: 2px; }
+
+    /* MAIN */
+    main { flex: 1; display: flex; align-items: center; justify-content: center; padding: calc(var(--nav-h) + 60px) 40px 80px; }
+
+    .thankyou-card {
+      max-width: 620px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Animated checkmark */
+    .check-wrap {
+      width: 88px; height: 88px;
+      background: var(--sage);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 36px;
+      animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .check-wrap svg { width: 40px; height: 40px; stroke: white; stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 60; stroke-dashoffset: 60; animation: drawCheck 0.5s 0.3s ease forwards; }
+    @keyframes drawCheck { to { stroke-dashoffset: 0; } }
+
+    .eyebrow { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 14px; }
+
+    .ty-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 900;
+      color: var(--ink);
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+    .ty-title em { font-style: italic; color: var(--gold); }
+
+    .ty-desc { font-size: 1rem; color: var(--ink-muted); line-height: 1.75; margin-bottom: 12px; }
+    .ty-email-note { font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 48px; }
+    .ty-email-note strong { color: var(--ink); }
+
+    .divider { width: 48px; height: 2px; background: var(--gold); margin: 0 auto 44px; }
+
+    .ty-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 56px; }
+
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--ink); color: var(--cream); text-decoration: none; padding: 14px 28px; font-size: 0.88rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; border-radius: 4px; transition: all 0.25s; border: 2px solid var(--ink); }
+    .btn-primary:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); transform: translateY(-2px); }
+
+    .btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--ink); text-decoration: none; padding: 14px 28px; font-size: 0.88rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; border-radius: 4px; border: 2px solid var(--border); transition: all 0.25s; }
+    .btn-secondary:hover { border-color: var(--ink); transform: translateY(-2px); }
+
+    /* PODCAST PROMPT */
+    .listen-prompt {
+      background: var(--ink);
+      border-radius: 12px;
+      padding: 40px 44px;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .listen-icon {
+      width: 64px; height: 64px; flex-shrink: 0;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+    }
+    .listen-body h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--cream); margin-bottom: 6px; }
+    .listen-body p { font-size: 0.85rem; color: rgba(250,248,243,0.5); margin-bottom: 18px; line-height: 1.6; }
+    .listen-link { display: inline-flex; align-items: center; gap: 7px; background: var(--gold); color: var(--ink); text-decoration: none; padding: 9px 18px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; border-radius: 4px; transition: all 0.2s; }
+    .listen-link:hover { background: var(--gold-light); }
+
+    footer { background: var(--ink); color: rgba(250,248,243,0.55); padding: 40px 0 28px; }
+    .footer-bottom { max-width: 1200px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.78rem; }
+    .footer-social { display: flex; gap: 16px; }
+    .footer-social a { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; text-decoration: none; color: rgba(250,248,243,0.55); transition: all 0.2s; }
+    .footer-social a:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* Confetti */
+    .confetti-piece { position: fixed; width: 8px; height: 8px; border-radius: 2px; animation: confettiFall linear forwards; pointer-events: none; }
+    @keyframes confettiFall { 0% { transform: translateY(-20px) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+
+    @media(max-width:768px) { .nav-links { display: none; } .hamburger { display: flex; } nav { padding: 0 24px; } main { padding-left: 24px; padding-right: 24px; } .listen-prompt { flex-direction: column; gap: 20px; padding: 28px; } .footer-bottom { padding: 0 24px; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Shared <span>с Хората</span></a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html" data-en="Home">Начало</a></li>
+    <li><a href="episodes.html" data-en="Episodes">Епизоди</a></li>
+    <li><a href="about.html" data-en="About">За нас</a></li>
+    <li><a href="shop.html" data-en="Shop">Магазин</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="active" onclick="setLang('bg')">БГ</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+    <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<main>
+  <div class="thankyou-card">
+
+    <div class="check-wrap">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+
+    <div class="eyebrow" data-en="Order Confirmed">Поръчката е потвърдена</div>
+
+    <h1 class="ty-title" data-en="Thank you for<br>your <em>support!</em>">Благодарим ти за<br>твоята <em>подкрепа!</em></h1>
+
+    <p class="ty-desc" data-en="Your order has been placed successfully and is now being processed. We appreciate every person who supports what we do.">
+      Поръчката ти е направена успешно и в момента се обработва. Ценим всеки човек, който подкрепя това, което правим.
+    </p>
+
+    <p class="ty-email-note" data-en="A confirmation email will be sent to you shortly. Check your spam folder if you don't see it within a few minutes.">
+      Имейл за потвърждение ще ти бъде изпратен скоро. Провери папката за спам, ако не го виждаш в рамките на няколко минути.
+    </p>
+
+    <div class="divider"></div>
+
+    <div class="ty-actions">
+      <a href="shop.html" class="btn-primary" data-en="Continue Shopping">Продължи пазаруването</a>
+      <a href="episodes.html" class="btn-secondary" data-en="Browse Episodes">Разгледай Епизоди</a>
+    </div>
+
+    <div class="listen-prompt">
+      <div class="listen-icon">🎙️</div>
+      <div class="listen-body">
+        <h3 data-en="While you wait for your order…">Докато чакаш поръчката…</h3>
+        <p data-en="Check out our latest episodes on YouTube. There's always a conversation waiting for you.">Разгледай последните ни епизоди в YouTube. Винаги има разговор, чакащ те.</p>
+        <a href="https://www.youtube.com/@SharedSHorata" target="_blank" class="listen-link" data-en="▶ Watch on YouTube">▶ Гледай в YouTube</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-bottom">
+    <p data-en="© 2025 Shared с Хората. All rights reserved.">© 2025 Shared с Хората. Всички права запазени.</p>
+    <div class="footer-social">
+      <a href="https://www.youtube.com/@SharedSHorata" target="_blank">▶</a>
+      <a href="#">📸</a><a href="#">🎵</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ─── CONFETTI ───
+  const colors = ['#C8942A', '#E8B84B', '#5A7060', '#C44B2B', '#141210', '#FAF8F3'];
+  for (let i = 0; i < 60; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'confetti-piece';
+      el.style.cssText = `left:${Math.random()*100}vw; top:-10px; background:${colors[Math.floor(Math.random()*colors.length)]}; animation-duration:${1.5+Math.random()*2}s; animation-delay:${Math.random()*0.5}s; width:${6+Math.random()*6}px; height:${6+Math.random()*6}px;`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 4000);
+    }, i * 30);
+  }
+
+  // ─── LANG ───
+  let currentLang = 'bg';
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-toggle button').forEach((btn, i) => { btn.classList.toggle('active', (i===0&&lang==='bg')||(i===1&&lang==='en')); });
+    document.querySelectorAll('[data-en]').forEach(el => {
+      if (lang==='en') { if (!el.dataset.bgText) el.dataset.bgText=el.innerHTML; el.innerHTML=el.dataset.en; }
+      else { if (el.dataset.bgText) el.innerHTML=el.dataset.bgText; }
+    });
+  }
+
+  function toggleMenu() {
+    const l = document.getElementById('nav-links');
+    l.style.display = l.style.display === 'flex' ? 'none' : 'flex';
+    if(l.style.display==='flex'){l.style.flexDirection='column';l.style.position='fixed';l.style.top='72px';l.style.left='0';l.style.right='0';l.style.background='var(--cream)';l.style.padding='24px 40px 40px';l.style.borderBottom='1px solid var(--border)';l.style.gap='20px';}
+  }
+</script>
+<script src="shared.js"></script>
+</body>
+</html>

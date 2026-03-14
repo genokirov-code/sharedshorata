@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Продукт — Shared с Хората</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #FAF8F3; --warm-white: #FFFFFF; --ink: #141210;
+      --ink-soft: #3a3530; --ink-muted: #7a746e; --gold: #C8942A;
+      --gold-light: #E8B84B; --border: #E5E0D8; --nav-h: 72px;
+      --rust: #C44B2B;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: rgba(250,248,243,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 900; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+    .nav-links a { text-decoration: none; font-size: 0.88rem; font-weight: 500; letter-spacing: 0.03em; color: var(--ink-soft); text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .lang-toggle { display: flex; background: var(--border); border-radius: 20px; overflow: hidden; }
+    .lang-toggle button { border: none; background: none; padding: 5px 12px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; cursor: pointer; color: var(--ink-muted); transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+    .lang-toggle button.active { background: var(--ink); color: var(--cream); border-radius: 20px; }
+    .nav-cta { background: var(--ink); color: var(--cream) !important; padding: 9px 22px !important; border-radius: 4px; font-size: 0.8rem !important; }
+    .nav-cta:hover { background: var(--gold); color: var(--ink) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--ink); border-radius: 2px; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+    /* BREADCRUMB */
+    .breadcrumb { padding: calc(var(--nav-h) + 28px) 40px 0; max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: var(--ink-muted); }
+    .breadcrumb a { color: var(--ink-muted); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb-sep { color: var(--border); }
+
+    /* PRODUCT LAYOUT */
+    .product-section { padding: 40px 0 100px; }
+    .product-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+
+    /* GALLERY */
+    .gallery { position: sticky; top: calc(var(--nav-h) + 24px); }
+    .gallery-main { aspect-ratio: 1/1; background: #F0EDE6; border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+    .gallery-main img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+    .gallery-main:hover img { transform: scale(1.03); }
+    .gallery-thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .gallery-thumb { aspect-ratio: 1/1; background: #E8E4DC; border-radius: 6px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s; }
+    .gallery-thumb.active { border-color: var(--gold); }
+    .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* PRODUCT INFO */
+    .product-info { }
+    .product-cat-label { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 10px; }
+    .product-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 900; line-height: 1.15; color: var(--ink); margin-bottom: 16px; }
+    .product-rating { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+    .stars { color: var(--gold); font-size: 0.9rem; }
+    .rating-count { font-size: 0.78rem; color: var(--ink-muted); }
+
+    .price-block { display: flex; align-items: baseline; gap: 14px; margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+    .price-main { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 900; color: var(--ink); }
+    .price-currency { font-size: 1rem; font-family: 'DM Sans', sans-serif; color: var(--ink-muted); }
+    .price-original { font-size: 1.1rem; color: var(--ink-muted); text-decoration: line-through; }
+    .price-save { background: var(--rust); color: white; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 3px; }
+
+    .product-desc { font-size: 0.95rem; line-height: 1.8; color: var(--ink-soft); margin-bottom: 28px; }
+
+    /* VARIANTS */
+    .variant-group { margin-bottom: 24px; }
+    .variant-label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 10px; }
+    .variant-label span { color: var(--ink); font-weight: 700; }
+    .size-options { display: flex; gap: 8px; flex-wrap: wrap; }
+    .size-btn { min-width: 44px; padding: 8px 14px; border: 2px solid var(--border); background: transparent; border-radius: 4px; font-size: 0.82rem; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; color: var(--ink); transition: all 0.2s; }
+    .size-btn:hover, .size-btn.active { border-color: var(--ink); background: var(--ink); color: var(--cream); }
+    .size-btn.out { opacity: 0.35; cursor: not-allowed; text-decoration: line-through; }
+    .color-options { display: flex; gap: 10px; }
+    .color-btn { width: 34px; height: 34px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; transition: all 0.2s; outline: 2px solid transparent; }
+    .color-btn.active { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+    /* QTY */
+    .qty-group { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+    .qty-label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
+    .qty-control { display: flex; align-items: center; gap: 0; border: 2px solid var(--border); border-radius: 4px; overflow: hidden; }
+    .qty-btn { background: none; border: none; padding: 8px 14px; font-size: 1.1rem; cursor: pointer; color: var(--ink); transition: background 0.2s; font-family: 'DM Sans', sans-serif; }
+    .qty-btn:hover { background: var(--border); }
+    .qty-display { padding: 8px 16px; font-size: 0.95rem; font-weight: 600; border-left: 2px solid var(--border); border-right: 2px solid var(--border); min-width: 48px; text-align: center; }
+
+    /* BUY BUTTON */
+    .buy-btn {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      width: 100%;
+      background: var(--ink);
+      color: var(--cream);
+      border: none;
+      padding: 18px 32px;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.3s;
+      margin-bottom: 14px;
+      text-decoration: none;
+    }
+    .buy-btn:hover { background: var(--gold); color: var(--ink); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(200,148,42,0.3); }
+    .buy-btn svg { width: 20px; flex-shrink: 0; }
+
+    .stripe-note { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.76rem; color: var(--ink-muted); }
+    .stripe-note svg { width: 40px; opacity: 0.4; }
+
+    /* FEATURES */
+    .feature-list { margin: 28px 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .feature-list li { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; color: var(--ink-soft); }
+    .feature-list li::before { content: '✓'; color: var(--gold); font-weight: 700; font-size: 0.9rem; flex-shrink: 0; }
+
+    /* TABS */
+    .tabs { border-top: 1px solid var(--border); margin-top: 28px; padding-top: 0; }
+    .tab-nav { display: flex; border-bottom: 1px solid var(--border); }
+    .tab-btn { background: none; border: none; padding: 14px 18px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-muted); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -1px; transition: all 0.2s; }
+    .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .tab-content { padding: 22px 0; font-size: 0.88rem; line-height: 1.7; color: var(--ink-soft); display: none; }
+    .tab-content.active { display: block; }
+
+    /* RELATED */
+    .related-section { background: var(--warm-white); padding: 80px 0; }
+    .section-header { margin-bottom: 44px; }
+    .section-label { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+    .section-label span { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+    .section-label-line { width: 28px; height: 2px; background: var(--gold); }
+    .section-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--ink); }
+    .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .mini-card { background: var(--cream); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; text-decoration: none; color: inherit; transition: transform 0.3s, box-shadow 0.3s; }
+    .mini-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(0,0,0,0.08); }
+    .mini-img { aspect-ratio: 1/1; overflow: hidden; }
+    .mini-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .mini-card:hover .mini-img img { transform: scale(1.04); }
+    .mini-body { padding: 18px; }
+    .mini-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+    .mini-price { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 900; color: var(--ink); }
+
+    footer { background: var(--ink); color: rgba(250,248,243,0.55); padding: 60px 0 32px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+    .footer-brand .nav-logo { color: var(--cream); font-size: 1.4rem; display: block; margin-bottom: 16px; }
+    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream); font-weight: 700; margin-bottom: 20px; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul a { text-decoration: none; font-size: 0.88rem; color: rgba(250,248,243,0.55); transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--gold); }
+    .footer-bottom { padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.78rem; }
+    .footer-social { display: flex; gap: 16px; }
+    .footer-social a { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; text-decoration: none; color: rgba(250,248,243,0.55); transition: all 0.2s; }
+    .footer-social a:hover { border-color: var(--gold); color: var(--gold); }
+
+    @media(max-width:1024px) { .product-layout { grid-template-columns: 1fr; gap: 48px; } .gallery { position: static; } .related-grid { grid-template-columns: repeat(2, 1fr); } .footer-grid { grid-template-columns: 1fr 1fr; } }
+    @media(max-width:768px) { .nav-links { display: none; } .hamburger { display: flex; } nav, .breadcrumb { padding-left: 24px; padding-right: 24px; } .container { padding: 0 24px; } .related-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Shared <span>с Хората</span></a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html" data-en="Home">Начало</a></li>
+    <li><a href="episodes.html" data-en="Episodes">Епизоди</a></li>
+    <li><a href="about.html" data-en="About">За нас</a></li>
+    <li><a href="shop.html" data-en="Shop">Магазин</a></li>
+    <li><a href="shop.html" class="nav-cta" data-en="Shop Now">Купи сега</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="active" onclick="setLang('bg')">БГ</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+    <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html" data-en="Home">Начало</a>
+  <span class="breadcrumb-sep">/</span>
+  <a href="shop.html" data-en="Shop">Магазин</a>
+  <span class="breadcrumb-sep">/</span>
+  <span id="breadcrumb-product" data-en="T-Shirt">Тениска</span>
+</div>
+
+<section class="product-section">
+  <div class="container">
+    <div class="product-layout">
+
+      <!-- GALLERY -->
+      <div class="gallery">
+        <div class="gallery-main">
+          <img id="main-img" src="https://placehold.co/700x700/E8E4DC/3a3530?text=Тениска+Shared" alt="Product">
+        </div>
+        <div class="gallery-thumbs">
+          <div class="gallery-thumb active" onclick="switchImg(this, 'https://placehold.co/700x700/E8E4DC/3a3530?text=Front')">
+            <img src="https://placehold.co/200x200/E8E4DC/3a3530?text=Front" alt="">
+          </div>
+          <div class="gallery-thumb" onclick="switchImg(this, 'https://placehold.co/700x700/D4C8B8/3a3530?text=Back')">
+            <img src="https://placehold.co/200x200/D4C8B8/3a3530?text=Back" alt="">
+          </div>
+          <div class="gallery-thumb" onclick="switchImg(this, 'https://placehold.co/700x700/C8B4A0/3a3530?text=Detail')">
+            <img src="https://placehold.co/200x200/C8B4A0/3a3530?text=Detail" alt="">
+          </div>
+          <div class="gallery-thumb" onclick="switchImg(this, 'https://placehold.co/700x700/B8A890/3a3530?text=Lifestyle')">
+            <img src="https://placehold.co/200x200/B8A890/3a3530?text=Lifestyle" alt="">
+          </div>
+        </div>
+      </div>
+
+      <!-- INFO -->
+      <div class="product-info">
+        <div class="product-cat-label" data-en="Apparel / T-Shirts">Облекло / Тениски</div>
+        <h1 class="product-title" id="product-title" data-en="Shared Podcast T-Shirt">Тениска Shared Podcast</h1>
+
+        <div class="product-rating">
+          <div class="stars">★★★★★</div>
+          <span class="rating-count" data-en="(47 reviews)">47 отзива</span>
+        </div>
+
+        <div class="price-block">
+          <div class="price-main" id="product-price">39</div>
+          <div class="price-currency" data-en="BGN">лв</div>
+          <div class="price-original" style="display:none;">49 лв</div>
+          <div class="price-save" style="display:none;">-20%</div>
+        </div>
+
+        <p class="product-desc" id="product-desc" data-en="Premium 100% organic cotton t-shirt with minimalist embroidered Shared Podcast logo on the left chest. Relaxed fit, pre-washed for extra softness. A wardrobe staple made to last.">
+          Премиум 100% органична памучна тениска с минималистично бродирано лого на Shared Podcast на лявото деколте. Свободна кройка, предварително изпрана за допълнителна мекота. Основен гардеробен артикул, направен да издържи.
+        </p>
+
+        <!-- SIZE -->
+        <div class="variant-group">
+          <div class="variant-label" data-en="Size:">Размер: <span id="selected-size">M</span></div>
+          <div class="size-options">
+            <button class="size-btn" onclick="selectSize(this,'XS')">XS</button>
+            <button class="size-btn" onclick="selectSize(this,'S')">S</button>
+            <button class="size-btn active" onclick="selectSize(this,'M')">M</button>
+            <button class="size-btn" onclick="selectSize(this,'L')">L</button>
+            <button class="size-btn" onclick="selectSize(this,'XL')">XL</button>
+            <button class="size-btn" onclick="selectSize(this,'XXL')">XXL</button>
+          </div>
+        </div>
+
+        <!-- COLOR -->
+        <div class="variant-group">
+          <div class="variant-label" data-en="Color:">Цвят: <span id="selected-color" data-en="Natural">Натурал</span></div>
+          <div class="color-options">
+            <button class="color-btn active" style="background:#E8E4DC;" title="Natural" onclick="selectColor(this,'Natural','Натурал')"></button>
+            <button class="color-btn" style="background:#141210;" title="Black" onclick="selectColor(this,'Black','Черен')"></button>
+            <button class="color-btn" style="background:#5A7060;" title="Sage" onclick="selectColor(this,'Sage','Маслина')"></button>
+          </div>
+        </div>
+
+        <!-- QTY -->
+        <div class="qty-group">
+          <div class="qty-label" data-en="Qty:">Бр:</div>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty(-1)">−</button>
+            <div class="qty-display" id="qty-display">1</div>
+            <button class="qty-btn" onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+
+        <!-- BUY BUTTON — Replace href with your real Stripe Payment Link -->
+        <a href="https://buy.stripe.com/YOUR_STRIPE_LINK_HERE" id="buy-btn" class="buy-btn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span data-en="Buy Now — Secure Payment">Купи сега — Сигурно плащане</span>
+        </a>
+
+        <div class="stripe-note">
+          <svg viewBox="0 0 60 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <text x="0" y="18" font-family="sans-serif" font-size="14" font-weight="700" fill="#635BFF">stripe</text>
+          </svg>
+          <span data-en="Secure checkout powered by Stripe. You'll be redirected to complete payment.">Сигурно плащане чрез Stripe. Ще бъдете пренасочени за завършване на плащането.</span>
+        </div>
+
+        <ul class="feature-list">
+          <li data-en="Free shipping over 60 BGN">Безплатна доставка над 60 лв</li>
+          <li data-en="30-day returns — no questions asked">30-дневно връщане — без въпроси</li>
+          <li data-en="100% organic cotton">100% органичен памук</li>
+          <li data-en="Ships within 2–4 business days">Изпраща се в рамките на 2–4 работни дни</li>
+        </ul>
+
+        <!-- TABS -->
+        <div class="tabs">
+          <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('details')" data-en="Details">Детайли</button>
+            <button class="tab-btn" onclick="switchTab('sizing')" data-en="Size Guide">Размери</button>
+            <button class="tab-btn" onclick="switchTab('shipping')" data-en="Shipping">Доставка</button>
+          </div>
+          <div class="tab-content active" id="tab-details">
+            <p data-en="• 100% organic ring-spun cotton • 180 GSM weight • Pre-washed for softness • Embroidered logo (not printed) • Relaxed unisex fit • Machine wash cold, tumble dry low">
+              • 100% органичен памук • 180 г/м² тегло • Предварително изпрана за мекота • Бродирано лого (не принтирано) • Свободна унисекс кройка • Пера се машинно при студена вода
+            </p>
+          </div>
+          <div class="tab-content" id="tab-sizing">
+            <p data-en="XS: Chest 84–88cm · S: 88–92cm · M: 92–96cm · L: 96–100cm · XL: 100–104cm · XXL: 104–110cm. For a relaxed fit, size up one size.">
+              XS: Гърди 84–88см · S: 88–92см · M: 92–96см · L: 96–100см · XL: 100–104см · XXL: 104–110см. За свободна кройка вземете един размер по-голям.
+            </p>
+          </div>
+          <div class="tab-content" id="tab-shipping">
+            <p data-en="Standard delivery: 2–4 business days. Express: 1 business day. Free shipping on orders over 60 BGN. International shipping available.">
+              Стандартна доставка: 2–4 работни дни. Експрес: 1 работен ден. Безплатна доставка при поръчки над 60 лв. Международна доставка налична.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RELATED -->
+<section class="related-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">
+        <div class="section-label-line"></div>
+        <span data-en="You might also like">Може да харесате и</span>
+      </div>
+      <h2 class="section-title" data-en="Related Products">Свързани продукти</h2>
+    </div>
+    <div class="related-grid">
+      <a href="product.html?id=book" class="mini-card">
+        <div class="mini-img"><img src="https://placehold.co/500x500/D4C8B8/3a3530?text=Книга" alt="Book"></div>
+        <div class="mini-body">
+          <div class="mini-name" data-en="Shared Stories – Vol. 1">Споделени Истории – Том 1</div>
+          <div class="mini-price">29 <span style="font-size:0.75rem; font-family:'DM Sans'; font-weight:400; color:var(--ink-muted);" data-en="BGN">лв</span></div>
+        </div>
+      </a>
+      <a href="product.html?id=cap" class="mini-card">
+        <div class="mini-img"><img src="https://placehold.co/500x500/C8B4A0/3a3530?text=Шапка" alt="Cap"></div>
+        <div class="mini-body">
+          <div class="mini-name" data-en="Shared Podcast Cap">Шапка Shared Podcast</div>
+          <div class="mini-price">25 <span style="font-size:0.75rem; font-family:'DM Sans'; font-weight:400; color:var(--ink-muted);" data-en="BGN">лв</span></div>
+        </div>
+      </a>
+      <a href="product.html?id=bundle-starter" class="mini-card">
+        <div class="mini-img"><img src="https://placehold.co/500x500/C8942A/1a1714?text=Bundle" alt="Bundle"></div>
+        <div class="mini-body">
+          <div class="mini-name" data-en="Starter Bundle (T-Shirt + Book)">Starter Комплект</div>
+          <div class="mini-price">53 <span style="font-size:0.75rem; font-family:'DM Sans'; font-weight:400; color:var(--ink-muted);" data-en="BGN">лв</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">Shared <span style="color:var(--gold);">с Хората</span></a>
+        <p data-en="Real conversations with remarkable people.">Истински разговори с забележителни хора.</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Podcast">Подкаст</h4>
+        <ul>
+          <li><a href="episodes.html" data-en="All Episodes">Всички Епизоди</a></li>
+          <li><a href="about.html" data-en="About">За нас</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Shop">Магазин</h4>
+        <ul>
+          <li><a href="shop.html" data-en="All Products">Всички продукти</a></li>
+          <li><a href="thank-you.html" data-en="Order Success">Успешна поръчка</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Contact">Контакти</h4>
+        <ul><li><a href="mailto:hello@shared.bg">hello@shared.bg</a></li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-en="© 2025 Shared с Хората. All rights reserved.">© 2025 Shared с Хората. Всички права запазени.</p>
+      <div class="footer-social">
+        <a href="https://www.youtube.com/@SharedSHorata" target="_blank">▶</a>
+        <a href="#">📸</a><a href="#">🎵</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ─── PRODUCT DATA ───
+  const PRODUCTS = {
+    'tshirt': { bg: 'Тениска Shared Podcast', en: 'Shared Podcast T-Shirt', price: '39', cat_bg: 'Облекло / Тениски', cat_en: 'Apparel / T-Shirts', stripe: 'https://buy.stripe.com/YOUR_TSHIRT_STRIPE_LINK', img: 'https://placehold.co/700x700/E8E4DC/3a3530?text=Тениска+Shared', breadcrumb_bg: 'Тениска', breadcrumb_en: 'T-Shirt' },
+    'book': { bg: 'Споделени Истории – Том 1', en: 'Shared Stories – Vol. 1', price: '29', cat_bg: 'Книги', cat_en: 'Books', stripe: 'https://buy.stripe.com/YOUR_BOOK_STRIPE_LINK', img: 'https://placehold.co/700x700/D4C8B8/3a3530?text=Книга', breadcrumb_bg: 'Книга', breadcrumb_en: 'Book' },
+    'cap': { bg: 'Шапка Shared Podcast', en: 'Shared Podcast Cap', price: '25', cat_bg: 'Аксесоари', cat_en: 'Accessories', stripe: 'https://buy.stripe.com/YOUR_CAP_STRIPE_LINK', img: 'https://placehold.co/700x700/C8B4A0/3a3530?text=Шапка', breadcrumb_bg: 'Шапка', breadcrumb_en: 'Cap' },
+    'hoodie': { bg: 'Суичър Shared Podcast', en: 'Shared Podcast Hoodie', price: '69', cat_bg: 'Облекло / Суичъри', cat_en: 'Apparel / Hoodies', stripe: 'https://buy.stripe.com/YOUR_HOODIE_STRIPE_LINK', img: 'https://placehold.co/700x700/2a2522/FAF8F3?text=Суичър', breadcrumb_bg: 'Суичър', breadcrumb_en: 'Hoodie' },
+    'bundle-starter': { bg: 'Starter Комплект', en: 'Starter Bundle', price: '53', cat_bg: 'Комплекти', cat_en: 'Bundles', stripe: 'https://buy.stripe.com/YOUR_BUNDLE_STRIPE_LINK', img: 'https://placehold.co/700x700/C8942A/1a1714?text=Комплект', breadcrumb_bg: 'Комплект', breadcrumb_en: 'Bundle' },
+    'notebook': { bg: 'Тефтер Shared', en: 'Shared Notebook', price: '22', cat_bg: 'Аксесоари', cat_en: 'Accessories', stripe: 'https://buy.stripe.com/YOUR_NOTEBOOK_STRIPE_LINK', img: 'https://placehold.co/700x700/5A7060/FAF8F3?text=Тефтер', breadcrumb_bg: 'Тефтер', breadcrumb_en: 'Notebook' },
+  };
+
+  // Load product from URL param
+  const params = new URLSearchParams(window.location.search);
+  const pid = params.get('id') || 'tshirt';
+  const prod = PRODUCTS[pid] || PRODUCTS['tshirt'];
+  document.getElementById('product-title').textContent = prod.bg;
+  document.getElementById('product-title').dataset.en = prod.en;
+  document.getElementById('product-price').textContent = prod.price;
+  document.getElementById('breadcrumb-product').textContent = prod.breadcrumb_bg;
+  document.getElementById('breadcrumb-product').dataset.en = prod.breadcrumb_en;
+  document.getElementById('main-img').src = prod.img;
+  document.title = prod.bg + ' — Shared с Хората';
+  // Set Stripe link on buy button
+  document.getElementById('buy-btn').href = prod.stripe;
+
+  // ─── LANG ───
+  let currentLang = 'bg';
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-toggle button').forEach((btn, i) => { btn.classList.toggle('active', (i===0&&lang==='bg')||(i===1&&lang==='en')); });
+    document.querySelectorAll('[data-en]').forEach(el => {
+      if (lang==='en') { if (!el.dataset.bgText) el.dataset.bgText=el.textContent; el.textContent=el.dataset.en; }
+      else { if (el.dataset.bgText) el.textContent=el.dataset.bgText; }
+    });
+  }
+
+  // ─── GALLERY ───
+  function switchImg(thumb, src) {
+    document.getElementById('main-img').src = src;
+    document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+  }
+
+  // ─── SIZE ───
+  function selectSize(btn, size) {
+    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('selected-size').textContent = size;
+  }
+
+  // ─── COLOR ───
+  function selectColor(btn, en, bg) {
+    document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('selected-color').textContent = currentLang === 'en' ? en : bg;
+    document.getElementById('selected-color').dataset.en = en;
+  }
+
+  // ─── QTY ───
+  let qty = 1;
+  function changeQty(delta) {
+    qty = Math.max(1, Math.min(10, qty + delta));
+    document.getElementById('qty-display').textContent = qty;
+  }
+
+  // ─── TABS ───
+  function switchTab(id) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.querySelector(`[onclick="switchTab('${id}')"]`).classList.add('active');
+    document.getElementById('tab-' + id).classList.add('active');
+  }
+
+  function toggleMenu() {
+    const l = document.getElementById('nav-links');
+    l.style.display = l.style.display === 'flex' ? 'none' : 'flex';
+    if(l.style.display==='flex'){l.style.flexDirection='column';l.style.position='fixed';l.style.top='72px';l.style.left='0';l.style.right='0';l.style.background='var(--cream)';l.style.padding='24px 40px 40px';l.style.borderBottom='1px solid var(--border)';l.style.gap='20px';}
+  }
+</script>
+</body>
+</html>

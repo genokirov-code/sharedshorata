@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Магазин — Shared с Хората</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #FAF8F3; --warm-white: #FFFFFF; --ink: #141210;
+      --ink-soft: #3a3530; --ink-muted: #7a746e; --gold: #C8942A;
+      --gold-light: #E8B84B; --border: #E5E0D8; --nav-h: 72px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: rgba(250,248,243,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 900; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+    .nav-links a { text-decoration: none; font-size: 0.88rem; font-weight: 500; letter-spacing: 0.03em; color: var(--ink-soft); text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .lang-toggle { display: flex; background: var(--border); border-radius: 20px; overflow: hidden; }
+    .lang-toggle button { border: none; background: none; padding: 5px 12px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; cursor: pointer; color: var(--ink-muted); transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+    .lang-toggle button.active { background: var(--ink); color: var(--cream); border-radius: 20px; }
+    .nav-cta { background: var(--ink); color: var(--cream) !important; padding: 9px 22px !important; border-radius: 4px; font-size: 0.8rem !important; }
+    .nav-cta:hover { background: var(--gold); color: var(--ink) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--ink); border-radius: 2px; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+    .page-hero { padding-top: calc(var(--nav-h) + 60px); padding-bottom: 60px; background: var(--ink); text-align: center; }
+    .page-eyebrow { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .page-eyebrow span { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+    .page-eyebrow-line { width: 28px; height: 2px; background: var(--gold); }
+    .page-title { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 900; color: var(--cream); letter-spacing: -0.02em; margin-bottom: 16px; }
+    .page-sub { font-size: 1rem; color: rgba(250,248,243,0.55); max-width: 500px; margin: 0 auto; line-height: 1.7; }
+
+    .filter-bar { background: var(--warm-white); border-bottom: 1px solid var(--border); padding: 0 40px; position: sticky; top: var(--nav-h); z-index: 50; }
+    .filter-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 0; overflow-x: auto; }
+    .filter-btn { background: none; border: none; cursor: pointer; padding: 18px 22px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap; }
+    .filter-btn:hover, .filter-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+    .shop-section { padding: 80px 0; }
+
+    .shop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+
+    .product-card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
+    .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.09); }
+
+    .product-img { aspect-ratio: 1/1; background: #F0EDE6; overflow: hidden; position: relative; }
+    .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .product-card:hover .product-img img { transform: scale(1.04); }
+    .product-badge { position: absolute; top: 12px; right: 12px; background: var(--rust, #C44B2B); color: white; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; }
+
+    .product-body { padding: 24px; }
+    .product-cat { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); font-weight: 600; margin-bottom: 8px; }
+    .product-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--ink); margin-bottom: 10px; line-height: 1.3; }
+    .product-excerpt { font-size: 0.84rem; color: var(--ink-muted); line-height: 1.65; margin-bottom: 20px; }
+    .product-foot { display: flex; justify-content: space-between; align-items: center; }
+    .product-price { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: var(--ink); }
+    .product-price span { font-size: 0.78rem; font-family: 'DM Sans', sans-serif; color: var(--ink-muted); font-weight: 400; margin-left: 2px; }
+    .btn-buy { background: var(--ink); color: var(--cream); text-decoration: none; padding: 10px 20px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; border-radius: 4px; transition: all 0.2s; display: inline-block; }
+    .btn-buy:hover { background: var(--gold); color: var(--ink); }
+
+    .trust-bar { background: var(--warm-white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 40px 0; }
+    .trust-inner { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+    .trust-item h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
+    .trust-item p { font-size: 0.8rem; color: var(--ink-muted); }
+
+    footer { background: var(--ink); color: rgba(250,248,243,0.55); padding: 60px 0 32px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+    .footer-brand .nav-logo { color: var(--cream); font-size: 1.4rem; display: block; margin-bottom: 16px; }
+    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream); font-weight: 700; margin-bottom: 20px; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul a { text-decoration: none; font-size: 0.88rem; color: rgba(250,248,243,0.55); transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--gold); }
+    .footer-bottom { padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.78rem; }
+    .footer-social { display: flex; gap: 16px; }
+    .footer-social a { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; text-decoration: none; color: rgba(250,248,243,0.55); transition: all 0.2s; }
+    .footer-social a:hover { border-color: var(--gold); color: var(--gold); }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media(max-width:1024px) { .shop-grid { grid-template-columns: repeat(2, 1fr); } .trust-inner { grid-template-columns: repeat(2, 1fr); } .footer-grid { grid-template-columns: 1fr 1fr; } }
+    @media(max-width:768px) { .nav-links { display: none; } .hamburger { display: flex; } nav { padding: 0 24px; } .container { padding: 0 24px; } .filter-bar { padding: 0 24px; } .shop-grid { grid-template-columns: 1fr; } .trust-inner { grid-template-columns: 1fr 1fr; } .footer-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Shared <span>с Хората</span></a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html" data-en="Home">Начало</a></li>
+    <li><a href="episodes.html" data-en="Episodes">Епизоди</a></li>
+    <li><a href="about.html" data-en="About">За нас</a></li>
+    <li><a href="shop.html" class="active" data-en="Shop">Магазин</a></li>
+    <li><a href="shop.html" class="nav-cta" data-en="Shop Now">Купи сега</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="active" onclick="setLang('bg')">БГ</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+    <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-eyebrow"><div class="page-eyebrow-line"></div><span data-en="Official Merch">Официален Мърч</span><div class="page-eyebrow-line"></div></div>
+  <h1 class="page-title" data-en="Shop">Магазин</h1>
+  <p class="page-sub" data-en="Wear your story. Support the podcast. Every purchase helps us keep the conversations going.">Носи своята история. Подкрепи подкаста. Всяка покупка ни помага да продължаваме разговорите.</p>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-inner">
+    <button class="filter-btn active" data-en="All">Всички</button>
+    <button class="filter-btn" data-en="Apparel">Облекло</button>
+    <button class="filter-btn" data-en="Books">Книги</button>
+    <button class="filter-btn" data-en="Accessories">Аксесоари</button>
+    <button class="filter-btn" data-en="Bundles">Комплекти</button>
+  </div>
+</div>
+
+<div class="trust-bar">
+  <div class="container">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <h4>🚚</h4>
+        <p data-en="Free shipping over 60 BGN">Безплатна доставка над 60 лв</p>
+      </div>
+      <div class="trust-item">
+        <h4>🔒</h4>
+        <p data-en="Secure payment via Stripe">Сигурно плащане чрез Stripe</p>
+      </div>
+      <div class="trust-item">
+        <h4>↩️</h4>
+        <p data-en="30-day returns">30-дневно връщане</p>
+      </div>
+      <div class="trust-item">
+        <h4>🇧🇬</h4>
+        <p data-en="Made with love in Bulgaria">Направено с любов в България</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="shop-section">
+  <div class="container">
+    <div class="shop-grid">
+
+      <!-- Product 1 -->
+      <div class="product-card reveal">
+        <div class="product-img">
+          <img src="https://placehold.co/600x600/E8E4DC/3a3530?text=Тениска+Shared" alt="T-Shirt">
+          <div class="product-badge" data-en="Best Seller">Топ продукт</div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat" data-en="Apparel">Облекло</div>
+          <div class="product-name" data-en="Shared Podcast T-Shirt">Тениска Shared Podcast</div>
+          <div class="product-excerpt" data-en="Premium 100% organic cotton. Minimalist embroidered logo on chest. Available in sizes S–XXL.">Премиум 100% органичен памук. Минималистично бродирано лого на гърдите. Налично в размери S–XXL.</div>
+          <div class="product-foot">
+            <div class="product-price">39 <span>лв</span></div>
+            <a href="product.html?id=tshirt" class="btn-buy" data-en="View Product">Виж продукт</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card reveal">
+        <div class="product-img">
+          <img src="https://placehold.co/600x600/D4C8B8/3a3530?text=Книга+Shared" alt="Book">
+        </div>
+        <div class="product-body">
+          <div class="product-cat" data-en="Books">Книги</div>
+          <div class="product-name" data-en="Shared Stories – Vol. 1">Споделени Истории – Том 1</div>
+          <div class="product-excerpt" data-en="A curated collection of the most powerful stories from the first 50 episodes of the podcast. 240 pages.">Подбрана колекция от най-въздействащите истории от първите 50 епизода на подкаста. 240 стр.</div>
+          <div class="product-foot">
+            <div class="product-price">29 <span>лв</span></div>
+            <a href="product.html?id=book" class="btn-buy" data-en="View Product">Виж продукт</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card reveal">
+        <div class="product-img">
+          <img src="https://placehold.co/600x600/C8B4A0/3a3530?text=Шапка+Shared" alt="Cap">
+        </div>
+        <div class="product-body">
+          <div class="product-cat" data-en="Accessories">Аксесоари</div>
+          <div class="product-name" data-en="Shared Podcast Cap">Шапка Shared Podcast</div>
+          <div class="product-excerpt" data-en="Classic 6-panel structured cap. Embroidered logo on front. Adjustable strap. One size fits most.">Класическа 6-панелна шапка. Бродирано лого отпред. Регулируема каишка. Един размер за всички.</div>
+          <div class="product-foot">
+            <div class="product-price">25 <span>лв</span></div>
+            <a href="product.html?id=cap" class="btn-buy" data-en="View Product">Виж продукт</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="product-card reveal">
+        <div class="product-img">
+          <img src="https://placehold.co/600x600/2a2522/FAF8F3?text=Суичър+Shared" alt="Hoodie">
+          <div class="product-badge" data-en="New">Ново</div>
+        </div>
+        <div class="product-body">
+          <div class="product-cat" data-en="Apparel">Облекло</div>
+          <div class="product-name" data-en="Shared Podcast Hoodie">Суичър Shared Podcast</div>
+          <div class="product-excerpt" data-en="Heavyweight fleece hoodie. Super soft inside. Embroidered logo on chest. Sizes XS–XXL.">Тежко руно суичър. Ультра мек вътре. Бродирано лого на гърдите. Размери XS–XXL.</div>
+          <div class="product-foot">
+            <div class="product-price">69 <span>лв</span></div>
+            <a href="product.html?id=hoodie" class="btn-buy" data-en="View Product">Виж продукт</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 5 -->
+      <div class="product-card reveal">
+        <div class="product-img">
+          <img src="https://placehold.co/600x600/C8942A/1a1714?text=Комплект+Starter" alt="Bundle">
+        </div>
+        <div class="product-body">
+          <div class="product-cat" data-en="Bundles">Комплекти</div>
+          <div class="product-name" data-en="Starter Bundle (T-Shirt + Book)">Starter Комплект (Тениска + Книга)</div>
+          <div class="product-excerpt" data-en="Get the T-Shirt and the book together at a special bundle price. Save 15 BGN.">Вземи тениската и книгата заедно на специална цена. Спести 15 лв.</div>
+          <div class="product-foot">
+            <div class="product-price">53 <span>лв</span></div>
+            <a href="product.html?id=bundle-starter" class="btn-buy" data-en="View Product">Виж продукт</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 6 -->
+      <div class="product-card reveal">
+        <div class="product-img">
+          <img src="https://placehold.co/600x600/5A7060/FAF8F3?text=Дневник+Shared" alt="Journal">
+        </div>
+        <div class="product-body">
+          <div class="product-cat" data-en="Accessories">Аксесоари</div>
+          <div class="product-name" data-en="Shared Notebook">Тефтер Shared</div>
+          <div class="product-excerpt" data-en="A5 dotted notebook with 200 pages. Debossed logo on cover. Premium paper.">A5 точкован тефтер с 200 стр. Дебосирано лого на корицата. Премиум хартия.</div>
+          <div class="product-foot">
+            <div class="product-price">22 <span>лв</span></div>
+            <a href="product.html?id=notebook" class="btn-buy" data-en="View Product">Виж продукт</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">Shared <span style="color:var(--gold);">с Хората</span></a>
+        <p data-en="Real conversations with remarkable people.">Истински разговори с забележителни хора.</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Podcast">Подкаст</h4>
+        <ul>
+          <li><a href="episodes.html" data-en="All Episodes">Всички Епизоди</a></li>
+          <li><a href="about.html" data-en="About">За нас</a></li>
+          <li><a href="https://www.youtube.com/@SharedSHorata" target="_blank">YouTube</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Shop">Магазин</h4>
+        <ul>
+          <li><a href="shop.html" data-en="All Products">Всички продукти</a></li>
+          <li><a href="thank-you.html" data-en="Order Success">Успешна поръчка</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Contact">Контакти</h4>
+        <ul>
+          <li><a href="mailto:hello@shared.bg">hello@shared.bg</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-en="© 2025 Shared с Хората. All rights reserved.">© 2025 Shared с Хората. Всички права запазени.</p>
+      <div class="footer-social">
+        <a href="https://www.youtube.com/@SharedSHorata" target="_blank">▶</a>
+        <a href="#">📸</a>
+        <a href="#">🎵</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  let currentLang = 'bg';
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-toggle button').forEach((btn, i) => { btn.classList.toggle('active', (i===0&&lang==='bg')||(i===1&&lang==='en')); });
+    document.querySelectorAll('[data-en]').forEach(el => {
+      if (lang==='en') { if (!el.dataset.bgText) el.dataset.bgText=el.textContent; el.textContent=el.dataset.en; }
+      else { if (el.dataset.bgText) el.textContent=el.dataset.bgText; }
+    });
+  }
+  const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }); });
+  function toggleMenu() {
+    const l = document.getElementById('nav-links');
+    l.style.display = l.style.display === 'flex' ? 'none' : 'flex';
+    if(l.style.display==='flex'){l.style.flexDirection='column';l.style.position='fixed';l.style.top='72px';l.style.left='0';l.style.right='0';l.style.background='var(--cream)';l.style.padding='24px 40px 40px';l.style.borderBottom='1px solid var(--border)';l.style.gap='20px';}
+  }
+</script>
+</body>
+</html>
