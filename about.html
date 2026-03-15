@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>За нас — Shared с Хората</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --cream:#FAF8F3;--warm-white:#FFFFFF;--ink:#141210;--ink-soft:#3a3530;--ink-muted:#7a746e;--gold:#C8942A;--gold-light:#E8B84B;--border:#E5E0D8;--nav-h:72px; }
+    html { scroll-behavior: smooth; }
+    body { font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden; }
+    nav { position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(250,248,243,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border); }
+    .nav-logo { font-family:"Playfair Display",serif;font-size:1.25rem;font-weight:900;letter-spacing:-0.02em;color:var(--ink);text-decoration:none; }
+    .nav-logo span { color:var(--gold); }
+    .nav-links { display:flex;gap:36px;list-style:none;align-items:center; }
+    .nav-links a { text-decoration:none;font-size:0.88rem;font-weight:500;letter-spacing:0.03em;color:var(--ink-soft);text-transform:uppercase;transition:color 0.2s; }
+    .nav-links a:hover,.nav-links a.active { color:var(--gold); }
+    .nav-right { display:flex;align-items:center;gap:20px; }
+    .lang-toggle { display:flex;background:var(--border);border-radius:20px;overflow:hidden; }
+    .lang-toggle button { border:none;background:none;padding:5px 12px;font-size:0.75rem;font-weight:600;letter-spacing:0.05em;cursor:pointer;color:var(--ink-muted);transition:all 0.2s;font-family:"DM Sans",sans-serif; }
+    .lang-toggle button.active { background:var(--ink);color:var(--cream);border-radius:20px; }
+    .nav-cta { background:var(--gold)!important;color:var(--ink)!important;padding:9px 22px!important;border-radius:4px!important;font-weight:700!important; }
+    .nav-cta:hover { background:var(--gold-light)!important; }
+    .hamburger { display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px; }
+    .hamburger span { display:block;width:24px;height:2px;background:var(--ink);border-radius:2px; }
+    .container { max-width:1200px;margin:0 auto;padding:0 40px; }
+    .section-label { display:flex;align-items:center;gap:14px;margin-bottom:20px; }
+    .section-label span { font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:700; }
+    .section-label-line { width:32px;height:2px;background:var(--gold); }
+    /* HERO */
+    .about-hero { min-height:100vh;padding-top:var(--nav-h);position:relative;display:flex;align-items:flex-end;overflow:hidden; }
+    .about-hero-bg { position:absolute;inset:0;z-index:0; }
+    .about-hero-bg img { width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block; }
+    .about-hero-bg::after { content:"";position:absolute;inset:0;background:linear-gradient(to right,rgba(20,18,16,0.85) 0%,rgba(20,18,16,0.55) 50%,rgba(20,18,16,0.1) 100%),linear-gradient(to top,rgba(20,18,16,0.70) 0%,transparent 55%); }
+    .about-hero-content { position:relative;z-index:2;padding:0 80px 80px;max-width:720px;color:var(--cream); }
+    .about-hero-eyebrow { display:flex;align-items:center;gap:12px;margin-bottom:24px; }
+    .about-hero-eyebrow-line { width:36px;height:2px;background:var(--gold); }
+    .about-hero-eyebrow span { font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:700; }
+    .about-hero h1 { font-family:"Playfair Display",serif;font-size:clamp(3rem,5.5vw,5rem);font-weight:900;line-height:1.05;letter-spacing:-0.03em;margin-bottom:24px; }
+    .about-hero h1 em { font-style:italic;color:var(--gold); }
+    .about-hero-desc { font-size:1.1rem;line-height:1.75;color:rgba(250,248,243,0.68);max-width:540px; }
+    .hero-scroll-hint { position:absolute;z-index:2;bottom:36px;right:48px;display:flex;align-items:center;gap:10px;font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(250,248,243,0.35); }
+    .hero-scroll-hint svg { width:14px;opacity:0.4;animation:scrollBob 2s ease-in-out infinite; }
+    @keyframes scrollBob { 0%,100%{transform:translateY(0);}50%{transform:translateY(5px);} }
+    /* INTRO */
+    .intro-section { background:var(--warm-white);padding:100px 0; }
+    .intro-grid { display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center; }
+    .intro-title { font-family:"Playfair Display",serif;font-size:clamp(2rem,3.5vw,2.8rem);font-weight:900;line-height:1.12;letter-spacing:-0.02em;color:var(--ink);margin-bottom:28px; }
+    .intro-title em { font-style:italic;color:var(--gold); }
+    .intro-body { font-size:1rem;line-height:1.85;color:var(--ink-soft);margin-bottom:20px; }
+    .intro-img { position:relative; }
+    .intro-img img { width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:4px;display:block; }
+    .intro-img-accent { position:absolute;bottom:-18px;left:-18px;width:100px;height:100px;background:var(--gold);border-radius:4px;z-index:-1; }
+    /* QUOTE */
+    .quote-section { background:var(--ink);padding:80px 0; }
+    .quote-inner { max-width:860px;margin:0 auto;text-align:center;padding:0 40px; }
+    .quote-mark { font-family:"Playfair Display",serif;font-size:6rem;line-height:0.5;color:var(--gold);opacity:0.4;margin-bottom:16px;display:block; }
+    .quote-text { font-family:"Playfair Display",serif;font-size:clamp(1.5rem,3vw,2.2rem);font-style:italic;font-weight:400;line-height:1.5;color:var(--cream);margin-bottom:28px; }
+    .quote-author { font-size:0.8rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);font-weight:700; }
+    /* STORY CARDS */
+    .story-section { background:var(--cream);padding:100px 0 0; }
+    .story-cards { display:flex;flex-direction:column;gap:0; }
+    .story-card { display:grid;grid-template-columns:1fr 1fr;min-height:520px;overflow:hidden; }
+    .story-card:nth-child(even) { direction:rtl; }
+    .story-card:nth-child(even) > * { direction:ltr; }
+    .story-card-img { position:relative;overflow:hidden; }
+    .story-card-img img { width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s ease; }
+    .story-card:hover .story-card-img img { transform:scale(1.03); }
+    .story-card-img-overlay { position:absolute;inset:0;background:rgba(20,18,16,0.12); }
+    .story-card-body { display:flex;flex-direction:column;justify-content:center;padding:72px 64px; }
+    .story-card:nth-child(odd) .story-card-body { background:var(--warm-white); }
+    .story-card:nth-child(even) .story-card-body { background:var(--ink);color:var(--cream); }
+    .story-card-num { font-family:"Playfair Display",serif;font-size:5rem;font-weight:900;line-height:1;color:var(--gold);opacity:0.18;margin-bottom:-16px;display:block; }
+    .story-card-tag { font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:16px; }
+    .story-card-title { font-family:"Playfair Display",serif;font-size:clamp(1.6rem,2.5vw,2.1rem);font-weight:900;line-height:1.15;letter-spacing:-0.02em;margin-bottom:20px; }
+    .story-card:nth-child(odd) .story-card-title { color:var(--ink); }
+    .story-card:nth-child(even) .story-card-title { color:var(--cream); }
+    .story-card-text { font-size:0.95rem;line-height:1.82; }
+    .story-card:nth-child(odd) .story-card-text { color:var(--ink-soft); }
+    .story-card:nth-child(even) .story-card-text { color:rgba(250,248,243,0.62); }
+    /* VALUES */
+    .values-section { background:var(--cream);padding:80px 0 100px; }
+    .values-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px; }
+    .value-card { background:var(--warm-white);border:1px solid var(--border);border-radius:8px;padding:36px 30px;transition:transform 0.3s,box-shadow 0.3s; }
+    .value-card:hover { transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,0.07); }
+    .value-icon { font-size:2rem;margin-bottom:18px; }
+    .value-title { font-family:"Playfair Display",serif;font-size:1.15rem;font-weight:700;color:var(--ink);margin-bottom:12px; }
+    .value-text { font-size:0.88rem;line-height:1.72;color:var(--ink-muted); }
+    /* NUMBERS */
+    .numbers-strip { background:var(--gold);padding:60px 0; }
+    .numbers-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center; }
+    .num-item h3 { font-family:"Playfair Display",serif;font-size:3rem;font-weight:900;color:var(--ink);margin-bottom:6px;line-height:1; }
+    .num-item p { font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(20,18,16,0.6);font-weight:600; }
+    /* EPISODES */
+    .episodes-section { background:var(--warm-white);padding:100px 0; }
+    .section-header-row { display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;flex-wrap:wrap;gap:16px; }
+    .section-title { font-family:"Playfair Display",serif;font-size:clamp(2rem,3.5vw,2.8rem);font-weight:900;letter-spacing:-0.02em;line-height:1.1;color:var(--ink); }
+    .ep-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:24px; }
+    .ep-card { background:var(--cream);border:1px solid var(--border);border-radius:8px;overflow:hidden;text-decoration:none;color:inherit;transition:transform 0.3s,box-shadow 0.3s;display:block; }
+    .ep-card:hover { transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,0.09); }
+    .ep-thumb { position:relative;aspect-ratio:16/9;overflow:hidden;background:#e0dcd4; }
+    .ep-thumb img { width:100%;height:100%;object-fit:cover;transition:transform 0.4s;display:block; }
+    .ep-card:hover .ep-thumb img { transform:scale(1.04); }
+    .ep-play { position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.18);opacity:0;transition:opacity 0.3s; }
+    .ep-card:hover .ep-play { opacity:1; }
+    .ep-play-circle { width:48px;height:48px;background:rgba(250,248,243,0.92);border-radius:50%;display:flex;align-items:center;justify-content:center; }
+    .ep-play-circle svg { width:16px;fill:var(--ink);margin-left:3px; }
+    .ep-badge { position:absolute;top:10px;left:10px;background:var(--gold);color:var(--ink);font-size:0.65rem;font-weight:700;letter-spacing:0.08em;padding:2px 8px; }
+    .ep-body { padding:20px; }
+    .ep-guest { font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:7px; }
+    .ep-title { font-family:"Playfair Display",serif;font-size:1rem;font-weight:700;line-height:1.35;color:var(--ink);margin-bottom:8px; }
+    .ep-desc { font-size:0.8rem;color:var(--ink-muted);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden; }
+    .ep-foot { display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:14px;border-top:1px solid var(--border); }
+    .ep-dur { font-size:0.72rem;color:var(--ink-muted); }
+    .ep-arrow { width:26px;height:26px;border:1.5px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center; }
+    .ep-arrow svg { width:11px;fill:none;stroke:var(--ink-muted);stroke-width:2; }
+    .skel { background:linear-gradient(90deg,#eee 25%,#f5f5f5 50%,#eee 75%);background-size:200%;animation:shimmer 1.4s infinite;border-radius:4px; }
+    @keyframes shimmer { from{background-position:200% 0;}to{background-position:-200% 0;} }
+    /* SHOP */
+    .shop-section { background:var(--cream);padding:100px 0; }
+    .shop-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:24px; }
+    .product-card { background:var(--warm-white);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s; }
+    .product-card:hover { transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,0.08); }
+    .product-img { aspect-ratio:1/1;overflow:hidden;background:#F0EDE6; }
+    .product-img img { width:100%;height:100%;object-fit:cover;transition:transform 0.4s;display:block; }
+    .product-card:hover .product-img img { transform:scale(1.04); }
+    .product-body { padding:22px; }
+    .product-cat { font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-muted);font-weight:600;margin-bottom:7px; }
+    .product-name { font-family:"Playfair Display",serif;font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:8px; }
+    .product-excerpt { font-size:0.82rem;color:var(--ink-muted);line-height:1.6;margin-bottom:18px; }
+    .product-foot { display:flex;justify-content:space-between;align-items:center; }
+    .product-price { font-family:"Playfair Display",serif;font-size:1.35rem;font-weight:900;color:var(--ink); }
+    .product-price span { font-size:0.75rem;font-family:"DM Sans",sans-serif;color:var(--ink-muted);font-weight:400; }
+    .btn-shop { background:var(--ink);color:var(--cream);text-decoration:none;padding:9px 18px;font-size:0.78rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;border-radius:4px;transition:all 0.2s; }
+    .btn-shop:hover { background:var(--gold);color:var(--ink); }
+    /* BUTTONS */
+    .btn-primary { display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--cream);text-decoration:none;padding:14px 30px;font-size:0.88rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;border-radius:4px;border:2px solid var(--ink);transition:all 0.25s; }
+    .btn-primary:hover { background:var(--gold);border-color:var(--gold);color:var(--ink);transform:translateY(-2px); }
+    .btn-outline { display:inline-flex;align-items:center;gap:10px;background:transparent;color:var(--ink);text-decoration:none;padding:13px 28px;font-size:0.88rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;border-radius:4px;border:2px solid var(--border);transition:all 0.25s; }
+    .btn-outline:hover { border-color:var(--ink);transform:translateY(-2px); }
+    /* CTA */
+    .cta-section { background:var(--ink);padding:100px 0;text-align:center; }
+    .cta-title { font-family:"Playfair Display",serif;font-size:clamp(2rem,4vw,3rem);font-weight:900;color:var(--cream);margin-bottom:18px;letter-spacing:-0.02em; }
+    .cta-title em { font-style:italic;color:var(--gold); }
+    .cta-sub { font-size:1rem;color:rgba(250,248,243,0.5);margin-bottom:40px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7; }
+    .btn-gold-solid { display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--ink);text-decoration:none;padding:15px 36px;font-size:0.9rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;border-radius:4px;transition:all 0.25s; }
+    .btn-gold-solid:hover { background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 28px rgba(200,148,42,0.35); }
+    /* FOOTER */
+    footer { background:var(--ink);color:rgba(250,248,243,0.55);padding:60px 0 32px; }
+    .footer-grid { display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px; }
+    .footer-brand .footer-logo { font-family:"Playfair Display",serif;font-size:1.4rem;font-weight:900;letter-spacing:-0.02em;color:var(--cream);text-decoration:none;display:block;margin-bottom:16px; }
+    .footer-brand .footer-logo span { color:var(--gold); }
+    .footer-brand p { font-size:0.88rem;line-height:1.7;max-width:260px; }
+    .footer-col h4 { font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--cream);font-weight:700;margin-bottom:20px; }
+    .footer-col ul { list-style:none; }
+    .footer-col ul li { margin-bottom:10px; }
+    .footer-col ul a { text-decoration:none;font-size:0.88rem;color:rgba(250,248,243,0.55);transition:color 0.2s; }
+    .footer-col ul a:hover { color:var(--gold); }
+    .footer-bottom { padding-top:28px;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px; }
+    .footer-bottom p { font-size:0.78rem; }
+    .footer-social { display:flex;gap:16px; }
+    .footer-social a { width:36px;height:36px;border:1px solid rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.82rem;text-decoration:none;color:rgba(250,248,243,0.55);transition:all 0.2s; }
+    .footer-social a:hover { border-color:var(--gold);color:var(--gold); }
+    /* REVEAL */
+    .reveal { opacity:0;transform:translateY(24px);transition:opacity 0.65s ease,transform 0.65s ease; }
+    .reveal.visible { opacity:1;transform:translateY(0); }
+    /* RESPONSIVE */
+    @media(max-width:1024px) {
+      .intro-grid { grid-template-columns:1fr;gap:48px; }
+      .intro-img { order:-1; }
+      .story-card { grid-template-columns:1fr;min-height:auto; }
+      .story-card:nth-child(even) { direction:ltr; }
+      .story-card-body { padding:48px 40px; }
+      .story-card-img { aspect-ratio:16/8; min-height:260px; }
+      .values-grid { grid-template-columns:1fr 1fr; }
+      .numbers-grid { grid-template-columns:repeat(2,1fr); }
+      .ep-grid,.shop-grid { grid-template-columns:repeat(2,1fr); }
+      .footer-grid { grid-template-columns:1fr 1fr; }
+    }
+    @media(max-width:768px) {
+      .nav-links { display:none; }
+      .hamburger { display:flex; }
+      nav { padding:0 24px; }
+      .container { padding:0 24px; }
+      .about-hero-content { padding:0 24px 56px; }
+      .values-grid { grid-template-columns:1fr; }
+      .ep-grid,.shop-grid { grid-template-columns:1fr; }
+      .footer-grid { grid-template-columns:1fr; }
+      .numbers-grid { grid-template-columns:repeat(2,1fr);gap:28px; }
+      .story-card-body { padding:36px 24px; }
+      .hero-scroll-hint { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Shared <span>с Хората</span></a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html" data-en="Home">Начало</a></li>
+    <li><a href="episodes.html" data-en="Episodes">Епизоди</a></li>
+    <li><a href="about.html" class="active" data-en="About">За нас</a></li>
+    <li><a href="shop.html" data-en="Shop">Магазин</a></li>
+    <li><a href="shop.html" class="nav-cta" data-en="Shop Now">Купи сега</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button onclick="setLang('bg')">БГ</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+    <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="about-hero">
+  <div class="about-hero-bg">
+    <img src="images/studio.jpg" onerror="this.src='https://placehold.co/1600x900/1a1714/FAF8F3?text=Shared+с+Хората'" alt="Shared с Хората">
+  </div>
+  <div class="about-hero-content">
+    <div class="about-hero-eyebrow">
+      <div class="about-hero-eyebrow-line"></div>
+      <span data-en="The Story">Историята</span>
+    </div>
+    <h1><em data-en="Curious.">Любопитни.</em><br><span data-en="Honest.">Честни.</span><br><span data-en="Bulgarian.">Български.</span></h1>
+    <p class="about-hero-desc" data-en="We believe every person carries a remarkable story. We just ask the right questions.">Вярваме, че всеки носи забележителна история. Ние просто задаваме правилните въпроси.</p>
+  </div>
+  <div class="hero-scroll-hint">Scroll<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+</section>
+
+<section class="intro-section">
+  <div class="container">
+    <div class="intro-grid">
+      <div class="reveal">
+        <div class="section-label"><div class="section-label-line"></div><span data-en="Who we are">Кои сме ние</span></div>
+        <h2 class="intro-title" data-en="A podcast born from &lt;em&gt;genuine curiosity&lt;/em&gt;">Подкаст роден от <em>искрено любопитство</em></h2>
+        <p class="intro-body" data-en="Shared с Хората started with a simple question: what happens when you sit across from someone remarkable and simply listen? Not to interview them. Not to extract soundbites. But to genuinely understand how they see the world.">Shared с Хората започна с един прост въпрос: какво се случва, когато седнеш срещу забележителен човек и просто го слушаш? Не за да го интервюираш. Не за да извличаш цитати. Просто за да разбереш истински как вижда света.</p>
+        <p class="intro-body" data-en="What started as an experiment has become Bulgaria's most honest podcast — a space where guards come down, real stories emerge, and listeners walk away seeing life a little differently.">Това, което започна като експеримент, се превърна в най-честния подкаст в България — пространство, където охраната пада, истинските истории изплуват и слушателите тръгват с малко по-различен поглед към живота.</p>
+        <a href="episodes.html" class="btn-primary" data-en="Listen now →">Слушай сега →</a>
+      </div>
+      <div class="intro-img reveal">
+        <img src="images/hosts.jpg" onerror="this.src='https://placehold.co/600x750/E8E4DC/3a3530?text=Водещи'" alt="Hosts">
+        <div class="intro-img-accent"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quote-section">
+  <div class="quote-inner reveal">
+    <span class="quote-mark">"</span>
+    <p class="quote-text" data-en="The best conversations happen when both people forget the camera is on.">Най-добрите разговори се случват, когато и двамата забравят, че камерата е включена.</p>
+    <span class="quote-author" data-en="— The Shared с Хората Team">— Екипът на Shared с Хората</span>
+  </div>
+</section>
+
+<section class="story-section">
+  <div class="container" style="margin-bottom:48px;">
+    <div class="section-label reveal"><div class="section-label-line"></div><span data-en="Our Journey">Нашият Път</span></div>
+  </div>
+  <div class="story-cards">
+    <div class="story-card">
+      <div class="story-card-img"><img src="images/studio.jpg" onerror="this.src='https://placehold.co/800x600/2a2522/FAF8F3?text=Началото'" alt="The Beginning"><div class="story-card-img-overlay"></div></div>
+      <div class="story-card-body">
+        <span class="story-card-num">01</span>
+        <div class="story-card-tag" data-en="The Beginning">Началото</div>
+        <h3 class="story-card-title" data-en="It started with one conversation">Започна с един разговор</h3>
+        <p class="story-card-text" data-en="The very first episode was recorded in a borrowed studio, with borrowed equipment, and zero expectations. We just wanted to see what would happen if we asked the questions no one else was asking. The response changed everything.">Първият епизод беше записан в наето студио, с наета техника и нулеви очаквания. Просто исках да видя какво ще се случи, ако задам въпросите, които никой друг не задаваше. Отговорът промени всичко.</p>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-card-img"><img src="images/hosts.jpg" onerror="this.src='https://placehold.co/800x600/3a3530/FAF8F3?text=Мисията'" alt="The Mission"><div class="story-card-img-overlay"></div></div>
+      <div class="story-card-body">
+        <span class="story-card-num">02</span>
+        <div class="story-card-tag" data-en="The Mission">Мисията</div>
+        <h3 class="story-card-title" data-en="Every Bulgarian has a story worth sharing">Всеки българин има история, която си заслужава да бъде споделена</h3>
+        <p class="story-card-text" data-en="Bulgaria is full of extraordinary people — entrepreneurs who built companies from nothing, artists who create beauty from pain, doctors who push the boundaries of the possible. Their stories deserve an audience. That's why we built this.">България е пълна с extraordinary хора — предприемачи, изградили компании от нула, артисти, създаващи красота от болка, лекари, разширяващи границите на възможното. Техните истории заслужават публика. Затова изградихме това.</p>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-card-img"><img src="images/studio.jpg" onerror="this.src='https://placehold.co/800x600/5A7060/FAF8F3?text=Форматът'" alt="The Format"><div class="story-card-img-overlay"></div></div>
+      <div class="story-card-body">
+        <span class="story-card-num">03</span>
+        <div class="story-card-tag" data-en="The Format">Форматът</div>
+        <h3 class="story-card-title" data-en="No scripts. No PR prep. Just truth.">Без сценарии. Без PR подготовка. Само истината.</h3>
+        <p class="story-card-text" data-en="We never share questions in advance. We never do pre-interviews. Every reaction you see is genuine. Every emotion is real. Because we believe authentic vulnerability is the most powerful thing you can put in a microphone.">Никога не споделяме въпроси предварително. Никога не правим предварителни интервюта. Всяка реакция, която виждате, е истинска. Всяка емоция е реална. Защото вярваме, че автентичната уязвимост е най-мощното нещо, което можеш да сложиш пред микрофон.</p>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-card-img"><img src="images/hero.jpg" onerror="this.src='https://placehold.co/800x600/C8942A/1a1714?text=Напред'" alt="Whats next"><div class="story-card-img-overlay"></div></div>
+      <div class="story-card-body">
+        <span class="story-card-num">04</span>
+        <div class="story-card-tag" data-en="What's next">Напред</div>
+        <h3 class="story-card-title" data-en="50 episodes down. Countless more to go.">50 епизода зад нас. Безброй предстоят.</h3>
+        <p class="story-card-text" data-en="We're just getting started. More guests, more stories, more moments that make you see the world differently. Every week, without fail — a new conversation that might just change the way you think.">Тепърва започваме. Още гости, още истории, още моменти, които те карат да видиш света по различен начин. Всяка седмица, без изключение — нов разговор, който може да промени начина, по който мислиш.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="values-section">
+  <div class="container">
+    <div class="section-header-row reveal">
+      <div>
+        <div class="section-label"><div class="section-label-line"></div><span data-en="What drives us">Нашите ценности</span></div>
+        <h2 class="section-title" data-en="What we stand for">Какво защитаваме</h2>
+      </div>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal"><div class="value-icon">🎙️</div><h3 class="value-title" data-en="Authenticity">Автентичност</h3><p class="value-text" data-en="No scripts, no pre-interviews, no PR polish. Every conversation is raw, real, and unfiltered.">Без сценарии, без предварителни интервюта, без PR лак. Всеки разговор е суров, реален и нефилтриран.</p></div>
+      <div class="value-card reveal"><div class="value-icon">🤝</div><h3 class="value-title" data-en="Respect">Уважение</h3><p class="value-text" data-en="Every guest is treated with deep respect. We hold space for their truth, however uncomfortable it may be.">Всеки гост се третира с дълбоко уважение. Пазим пространство за тяхната истина, колкото и неудобна да е тя.</p></div>
+      <div class="value-card reveal"><div class="value-icon">💡</div><h3 class="value-title" data-en="Curiosity">Любопитство</h3><p class="value-text" data-en="We ask the questions others won't. We go where the conversation leads. Curiosity is our only compass.">Задаваме въпросите, които другите не задават. Любопитството е единственият ни компас.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="numbers-strip">
+  <div class="container">
+    <div class="numbers-grid">
+      <div class="num-item reveal"><h3>52+</h3><p data-en="Episodes">Епизода</p></div>
+      <div class="num-item reveal"><h3>100К+</h3><p data-en="Total views">Общо гледания</p></div>
+      <div class="num-item reveal"><h3>3</h3><p data-en="Years on air">Години в ефир</p></div>
+      <div class="num-item reveal"><h3>∞</h3><p data-en="Stories left">Истории предстоят</p></div>
+    </div>
+  </div>
+</div>
+
+<section class="episodes-section">
+  <div class="container">
+    <div class="section-header-row">
+      <div>
+        <div class="section-label"><div class="section-label-line"></div><span data-en="Recent Episodes">Последни Епизоди</span></div>
+        <h2 class="section-title" data-en="Listen &amp; Watch">Слушайте и Гледайте</h2>
+      </div>
+      <a href="episodes.html" class="btn-outline" data-en="All Episodes →">Всички Епизоди →</a>
+    </div>
+    <div class="ep-grid" id="about-episodes">
+      <div class="ep-card"><div class="ep-thumb skel"></div><div class="ep-body"><div class="skel" style="height:11px;width:50%;margin-bottom:10px;"></div><div class="skel" style="height:20px;margin-bottom:8px;"></div><div class="skel" style="height:11px;width:75%;"></div></div></div>
+      <div class="ep-card"><div class="ep-thumb skel"></div><div class="ep-body"><div class="skel" style="height:11px;width:50%;margin-bottom:10px;"></div><div class="skel" style="height:20px;margin-bottom:8px;"></div><div class="skel" style="height:11px;width:75%;"></div></div></div>
+      <div class="ep-card"><div class="ep-thumb skel"></div><div class="ep-body"><div class="skel" style="height:11px;width:50%;margin-bottom:10px;"></div><div class="skel" style="height:20px;margin-bottom:8px;"></div><div class="skel" style="height:11px;width:75%;"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="shop-section">
+  <div class="container">
+    <div class="section-header-row">
+      <div>
+        <div class="section-label"><div class="section-label-line"></div><span data-en="Official Merch">Официален Мърч</span></div>
+        <h2 class="section-title" data-en="Shop">Магазин</h2>
+      </div>
+      <a href="shop.html" class="btn-outline" data-en="View All →">Виж всички →</a>
+    </div>
+    <div class="shop-grid">
+      <div class="product-card"><div class="product-img"><img src="images/tshirt.jpg" onerror="this.src='https://placehold.co/500x500/E8E4DC/3a3530?text=Тениска'" alt="T-Shirt"></div><div class="product-body"><div class="product-cat" data-en="Apparel">Облекло</div><div class="product-name" data-en="Shared Podcast T-Shirt">Тениска Shared Podcast</div><div class="product-excerpt" data-en="Premium organic cotton. Minimalist embroidered logo.">Премиум органичен памук. Бродирано лого.</div><div class="product-foot"><div class="product-price">20 <span>€</span></div><a href="product.html?id=tshirt" class="btn-shop" data-en="Buy">Купи</a></div></div></div>
+      <div class="product-card"><div class="product-img"><img src="images/book.jpg" onerror="this.src='https://placehold.co/500x500/D4C8B8/3a3530?text=Книга'" alt="Book"></div><div class="product-body"><div class="product-cat" data-en="Books">Книги</div><div class="product-name" data-en="Shared Stories – Vol. 1">Споделени Истории – Том 1</div><div class="product-excerpt" data-en="The most powerful stories from the first 50 episodes.">Най-въздействащите истории от първите 50 епизода.</div><div class="product-foot"><div class="product-price">15 <span>€</span></div><a href="product.html?id=book" class="btn-shop" data-en="Buy">Купи</a></div></div></div>
+      <div class="product-card"><div class="product-img"><img src="images/cap.jpg" onerror="this.src='https://placehold.co/500x500/C8B4A0/3a3530?text=Шапка'" alt="Cap"></div><div class="product-body"><div class="product-cat" data-en="Accessories">Аксесоари</div><div class="product-name" data-en="Shared Cap">Шапка Shared</div><div class="product-excerpt" data-en="Structured cap with embroidered logo. One size.">Структурирана шапка с бродирано лого.</div><div class="product-foot"><div class="product-price">13 <span>€</span></div><a href="product.html?id=cap" class="btn-shop" data-en="Buy">Купи</a></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <h2 class="cta-title" data-en="Ready to hear a story that &lt;em&gt;changes you?&lt;/em&gt;">Готов ли си да чуеш история,<br>която <em>те променя?</em></h2>
+    <p class="cta-sub" data-en="Every week, a new conversation. Every episode, a different life.">Всяка седмица, нов разговор. Всеки епизод, различен живот.</p>
+    <a href="episodes.html" class="btn-gold-solid" data-en="Browse All Episodes →"><svg width="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Разгледай всички епизоди →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="footer-logo">Shared <span>с Хората</span></a><p data-en="Real conversations with remarkable people.">Истински разговори с забележителни хора.</p></div>
+      <div class="footer-col"><h4 data-en="Podcast">Подкаст</h4><ul><li><a href="episodes.html" data-en="All Episodes">Всички Епизоди</a></li><li><a href="about.html" data-en="About">За нас</a></li><li><a href="https://www.youtube.com/@SharedSHorata" target="_blank">YouTube</a></li></ul></div>
+      <div class="footer-col"><h4 data-en="Shop">Магазин</h4><ul><li><a href="shop.html" data-en="All Products">Всички продукти</a></li><li><a href="thank-you.html" data-en="Order Success">Успешна поръчка</a></li></ul></div>
+      <div class="footer-col"><h4 data-en="Contact">Контакти</h4><ul><li><a href="mailto:hello@shared.bg">hello@shared.bg</a></li><li><a href="admin.html" style="opacity:0.35;font-size:0.78rem;" data-en="Admin">Админ</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p data-en="© 2025 Shared с Хората. All rights reserved.">© 2025 Shared с Хората. Всички права запазени.</p>
+      <div class="footer-social"><a href="https://www.youtube.com/@SharedSHorata" target="_blank">▶</a><a href="#">📸</a><a href="#">🎵</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+async function renderVideos() {
+  const videos = await loadVideos();
+  const lang = currentLang;
+  const latest = [...videos].sort((a, b) => b.episode - a.episode).slice(0, 3);
+  const colors = ["2a2522","3a3530","5A7060"];
+  document.getElementById("about-episodes").innerHTML = latest.map((v, i) => `
+    <a href="${ytUrl(v.youtubeId)}" target="_blank" class="ep-card">
+      <div class="ep-thumb">
+        <img src="${ytThumb(v.youtubeId)}" onerror="this.src='https://placehold.co/600x338/${colors[i]}/FAF8F3?text=Еп+${v.episode}'" alt="Ep ${v.episode}" loading="lazy">
+        <div class="ep-play"><div class="ep-play-circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="ep-badge">${lang === "en" ? "Ep. " + v.episode : "Еп. " + v.episode}</div>
+      </div>
+      <div class="ep-body">
+        <div class="ep-guest">${lang === "en" ? v.guestEn : v.guest}</div>
+        <div class="ep-title">${lang === "en" ? v.titleEn : v.title}</div>
+        <div class="ep-desc">${lang === "en" ? v.descriptionEn : v.description}</div>
+        <div class="ep-foot"><span class="ep-dur">${lang === "en" ? v.durationEn : v.duration}</span><div class="ep-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+      </div>
+    </a>`).join("");
+}
+document.addEventListener("DOMContentLoaded", renderVideos);
+</script>
+</body>
+</html>
