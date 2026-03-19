@@ -156,7 +156,6 @@ const FOOTER_HTML = `
         <h4 data-en="Contact">Контакти</h4>
         <ul>
           <li><a href="mailto:sharedshorata@gmail.com">sharedshorata@gmail.com</a></li>
-          <li><a href="admin.html" style="opacity:0.35; font-size:0.78rem;" data-en="⚙ Admin">⚙ Админ</a></li>
         </ul>
       </div>
 
