@@ -210,7 +210,7 @@
     .featured-label { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 16px; }
     .featured-title { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 900; line-height: 1.2; margin-bottom: 16px; }
     .featured-desc { font-size: 0.9rem; line-height: 1.7; color: rgba(250,248,243,0.65); margin-bottom: 28px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
-    
+
     /* ─── EPISODE GRID ─── */
     .episode-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
     .episode-card {
@@ -282,22 +282,7 @@
     .newsletter-form button { padding: 14px 26px; background: var(--ink); color: var(--cream); border: none; border-radius: 4px; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
     .newsletter-form button:hover { background: #000; }
 
-    /* ─── FOOTER ─── */
-    footer { background: var(--ink); color: rgba(250,248,243,0.55); padding: 60px 0 32px; }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
-    .footer-brand .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; letter-spacing: -0.02em; color: var(--cream); text-decoration: none; display: block; margin-bottom: 16px; }
-    .footer-brand .footer-logo span { color: var(--gold); }
-    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 260px; }
-    .footer-col h4 { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream); font-weight: 700; margin-bottom: 20px; }
-    .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 10px; }
-    .footer-col ul a { text-decoration: none; font-size: 0.88rem; color: rgba(250,248,243,0.55); transition: color 0.2s; }
-    .footer-col ul a:hover { color: var(--gold); }
-    .footer-bottom { padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-    .footer-bottom p { font-size: 0.78rem; }
-    .footer-social { display: flex; gap: 16px; }
-    .footer-social a { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; text-decoration: none; color: rgba(250,248,243,0.55); transition: all 0.2s; }
-    .footer-social a:hover { border-color: var(--gold); color: var(--gold); }
+    /* footer styles → components.js */
 
     /* ─── SCROLL REVEAL ─── */
     .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
@@ -472,7 +457,7 @@
   <div class="container">
     <div class="about-grid">
       <div class="about-img">
-        <img src="images/shared-s-horata-website-600-750.png" alt="Host">
+        <img src="https://placehold.co/600x750/E8E4DC/3a3530?text=Водещи" alt="Hosts">
         <div class="about-img-accent"></div>
       </div>
       <div>
@@ -490,56 +475,8 @@
   </div>
 </section>
 
-<!-- ─── SHOP PREVIEW ─── -->
-<section class="shop-section">
-  <div class="container">
-    <div class="section-header-row">
-      <div>
-        <div class="section-label"><div class="section-label-line"></div><span data-en="Merch & More">Мърч и повече</span></div>
-        <h2 class="section-title" data-en="Shop">Магазин</h2>
-      </div>
-      <a href="shop.html" class="btn-secondary-dark" data-en="View All →">Виж всички →</a>
-    </div>
-    <div class="shop-grid">
-      <div class="product-card">
-        <div class="product-img"><img src="images/white-t-shirt-mirching.png" alt="T-Shirt"></div>
-        <div class="product-body">
-          <div class="product-cat" data-en="Apparel">Облекло</div>
-          <div class="product-name" data-en="Shared Podcast T-Shirt">Тениска Shared Podcast</div>
-          <div class="product-excerpt" data-en="Premium quality. Minimalist design.">Премиум качество. Минималистичен дизайн.</div>
-          <div class="product-foot">
-            <div class="product-price">€39</div>
-            <a href="product.html?id=tshirt" class="btn-shop" data-en="Buy">Купи</a>
-          </div>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-img"><img src="images/pen-shared-s-horata.png" alt="Pen"></div>
-        <div class="product-body">
-          <div class="product-cat" data-en="Accessories">Аксесоари</div>
-          <div class="product-name" data-en="Pen - Shared с хората">Химикалка - Shared с хората</div>
-          <div class="product-excerpt" data-en="The Shared Pen isn't just a writing instrument—it’s a statement of collaboration.">Химикалката Shared е създадена за хората, които вярват, че най-добрите проекти се раждат в споделянето.</div>
-          <div class="product-foot">
-            <div class="product-price">€6</div>
-            <a href="product.html?id=pens" class="btn-shop" data-en="Buy">Купи</a>
-          </div>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-img"><img src="images/pink-cap-mirching.png" alt="Cap"></div>
-        <div class="product-body">
-          <div class="product-cat" data-en="Accessories">Аксесоари</div>
-          <div class="product-name" data-en="Shared Cap">Шапка Shared</div>
-          <div class="product-excerpt" data-en="Classic structured cap with embroidered logo.">Класическа шапка с бродирано лого.</div>
-          <div class="product-foot">
-            <div class="product-price">€30</div>
-            <a href="product.html?id=cap" class="btn-shop" data-en="Buy">Купи</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ─── SHOP ─── -->
+<div id="shared-shop"></div>
 
 <!-- ─── PLATFORMS ─── -->
 <section class="platforms-section">
@@ -553,25 +490,25 @@
       Намерете ни на вашата<br>любима платформа
     </h2>
     <div class="platforms-grid">
-      <a href="https://youtube.com/@SharedSHorata?sub_confirmation=1" target="_blank" class="platform-item">
+      <a href="https://www.youtube.com/@SharedSHorata" target="_blank" class="platform-item">
         <div class="platform-icon">▶</div>
         <div class="platform-name">YouTube</div>
         <div class="platform-sub" data-en="Watch">Гледайте</div>
       </a>
-      <a href="https://open.spotify.com/show/5Ny8UTNXTDtNiDOfDbvIvE?si=8536fae1da0e4954" class="platform-item">
+      <a href="#" class="platform-item">
         <div class="platform-icon">🎵</div>
         <div class="platform-name">Spotify</div>
         <div class="platform-sub" data-en="Listen">Слушайте</div>
       </a>
-      <a href="https://podcasts.apple.com/us/podcast/shared-%D1%81-%D1%85%D0%BE%D1%80%D0%B0%D1%82%D0%B0-%D0%B8%D0%BD%D1%81%D0%B0%D0%B9%D1%82%D0%B8-%D0%BE%D1%82-%D1%85%D0%BE%D0%B1%D0%B8-%D0%B8-%D0%BF%D1%80%D0%BE%D1%84%D0%B5%D1%81%D0%B8%D0%B8-%D0%BD%D0%B0-%D1%80%D0%B0%D0%B7%D0%BB%D0%B8%D1%87%D0%BD%D0%B8/id1672583273" class="platform-item">
+      <a href="#" class="platform-item">
         <div class="platform-icon">🎙️</div>
         <div class="platform-name">Apple Podcasts</div>
         <div class="platform-sub" data-en="Listen">Слушайте</div>
       </a>
-      <a href="https://patreon.com/sharedshorata" class="platform-item">
+      <a href="#" class="platform-item">
         <div class="platform-icon">🎧</div>
-        <div class="platform-name">Patreon Podcasts</div>
-        <div class="platform-sub" data-en=""Watch">Гледайте></div>
+        <div class="platform-name">Google Podcasts</div>
+        <div class="platform-sub" data-en="Listen">Слушайте</div>
       </a>
     </div>
   </div>
@@ -597,45 +534,9 @@
 </section>
 
 <!-- ─── FOOTER ─── -->
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="index.html" class="footer-logo">Shared <span>с Хората</span></a>
-        <p data-en="Real conversations with remarkable people.">Истински разговори с забележителни хора.</p>
-      </div>
-      <div class="footer-col">
-        <h4 data-en="Podcast">Подкаст</h4>
-        <ul>
-          <li><a href="episodes.html" data-en="All Episodes">Всички Епизоди</a></li>
-          <li><a href="about.html" data-en="About">За нас</a></li>
-          <li><a href="https://www.youtube.com/@SharedSHorata" target="_blank">YouTube</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4 data-en="Shop">Магазин</h4>
-        <ul>
-          <li><a href="shop.html" data-en="All Products">Всички продукти</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4 data-en="Contact">Контакти</h4>
-        <ul>
-          <li><a href="mailto:sharedshorata@gmail.com">sharedshorata@gmail.com</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p data-en="© 2026 Shared с Хората. All rights reserved.">© 2026 Shared с Хората. Всички права запазени.</p>
-      <div class="footer-social">
-        <a href="https://www.youtube.com/@SharedSHorata" target="_blank" title="YouTube">▶</a>
-        <a href="https://open.spotify.com/show/5Ny8UTNXTDtNiDOfDbvIvE?si=8536fae1da0e4954" title="Spotify">🎵</a>
-      </div>
-    </div>
-  </div>
-</footer>
+<div id="shared-footer"></div>
 
-<script src="shared.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="shared.js"></script>
 <script>
 // ─── Transparent nav → solid on scroll ───
 (function() {
@@ -691,16 +592,20 @@ async function renderVideos() {
         <div class="episode-desc">${lang === 'en' ? v.descriptionEn : v.description}</div>
         <div class="episode-meta">
           <span class="episode-duration">${lang === 'en' ? v.durationEn : v.duration}</span>
-          <div class="episode-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+          <div class="episode-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 9 18 15 12 9 6"/></svg></div>
         </div>
       </div>
     </a>`).join('');
 
-  // Re-run reveal observer on newly injected cards
   reObserveReveal();
 }
 
 document.addEventListener('DOMContentLoaded', renderVideos);
 </script>
+<div id="shared-footer"></div>
+
+<script src="shared.js"></script>
+<script src="components.js"></script>
+
 </body>
 </html>

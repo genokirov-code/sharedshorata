@@ -343,22 +343,8 @@
   </div>
 </section>
 
-<section class="shop-section">
-  <div class="container">
-    <div class="section-header-row">
-      <div>
-        <div class="section-label"><div class="section-label-line"></div><span data-en="Official Merch">Официален Мърч</span></div>
-        <h2 class="section-title" data-en="Shop">Магазин</h2>
-      </div>
-      <a href="shop.html" class="btn-outline" data-en="View All →">Виж всички →</a>
-    </div>
-    <div class="shop-grid">
-      <div class="product-card"><div class="product-img"><img src="images/tshirt.jpg" onerror="this.src='https://placehold.co/500x500/E8E4DC/3a3530?text=Тениска'" alt="T-Shirt"></div><div class="product-body"><div class="product-cat" data-en="Apparel">Облекло</div><div class="product-name" data-en="Shared Podcast T-Shirt">Тениска Shared Podcast</div><div class="product-excerpt" data-en="Premium organic cotton. Minimalist embroidered logo.">Премиум органичен памук. Бродирано лого.</div><div class="product-foot"><div class="product-price">20 <span>€</span></div><a href="product.html?id=tshirt" class="btn-shop" data-en="Buy">Купи</a></div></div></div>
-      <div class="product-card"><div class="product-img"><img src="images/book.jpg" onerror="this.src='https://placehold.co/500x500/D4C8B8/3a3530?text=Книга'" alt="Book"></div><div class="product-body"><div class="product-cat" data-en="Books">Книги</div><div class="product-name" data-en="Shared Stories – Vol. 1">Споделени Истории – Том 1</div><div class="product-excerpt" data-en="The most powerful stories from the first 50 episodes.">Най-въздействащите истории от първите 50 епизода.</div><div class="product-foot"><div class="product-price">15 <span>€</span></div><a href="product.html?id=book" class="btn-shop" data-en="Buy">Купи</a></div></div></div>
-      <div class="product-card"><div class="product-img"><img src="images/cap.jpg" onerror="this.src='https://placehold.co/500x500/C8B4A0/3a3530?text=Шапка'" alt="Cap"></div><div class="product-body"><div class="product-cat" data-en="Accessories">Аксесоари</div><div class="product-name" data-en="Shared Cap">Шапка Shared</div><div class="product-excerpt" data-en="Structured cap with embroidered logo. One size.">Структурирана шапка с бродирано лого.</div><div class="product-foot"><div class="product-price">13 <span>€</span></div><a href="product.html?id=cap" class="btn-shop" data-en="Buy">Купи</a></div></div></div>
-    </div>
-  </div>
-</section>
+<!-- ─── SHOP ─── -->
+<div id="shared-shop"></div>
 
 <section class="cta-section">
   <div class="container">
@@ -368,22 +354,10 @@
   </div>
 </section>
 
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand"><a href="index.html" class="footer-logo">Shared <span>с Хората</span></a><p data-en="Real conversations with remarkable people.">Истински разговори с забележителни хора.</p></div>
-      <div class="footer-col"><h4 data-en="Podcast">Подкаст</h4><ul><li><a href="episodes.html" data-en="All Episodes">Всички Епизоди</a></li><li><a href="about.html" data-en="About">За нас</a></li><li><a href="https://www.youtube.com/@SharedSHorata" target="_blank">YouTube</a></li></ul></div>
-      <div class="footer-col"><h4 data-en="Shop">Магазин</h4><ul><li><a href="shop.html" data-en="All Products">Всички продукти</a></li><li><a href="thank-you.html" data-en="Order Success">Успешна поръчка</a></li></ul></div>
-      <div class="footer-col"><h4 data-en="Contact">Контакти</h4><ul><li><a href="mailto:hello@shared.bg">hello@shared.bg</a></li><li><a href="admin.html" style="opacity:0.35;font-size:0.78rem;" data-en="Admin">Админ</a></li></ul></div>
-    </div>
-    <div class="footer-bottom">
-      <p data-en="© 2025 Shared с Хората. All rights reserved.">© 2025 Shared с Хората. Всички права запазени.</p>
-      <div class="footer-social"><a href="https://www.youtube.com/@SharedSHorata" target="_blank">▶</a><a href="#">📸</a><a href="#">🎵</a></div>
-    </div>
-  </div>
-</footer>
+<!-- ─── FOOTHER ─── -->
+<div id="shared-footer"></div>
 
-<script src="shared.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="shared.js"></script>
 <script>
 async function renderVideos() {
   const videos = await loadVideos();
@@ -401,11 +375,15 @@ async function renderVideos() {
         <div class="ep-guest">${lang === "en" ? v.guestEn : v.guest}</div>
         <div class="ep-title">${lang === "en" ? v.titleEn : v.title}</div>
         <div class="ep-desc">${lang === "en" ? v.descriptionEn : v.description}</div>
-        <div class="ep-foot"><span class="ep-dur">${lang === "en" ? v.durationEn : v.duration}</span><div class="ep-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div></div>
-      </div>
+        <div class="ep-foot"><span class="ep-dur">${lang === "en" ? v.durationEn : v.duration}</span></div></div>
     </a>`).join("");
 }
 document.addEventListener("DOMContentLoaded", renderVideos);
 </script>
+<div id="shared-footer"></div>
+
+<script src="shared.js"></script>
+<script src="components.js"></script>
+
 </body>
 </html>

@@ -356,51 +356,17 @@
   </div>
 </section>
 
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="index.html" class="nav-logo">Shared <span style="color:var(--gold);">с Хората</span></a>
-        <p data-en="Real conversations with remarkable people.">Истински разговори с забележителни хора.</p>
-      </div>
-      <div class="footer-col">
-        <h4 data-en="Podcast">Подкаст</h4>
-        <ul>
-          <li><a href="episodes.html" data-en="All Episodes">Всички Епизоди</a></li>
-          <li><a href="about.html" data-en="About">За нас</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4 data-en="Shop">Магазин</h4>
-        <ul>
-          <li><a href="shop.html" data-en="All Products">Всички продукти</a></li>
-          <li><a href="thank-you.html" data-en="Order Success">Успешна поръчка</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4 data-en="Contact">Контакти</h4>
-        <ul><li><a href="mailto:hello@shared.bg">hello@shared.bg</a></li></ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p data-en="© 2025 Shared с Хората. All rights reserved.">© 2025 Shared с Хората. Всички права запазени.</p>
-      <div class="footer-social">
-        <a href="https://www.youtube.com/@SharedSHorata" target="_blank">▶</a>
-        <a href="#">📸</a><a href="#">🎵</a>
-      </div>
-    </div>
-  </div>
-</footer>
+<div id="shared-footer"></div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // ─── PRODUCT DATA ───
   const PRODUCTS = {
-    'tshirt': { bg: 'Тениска Shared Podcast', en: 'Shared Podcast T-Shirt', price: '39', cat_bg: 'Облекло / Тениски', cat_en: 'Apparel / T-Shirts', stripe: 'https://buy.stripe.com/YOUR_TSHIRT_STRIPE_LINK', img: 'https://placehold.co/700x700/E8E4DC/3a3530?text=Тениска+Shared', breadcrumb_bg: 'Тениска', breadcrumb_en: 'T-Shirt' },
-    'book': { bg: 'Споделени Истории – Том 1', en: 'Shared Stories – Vol. 1', price: '29', cat_bg: 'Книги', cat_en: 'Books', stripe: 'https://buy.stripe.com/YOUR_BOOK_STRIPE_LINK', img: 'https://placehold.co/700x700/D4C8B8/3a3530?text=Книга', breadcrumb_bg: 'Книга', breadcrumb_en: 'Book' },
-    'cap': { bg: 'Шапка Shared Podcast', en: 'Shared Podcast Cap', price: '25', cat_bg: 'Аксесоари', cat_en: 'Accessories', stripe: 'https://buy.stripe.com/YOUR_CAP_STRIPE_LINK', img: 'https://placehold.co/700x700/C8B4A0/3a3530?text=Шапка', breadcrumb_bg: 'Шапка', breadcrumb_en: 'Cap' },
-    'hoodie': { bg: 'Суичър Shared Podcast', en: 'Shared Podcast Hoodie', price: '69', cat_bg: 'Облекло / Суичъри', cat_en: 'Apparel / Hoodies', stripe: 'https://buy.stripe.com/YOUR_HOODIE_STRIPE_LINK', img: 'https://placehold.co/700x700/2a2522/FAF8F3?text=Суичър', breadcrumb_bg: 'Суичър', breadcrumb_en: 'Hoodie' },
-    'bundle-starter': { bg: 'Starter Комплект', en: 'Starter Bundle', price: '53', cat_bg: 'Комплекти', cat_en: 'Bundles', stripe: 'https://buy.stripe.com/YOUR_BUNDLE_STRIPE_LINK', img: 'https://placehold.co/700x700/C8942A/1a1714?text=Комплект', breadcrumb_bg: 'Комплект', breadcrumb_en: 'Bundle' },
-    'notebook': { bg: 'Тефтер Shared', en: 'Shared Notebook', price: '22', cat_bg: 'Аксесоари', cat_en: 'Accessories', stripe: 'https://buy.stripe.com/YOUR_NOTEBOOK_STRIPE_LINK', img: 'https://placehold.co/700x700/5A7060/FAF8F3?text=Тефтер', breadcrumb_bg: 'Тефтер', breadcrumb_en: 'Notebook' },
+    'tshirt': { bg: 'Тениска Shared Podcast', en: 'Shared Podcast T-Shirt', price: '20 €', cat_bg: 'Облекло / Тениски', cat_en: 'Apparel / T-Shirts', stripe: 'https://buy.stripe.com/YOUR_TSHIRT_STRIPE_LINK', img: 'https://placehold.co/700x700/E8E4DC/3a3530?text=Тениска+Shared', breadcrumb_bg: 'Тениска', breadcrumb_en: 'T-Shirt' },
+    'book': { bg: 'Споделени Истории – Том 1', en: 'Shared Stories – Vol. 1', price: '15 €', cat_bg: 'Книги', cat_en: 'Books', stripe: 'https://buy.stripe.com/YOUR_BOOK_STRIPE_LINK', img: 'https://placehold.co/700x700/D4C8B8/3a3530?text=Книга', breadcrumb_bg: 'Книга', breadcrumb_en: 'Book' },
+    'cap': { bg: 'Шапка Shared Podcast', en: 'Shared Podcast Cap', price: '13 €', cat_bg: 'Аксесоари', cat_en: 'Accessories', stripe: 'https://buy.stripe.com/YOUR_CAP_STRIPE_LINK', img: 'https://placehold.co/700x700/C8B4A0/3a3530?text=Шапка', breadcrumb_bg: 'Шапка', breadcrumb_en: 'Cap' },
+    'hoodie': { bg: 'Суичър Shared Podcast', en: 'Shared Podcast Hoodie', price: '35 €', cat_bg: 'Облекло / Суичъри', cat_en: 'Apparel / Hoodies', stripe: 'https://buy.stripe.com/YOUR_HOODIE_STRIPE_LINK', img: 'https://placehold.co/700x700/2a2522/FAF8F3?text=Суичър', breadcrumb_bg: 'Суичър', breadcrumb_en: 'Hoodie' },
+    'bundle-starter': { bg: 'Starter Комплект', en: 'Starter Bundle', price: '28 €', cat_bg: 'Комплекти', cat_en: 'Bundles', stripe: 'https://buy.stripe.com/YOUR_BUNDLE_STRIPE_LINK', img: 'https://placehold.co/700x700/C8942A/1a1714?text=Комплект', breadcrumb_bg: 'Комплект', breadcrumb_en: 'Bundle' },
+    'notebook': { bg: 'Тефтер Shared', en: 'Shared Notebook', price: '11 €', cat_bg: 'Аксесоари', cat_en: 'Accessories', stripe: 'https://buy.stripe.com/YOUR_NOTEBOOK_STRIPE_LINK', img: 'https://placehold.co/700x700/5A7060/FAF8F3?text=Тефтер', breadcrumb_bg: 'Тефтер', breadcrumb_en: 'Notebook' },
   };
 
   // Load product from URL param
@@ -468,8 +434,15 @@
   function toggleMenu() {
     const l = document.getElementById('nav-links');
     l.style.display = l.style.display === 'flex' ? 'none' : 'flex';
-    if(l.style.display==='flex'){l.style.flexDirection='column';l.style.position='fixed';l.style.top='72px';l.style.left='0';l.style.right='0';l.style.background='var(--cream)';l.style.padding='24px 40px 40px';l.style.borderBottom='1px solid var(--border)';l.style.gap='20px';}
+    if(l.style.display==='flex'){l.style.flexDirection='column';l.style.position:'fixed',top:'72px',left:'0',right:'0',background:'var(--cream)',padding:'24px 40px 40px',borderBottom:'1px solid var(--border)',gap:'20px'});
+    links.dataset.open = 'true';
   }
+}
 </script>
+<div id="shared-footer"></div>
+
+<script src="shared.js"></script>
+<script src="components.js"></script>
+
 </body>
 </html>
