@@ -24,25 +24,33 @@
 // GOOGLE ANALYTICS
 // Set your real GA4 Measurement ID here, e.g. 'G-ABC123XYZ'
 // ─────────────────────────────────────────────────
-const GA_ID = 'G-VH3927PPW3'; // ← replace with your real ID
-
-function initAnalytics() {
-  if (!GA_ID || GA_ID === 'G-VH3927PPW3') return;
-  const s = document.createElement('script');
-  s.async = true;
-  s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-  document.head.appendChild(s);
+const GA_ID = 'G-VH3927PPW3'; // ← replace with your real Measurement ID
+ 
+(function initAnalytics() {
+  if (!GA_ID || GA_ID === 'G-VH3927PPW3') return; // skip if not configured
+ 
+  // Inject the gtag.js script into <head>
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+  document.head.insertBefore(script, document.head.firstChild);
+ 
+  // Set up the gtag function before the script finishes loading
+  // (this is the standard Google-recommended pattern)
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function(){ dataLayer.push(arguments); };
+  function gtag(){ window.dataLayer.push(arguments); }
+  window.gtag = gtag;
   gtag('js', new Date());
-  gtag('config', GA_ID);
-}
-
+  gtag('config', GA_ID, {
+    // Sends a pageview automatically on every page load ✅
+    send_page_view: true,
+  });
+})();
+ 
 function trackEvent(action, category, label, value) {
   if (typeof gtag === 'undefined') return;
   gtag('event', action, { event_category: category, event_label: label, value });
 }
-
 
 // ─────────────────────────────────────────────────
 // LANGUAGE SYSTEM
