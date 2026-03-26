@@ -24,10 +24,10 @@
 // GOOGLE ANALYTICS
 // Set your real GA4 Measurement ID here, e.g. 'G-ABC123XYZ'
 // ─────────────────────────────────────────────────
-const GA_ID = 'G-XXXXXXXXXX'; // ← replace with your real ID
+const GA_ID = 'G-VH3927PPW3'; // ← replace with your real ID
 
 function initAnalytics() {
-  if (!GA_ID || GA_ID === 'G-XXXXXXXXXX') return;
+  if (!GA_ID || GA_ID === 'G-VH3927PPW3') return;
   const s = document.createElement('script');
   s.async = true;
   s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
