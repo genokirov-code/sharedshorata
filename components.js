@@ -132,7 +132,7 @@ const FOOTER_HTML = `
 
       <div class="footer-brand">
         <a href="index.html" class="footer-logo">Shared <span>с Хората</span></a>
-        <p data-en="Real conversations with remarkable people.">Истински разговори с забележителни хора.</p>
+        <p data-en="Real conversations with remarkable people.">Истински разговори със забележителни хора.</p>
       </div>
 
       <div class="footer-col">
@@ -148,7 +148,6 @@ const FOOTER_HTML = `
         <h4 data-en="Shop">Магазин</h4>
         <ul>
           <li><a href="shop.html" data-en="All Products">Всички продукти</a></li>
-          <li><a href="thank-you.html" data-en="Order Success">Успешна поръчка</a></li>
         </ul>
       </div>
 
