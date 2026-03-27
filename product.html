@@ -198,20 +198,7 @@
         <div class="gallery-main">
           <img id="main-img" src="images/white-t-shirt-mirching.png" alt="Product">
         </div>
-        <div class="gallery-thumbs">
-          <div class="gallery-thumb active" onclick="switchImg(this, 'images/white-t-shirt-mirching.png')">
-            <img src="images/white-t-shirt-mirching.png" alt="">
-          </div>
-          <div class="gallery-thumb" onclick="switchImg(this, 'https://placehold.co/700x700/D4C8B8/3a3530?text=Back')">
-            <img src="https://placehold.co/200x200/D4C8B8/3a3530?text=Back" alt="">
-          </div>
-          <div class="gallery-thumb" onclick="switchImg(this, 'https://placehold.co/700x700/C8B4A0/3a3530?text=Detail')">
-            <img src="https://placehold.co/200x200/C8B4A0/3a3530?text=Detail" alt="">
-          </div>
-          <div class="gallery-thumb" onclick="switchImg(this, 'https://placehold.co/700x700/B8A890/3a3530?text=Lifestyle')">
-            <img src="https://placehold.co/200x200/B8A890/3a3530?text=Lifestyle" alt="">
-          </div>
-        </div>
+        <div class="gallery-thumbs" id="gallery-thumbs"></div>
       </div>
 
       <!-- INFO -->
@@ -361,9 +348,9 @@
   // ─── PRODUCT DATA ───
   const PRODUCTS = {
     // ─── TO ADD / UPDATE A PRODUCT ────────────────────────────────────────────
-    // 1. The key here must match the ?id= in shop.html links (e.g. ?id=tshirt)
-    // 2. Put product images in /images/ and update the img: field below
-    // 3. For extra gallery angles, update the gallery-thumbs HTML above
+    // 1. The key must match the ?id= in shop.html links (e.g. ?id=tshirt)
+    // 2. img: is the main image. thumbs: [] lists all gallery angles in order.
+    // 3. Add image files to /images/ and reference them below.
     // ─────────────────────────────────────────────────────────────────────────
     'tshirt': {
       bg: 'Тениска Shared Podcast', en: 'Shared Podcast T-Shirt',
@@ -372,6 +359,12 @@
       price: '€39', cat_bg: 'Облекло', cat_en: 'Apparel',
       stripe: 'https://buy.stripe.com/YOUR_TSHIRT_STRIPE_LINK',
       img: 'images/white-t-shirt-mirching.png',
+      thumbs: [
+        'images/white-t-shirt-mirching.png',
+        'images/back-t-shirt-mirching.png',
+        'images/details-marching-t-shirt.png',
+        'images/lifestyle-t-shirt-mirching.png',
+      ],
       breadcrumb_bg: 'Тениска', breadcrumb_en: 'T-Shirt'
     },
     'pens': {
@@ -381,6 +374,10 @@
       price: '€6', cat_bg: 'Аксесоари', cat_en: 'Accessories',
       stripe: 'https://buy.stripe.com/YOUR_PENS_STRIPE_LINK',
       img: 'images/pen-shared-s-horata.png',
+      thumbs: [
+        'images/pen-shared-s-horata.png',
+        'images/pens-shared-s-horata.png',
+      ],
       breadcrumb_bg: 'Химикалка', breadcrumb_en: 'Pen'
     },
     'cap': {
@@ -390,6 +387,12 @@
       price: '€30', cat_bg: 'Аксесоари', cat_en: 'Accessories',
       stripe: 'https://buy.stripe.com/YOUR_CAP_STRIPE_LINK',
       img: 'images/pink-cap-mirching.png',
+      thumbs: [
+        'images/pink-cap-mirching.png',
+        'images/pink-mirching-cap.png',
+        'images/red-cap-mirching.png',
+        'images/red-mirching-cap.png',
+      ],
       breadcrumb_bg: 'Шапка', breadcrumb_en: 'Cap'
     },
     'badge': {
@@ -399,6 +402,11 @@
       price: '€10', cat_bg: 'Аксесоари', cat_en: 'Accessories',
       stripe: 'https://buy.stripe.com/YOUR_BADGE_STRIPE_LINK',
       img: 'images/badge-mirching.png',
+      thumbs: [
+        'images/badge-mirching.png',
+        'images/badge-back.png',
+        'images/badge-shared-s-horata-podcast.png',
+      ],
       breadcrumb_bg: 'Значка', breadcrumb_en: 'Badge'
     },
     'bundle-starter': {
@@ -408,6 +416,9 @@
       price: '€10', cat_bg: 'Комплекти', cat_en: 'Bundles',
       stripe: 'https://buy.stripe.com/YOUR_BUNDLE_STRIPE_LINK',
       img: 'images/starter-bundle-shared-s-horata.png',
+      thumbs: [
+        'images/starter-bundle-shared-s-horata.png',
+      ],
       breadcrumb_bg: 'Комплект', breadcrumb_en: 'Bundle'
     },
     'opener': {
@@ -417,7 +428,25 @@
       price: '€6', cat_bg: 'Аксесоари', cat_en: 'Accessories',
       stripe: 'https://buy.stripe.com/YOUR_OPENER_STRIPE_LINK',
       img: 'images/opener-shared-s-horata.png',
+      thumbs: [
+        'images/opener-shared-s-horata.png',
+        'images/openers-shared-s-horata.png',
+        'images/openers-shared-s-horata-3.png',
+        'images/lifestyle-opener-shared-s-horata.png',
+      ],
       breadcrumb_bg: 'Отварачка', breadcrumb_en: 'Opener'
+    },
+    'denim-bag': {
+      bg: 'Дънкова чанта Shared с хората', en: 'Denim Bag Shared с хората',
+      desc_bg: 'Ръчно изработена дънкова чанта с уникален характер. Всяка чанта е различна и носи собствена история — точно като хората, за които е създадена. Издръжлива, стилна и изцяло ръчна изработка.',
+      desc_en: 'Handmade denim bag with unique character. Each bag is one-of-a-kind and carries its own story — just like the people it\'s made for. Durable, stylish, and entirely handcrafted.',
+      price: '€95', cat_bg: 'Аксесоари', cat_en: 'Accessories',
+      stripe: 'https://buy.stripe.com/YOUR_DENIMBAG_STRIPE_LINK',
+      img: 'images/denim-handmade-bag-shared-s-horata-2.png',
+      thumbs: [
+        'images/denim-handmade-bag-shared-s-horata-2.png',
+      ],
+      breadcrumb_bg: 'Дънкова чанта', breadcrumb_en: 'Denim Bag'
     },
   };
 
@@ -435,10 +464,18 @@
   document.getElementById('breadcrumb-product').textContent = prod.breadcrumb_bg;
   document.getElementById('breadcrumb-product').dataset.en = prod.breadcrumb_en;
   document.getElementById('main-img').src = prod.img;
-  // Sync first gallery thumbnail to this product's main image
-  var firstThumb = document.querySelector('.gallery-thumb');
-  firstThumb.querySelector('img').src = prod.img;
-  firstThumb.setAttribute('onclick', "switchImg(this, '" + prod.img + "')");
+  // Render gallery thumbnails from the product's thumbs array
+  var thumbsContainer = document.getElementById('gallery-thumbs');
+  (prod.thumbs || [prod.img]).forEach(function(src, i) {
+    var div = document.createElement('div');
+    div.className = 'gallery-thumb' + (i === 0 ? ' active' : '');
+    div.onclick = function() { switchImg(div, src); };
+    var img = document.createElement('img');
+    img.src = src;
+    img.alt = '';
+    div.appendChild(img);
+    thumbsContainer.appendChild(div);
+  });
   document.title = prod.bg + ' — Shared с Хората';
   // Set Stripe link on buy button
   document.getElementById('buy-btn').href = prod.stripe;
