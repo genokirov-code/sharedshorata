@@ -21,20 +21,29 @@
 
 
 // ─────────────────────────────────────────────────
-// GOOGLE ANALYTICS
-// Set your real GA4 Measurement ID here, e.g. 'G-ABC123XYZ'
+// GOOGLE ANALYTICS — GA4
+//
+// SETUP (do this once):
+// 1. Replace the GA_ID value below with your real
+//    Measurement ID (format: G-XXXXXXXXXX)
+// 2. The gtag snippet is loaded via shared.js so
+//    you only need to set it in one place.
+//
+// HOW TO FIND YOUR ID:
+//   analytics.google.com → Admin → Data Streams
+//   → your stream → Measurement ID
 // ─────────────────────────────────────────────────
-const GA_ID = 'G-VH3927PPW3'; // ← replace with your real Measurement ID
- 
+const GA_ID = 'G-XXXXXXXXXX'; // ← replace with your real Measurement ID
+
 (function initAnalytics() {
-  if (!GA_ID || GA_ID === 'G-VH3927PPW3') return; // skip if not configured
- 
+  if (!GA_ID || GA_ID === 'G-XXXXXXXXXX') return; // skip if not configured
+
   // Inject the gtag.js script into <head>
   const script = document.createElement('script');
   script.async = true;
   script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
   document.head.insertBefore(script, document.head.firstChild);
- 
+
   // Set up the gtag function before the script finishes loading
   // (this is the standard Google-recommended pattern)
   window.dataLayer = window.dataLayer || [];
@@ -46,11 +55,12 @@ const GA_ID = 'G-VH3927PPW3'; // ← replace with your real Measurement ID
     send_page_view: true,
   });
 })();
- 
+
 function trackEvent(action, category, label, value) {
   if (typeof gtag === 'undefined') return;
   gtag('event', action, { event_category: category, event_label: label, value });
 }
+
 
 // ─────────────────────────────────────────────────
 // LANGUAGE SYSTEM
@@ -103,6 +113,8 @@ function toggleMenu() {
   const isOpen = links.dataset.open === 'true';
   if (isOpen) {
     links.removeAttribute('style');
+    // Restore link colours back to whatever the nav state dictates
+    links.querySelectorAll('a').forEach(a => a.style.removeProperty('color'));
     links.dataset.open = 'false';
   } else {
     Object.assign(links.style, {
@@ -110,6 +122,11 @@ function toggleMenu() {
       top: '72px', left: '0', right: '0', zIndex: '99',
       background: 'var(--cream)', padding: '24px 40px 40px',
       borderBottom: '1px solid var(--border)', gap: '20px'
+    });
+    // Force dark text on all links — nav may still be in
+    // transparent/white-text state if user hasn't scrolled yet
+    links.querySelectorAll('a').forEach(a => {
+      a.style.color = 'var(--ink-soft)';
     });
     links.dataset.open = 'true';
   }
@@ -271,7 +288,6 @@ function ytUrl(videoId) {
 // INIT — runs on every page automatically
 // ─────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  initAnalytics();
   initLang();
   initReveal();
 });
