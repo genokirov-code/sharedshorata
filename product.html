@@ -199,7 +199,7 @@
           <img id="main-img" src="images/white-t-shirt-mirching.png" alt="Product">
         </div>
         <div class="gallery-thumbs">
-          <div class="gallery-thumb active" onclick="switchImg(this, 'https://placehold.co/700x700/E8E4DC/3a3530?text=Front')">
+          <div class="gallery-thumb active" onclick="switchImg(this, 'images/white-t-shirt-mirching.png')">
             <img src="images/white-t-shirt-mirching.png" alt="">
           </div>
           <div class="gallery-thumb" onclick="switchImg(this, 'https://placehold.co/700x700/D4C8B8/3a3530?text=Back')">
@@ -360,12 +360,17 @@
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // ─── PRODUCT DATA ───
   const PRODUCTS = {
-    'tshirt': { bg: 'Тениска Shared Podcast', en: 'Shared Podcast T-Shirt', price: '20 €', cat_bg: 'Облекло / Тениски', cat_en: 'Apparel / T-Shirts', stripe: 'https://buy.stripe.com/YOUR_TSHIRT_STRIPE_LINK', img: 'https://placehold.co/700x700/E8E4DC/3a3530?text=Тениска+Shared', breadcrumb_bg: 'Тениска', breadcrumb_en: 'T-Shirt' },
-    'book': { bg: 'Споделени Истории – Том 1', en: 'Shared Stories – Vol. 1', price: '15 €', cat_bg: 'Книги', cat_en: 'Books', stripe: 'https://buy.stripe.com/YOUR_BOOK_STRIPE_LINK', img: 'https://placehold.co/700x700/D4C8B8/3a3530?text=Книга', breadcrumb_bg: 'Книга', breadcrumb_en: 'Book' },
-    'cap': { bg: 'Шапка Shared Podcast', en: 'Shared Podcast Cap', price: '13 €', cat_bg: 'Аксесоари', cat_en: 'Accessories', stripe: 'https://buy.stripe.com/YOUR_CAP_STRIPE_LINK', img: 'https://placehold.co/700x700/C8B4A0/3a3530?text=Шапка', breadcrumb_bg: 'Шапка', breadcrumb_en: 'Cap' },
-    'hoodie': { bg: 'Суичър Shared Podcast', en: 'Shared Podcast Hoodie', price: '35 €', cat_bg: 'Облекло / Суичъри', cat_en: 'Apparel / Hoodies', stripe: 'https://buy.stripe.com/YOUR_HOODIE_STRIPE_LINK', img: 'https://placehold.co/700x700/2a2522/FAF8F3?text=Суичър', breadcrumb_bg: 'Суичър', breadcrumb_en: 'Hoodie' },
-    'bundle-starter': { bg: 'Starter Комплект', en: 'Starter Bundle', price: '28 €', cat_bg: 'Комплекти', cat_en: 'Bundles', stripe: 'https://buy.stripe.com/YOUR_BUNDLE_STRIPE_LINK', img: 'https://placehold.co/700x700/C8942A/1a1714?text=Комплект', breadcrumb_bg: 'Комплект', breadcrumb_en: 'Bundle' },
-    'notebook': { bg: 'Тефтер Shared', en: 'Shared Notebook', price: '11 €', cat_bg: 'Аксесоари', cat_en: 'Accessories', stripe: 'https://buy.stripe.com/YOUR_NOTEBOOK_STRIPE_LINK', img: 'https://placehold.co/700x700/5A7060/FAF8F3?text=Тефтер', breadcrumb_bg: 'Тефтер', breadcrumb_en: 'Notebook' },
+    // ─── TO ADD A PRODUCT IMAGE ───────────────────────────────────────────────
+    // 1. Put your image file inside the /images/ folder
+    // 2. Set img: 'images/your-filename.png' for that product below
+    // 3. For extra gallery angles, update the gallery-thumbs HTML above
+    // ─────────────────────────────────────────────────────────────────────────
+    'tshirt':         { bg: 'Тениска Shared Podcast',      en: 'Shared Podcast T-Shirt',  price: '20 €', cat_bg: 'Облекло / Тениски',   cat_en: 'Apparel / T-Shirts', stripe: 'https://buy.stripe.com/YOUR_TSHIRT_STRIPE_LINK',  img: 'images/white-t-shirt-mirching.png',           breadcrumb_bg: 'Тениска',  breadcrumb_en: 'T-Shirt' },
+    'book':           { bg: 'Споделени Истории – Том 1',   en: 'Shared Stories – Vol. 1', price: '15 €', cat_bg: 'Книги',               cat_en: 'Books',              stripe: 'https://buy.stripe.com/YOUR_BOOK_STRIPE_LINK',    img: 'https://placehold.co/700x700/D4C8B8/3a3530?text=Книга',           breadcrumb_bg: 'Книга',    breadcrumb_en: 'Book' },
+    'cap':            { bg: 'Шапка Shared Podcast',        en: 'Shared Podcast Cap',      price: '13 €', cat_bg: 'Аксесоари',           cat_en: 'Accessories',        stripe: 'https://buy.stripe.com/YOUR_CAP_STRIPE_LINK',     img: 'images/pink-cap-mirching.png',                breadcrumb_bg: 'Шапка',    breadcrumb_en: 'Cap' },
+    'hoodie':         { bg: 'Суичър Shared Podcast',       en: 'Shared Podcast Hoodie',   price: '35 €', cat_bg: 'Облекло / Суичъри',   cat_en: 'Apparel / Hoodies',  stripe: 'https://buy.stripe.com/YOUR_HOODIE_STRIPE_LINK',  img: 'https://placehold.co/700x700/2a2522/FAF8F3?text=Суичър',          breadcrumb_bg: 'Суичър',   breadcrumb_en: 'Hoodie' },
+    'bundle-starter': { bg: 'Starter Комплект',            en: 'Starter Bundle',          price: '28 €', cat_bg: 'Комплекти',           cat_en: 'Bundles',            stripe: 'https://buy.stripe.com/YOUR_BUNDLE_STRIPE_LINK',  img: 'images/starter-bundle-shared-s-horata.png',   breadcrumb_bg: 'Комплект', breadcrumb_en: 'Bundle' },
+    'notebook':       { bg: 'Тефтер Shared',               en: 'Shared Notebook',         price: '11 €', cat_bg: 'Аксесоари',           cat_en: 'Accessories',        stripe: 'https://buy.stripe.com/YOUR_NOTEBOOK_STRIPE_LINK', img: 'images/pen-shared-s-horata.png',              breadcrumb_bg: 'Тефтер',   breadcrumb_en: 'Notebook' },
   };
 
   // Load product from URL param
@@ -378,6 +383,10 @@
   document.getElementById('breadcrumb-product').textContent = prod.breadcrumb_bg;
   document.getElementById('breadcrumb-product').dataset.en = prod.breadcrumb_en;
   document.getElementById('main-img').src = prod.img;
+  // Sync first gallery thumbnail to this product's main image
+  var firstThumb = document.querySelector('.gallery-thumb');
+  firstThumb.querySelector('img').src = prod.img;
+  firstThumb.setAttribute('onclick', "switchImg(this, '" + prod.img + "')");
   document.title = prod.bg + ' — Shared с Хората';
   // Set Stripe link on buy button
   document.getElementById('buy-btn').href = prod.stripe;
