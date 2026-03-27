@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Епизоди — Shared с Хората</title>
-  <script data-cfasync="false">document.documentElement.classList.add('js');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -117,9 +116,6 @@
     .page-ellipsis { padding: 0 4px; color: var(--ink-muted); font-size: 0.85rem; user-select: none; }
 
     /* ─── REVEAL ─── */
-    .reveal { transition: opacity 0.55s ease, transform 0.55s ease; }
-    .js .reveal { opacity: 0; transform: translateY(20px); }
-    .js .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* footer styles → components.js */
 
@@ -286,8 +282,6 @@ function renderPage() {
   // 8. Render pagination
   renderPagination(safePage, totalPages, pool.length, lang);
 
-  // 9. Re-run reveal on new cards
-  reObserveReveal();
 }
 
 

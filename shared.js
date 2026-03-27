@@ -1,10 +1,6 @@
-// Progressive enhancement: mark JS as available immediately.
-// CSS uses .js to hide .reveal elements; without this class content is always visible.
-document.documentElement.classList.add('js');
-
 /* ═══════════════════════════════════════════════════
    shared.js — Shared с Хората
-   Utilities: Analytics · Language · Reveal · Videos
+   Utilities: Analytics · Language · Videos
    ═══════════════════════════════════════════════════
 
    HOW VIDEOS WORK
@@ -138,44 +134,6 @@ function toggleMenu() {
 
 
 // ─────────────────────────────────────────────────
-// SCROLL REVEAL
-// ─────────────────────────────────────────────────
-function initReveal() {
-  _observeReveal(document.querySelectorAll('.reveal'));
-}
-
-function reObserveReveal() {
-  _observeReveal(document.querySelectorAll('.reveal:not(.visible)'));
-}
-
-function _observeReveal(elements) {
-  // Fallback for browsers without IntersectionObserver (rare but safe)
-  if (!('IntersectionObserver' in window)) {
-    elements.forEach(el => el.classList.add('visible'));
-    return;
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.06 });
-
-  elements.forEach(el => {
-    const rect = el.getBoundingClientRect();
-    if (window.innerHeight > 0 && rect.top < window.innerHeight) {
-      el.classList.add('visible');    // already visible on load
-    } else {
-      observer.observe(el);           // will fire immediately if in view
-    }
-  });
-}
-
-
-// ─────────────────────────────────────────────────
 // VIDEO DATA — local fallback for file:// testing
 // This is ONLY used when you open the files locally.
 // On Cloudflare, videos.json is always fetched fresh.
@@ -300,22 +258,10 @@ function ytUrl(videoId) {
 // (e.g. Cloudflare Rocket Loader)
 // ─────────────────────────────────────────────────
 (function() {
-  function _init() { initLang(); initReveal(); }
+  function _init() { initLang(); }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', _init);
   } else {
     _init(); // DOMContentLoaded already fired — run immediately
   }
-
-  // Safety net: re-check after window.load when viewport height is settled
-  window.addEventListener('load', function() {
-    reObserveReveal();
-    // Hard fallback: reveal everything after 1s in case IntersectionObserver
-    // never fires (known iOS Safari bug with overflow:hidden scroll containers)
-    setTimeout(function() {
-      document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) {
-        el.classList.add('visible');
-      });
-    }, 1000);
-  });
 })();
