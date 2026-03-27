@@ -360,7 +360,7 @@
 <!-- ─── FOOTHER ─── -->
 <div id="shared-footer"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="shared.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="shared.js"></script>
 <script>
 async function renderVideos() {
   const videos = await loadVideos();
@@ -381,9 +381,13 @@ async function renderVideos() {
         <div class="ep-foot"><span class="ep-dur">${lang === "en" ? v.durationEn : v.duration}</span></div></div>
     </a>`).join("");
 }
-document.addEventListener("DOMContentLoaded", renderVideos);
+if (document.readyState === 'loading') {
+  document.addEventListener("DOMContentLoaded", renderVideos);
+} else {
+  renderVideos();
+}
 </script>
-<script src="components.js"></script>
+<script data-cfasync="false" src="components.js"></script>
 
 </body>
 </html>

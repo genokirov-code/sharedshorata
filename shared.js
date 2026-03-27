@@ -145,6 +145,12 @@ function reObserveReveal() {
 }
 
 function _observeReveal(elements) {
+  // Fallback for browsers without IntersectionObserver (rare but safe)
+  if (!('IntersectionObserver' in window)) {
+    elements.forEach(el => el.classList.add('visible'));
+    return;
+  }
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -156,10 +162,10 @@ function _observeReveal(elements) {
 
   elements.forEach(el => {
     const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
+    if (window.innerHeight > 0 && rect.top < window.innerHeight) {
       el.classList.add('visible');    // already visible on load
     } else {
-      observer.observe(el);
+      observer.observe(el);           // will fire immediately if in view
     }
   });
 }
@@ -286,8 +292,20 @@ function ytUrl(videoId) {
 
 // ─────────────────────────────────────────────────
 // INIT — runs on every page automatically
+// Works whether scripts load sync or deferred
+// (e.g. Cloudflare Rocket Loader)
 // ─────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  initLang();
-  initReveal();
-});
+(function() {
+  function _init() { initLang(); initReveal(); }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', _init);
+  } else {
+    _init(); // DOMContentLoaded already fired — run immediately
+  }
+
+  // Safety net: re-check after window.load when viewport height
+  // is guaranteed settled (covers Safari timing edge cases)
+  window.addEventListener('load', function() {
+    reObserveReveal();
+  });
+})();

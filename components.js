@@ -308,10 +308,19 @@ function injectCSS(id, css) {
 
 // ─────────────────────────────────────────────────
 // INIT — runs on every page
+// Works whether scripts load sync or deferred
+// (e.g. Cloudflare Rocket Loader)
 // ─────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  injectCSS('shared-footer-css', FOOTER_CSS);
-  injectCSS('shared-shop-css', SHOP_CSS);
-  renderSharedFooter();
-  renderSharedShop();
-});
+(function() {
+  function _init() {
+    injectCSS('shared-footer-css', FOOTER_CSS);
+    injectCSS('shared-shop-css', SHOP_CSS);
+    renderSharedFooter();
+    renderSharedShop();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', _init);
+  } else {
+    _init(); // DOMContentLoaded already fired — run immediately
+  }
+})();

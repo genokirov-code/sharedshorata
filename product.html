@@ -382,17 +382,6 @@
   // Set Stripe link on buy button
   document.getElementById('buy-btn').href = prod.stripe;
 
-  // ─── LANG ───
-  let currentLang = 'bg';
-  function setLang(lang) {
-    currentLang = lang;
-    document.querySelectorAll('.lang-toggle button').forEach((btn, i) => { btn.classList.toggle('active', (i===0&&lang==='bg')||(i===1&&lang==='en')); });
-    document.querySelectorAll('[data-en]').forEach(el => {
-      if (lang==='en') { if (!el.dataset.bgText) el.dataset.bgText=el.textContent; el.textContent=el.dataset.en; }
-      else { if (el.dataset.bgText) el.textContent=el.dataset.bgText; }
-    });
-  }
-
   // ─── GALLERY ───
   function switchImg(thumb, src) {
     document.getElementById('main-img').src = src;
@@ -430,18 +419,10 @@
     document.getElementById('tab-' + id).classList.add('active');
   }
 
-  function toggleMenu() {
-    const l = document.getElementById('nav-links');
-    l.style.display = l.style.display === 'flex' ? 'none' : 'flex';
-    if(l.style.display==='flex'){l.style.flexDirection='column';l.style.position:'fixed',top:'72px',left:'0',right:'0',background:'var(--cream)',padding:'24px 40px 40px',borderBottom:'1px solid var(--border)',gap:'20px'});
-    links.dataset.open = 'true';
-  }
-}
 </script>
 <div id="shared-footer"></div>
-
-<script src="shared.js"></script>
-<script src="components.js"></script>
+<script data-cfasync="false" src="shared.js"></script>
+<script data-cfasync="false" src="components.js"></script>
 
 </body>
 </html>

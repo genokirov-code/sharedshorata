@@ -217,7 +217,7 @@
 <!-- ─── FOOTER ─── -->
 <div id="shared-footer"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="shared.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="shared.js"></script>
 <script>
 // ═══════════════════════════════════════════════════
 // STATE
@@ -472,12 +472,14 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 // START
 /// START
 // ═══════════════════════════════════════════════════
-document.addEventListener('DOMContentLoaded', init);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
 </script>
 <div id="shared-footer"></div>
-
-<script src="shared.js"></script>
-<script src="components.js"></script>
+<script data-cfasync="false" src="components.js"></script>
 
 </body>
 </html>
