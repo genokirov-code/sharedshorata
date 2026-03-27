@@ -33,10 +33,10 @@
 //   analytics.google.com → Admin → Data Streams
 //   → your stream → Measurement ID
 // ─────────────────────────────────────────────────
-const GA_ID = 'G-XXXXXXXXXX'; // ← replace with your real Measurement ID
+const GA_ID = 'G-VH3927PPW3'; // ← replace with your real Measurement ID
 
 (function initAnalytics() {
-  if (!GA_ID || GA_ID === 'G-XXXXXXXXXX') return; // skip if not configured
+  if (!GA_ID || GA_ID === 'G-VH3927PPW3') return; // skip if not configured
 
   // Inject the gtag.js script into <head>
   const script = document.createElement('script');
