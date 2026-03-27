@@ -216,7 +216,7 @@
 
       <!-- INFO -->
       <div class="product-info">
-        <div class="product-cat-label" data-en="Apparel / T-Shirts">Облекло / Тениски</div>
+        <div class="product-cat-label" id="product-cat" data-en="Apparel / T-Shirts">Облекло / Тениски</div>
         <h1 class="product-title" id="product-title" data-en="Shared Podcast T-Shirt">Тениска Shared Podcast</h1>
 
         <div class="product-rating">
@@ -330,25 +330,25 @@
       <h2 class="section-title" data-en="Related Products">Свързани продукти</h2>
     </div>
     <div class="related-grid">
-      <a href="product.html?id=book" class="mini-card">
-        <div class="mini-img"><img src="https://placehold.co/500x500/D4C8B8/3a3530?text=Книга" alt="Book"></div>
-        <div class="mini-body">
-          <div class="mini-name" data-en="Shared Stories – Vol. 1">Споделени Истории – Том 1</div>
-          <div class="mini-price">29 <span style="font-size:0.75rem; font-family:'DM Sans'; font-weight:400; color:var(--ink-muted);" data-en="BGN">лв</span></div>
-        </div>
-      </a>
       <a href="product.html?id=cap" class="mini-card">
-        <div class="mini-img"><img src="https://placehold.co/500x500/C8B4A0/3a3530?text=Шапка" alt="Cap"></div>
+        <div class="mini-img"><img src="images/pink-cap-mirching.png" alt="Cap"></div>
         <div class="mini-body">
           <div class="mini-name" data-en="Shared Podcast Cap">Шапка Shared Podcast</div>
-          <div class="mini-price">25 <span style="font-size:0.75rem; font-family:'DM Sans'; font-weight:400; color:var(--ink-muted);" data-en="BGN">лв</span></div>
+          <div class="mini-price">€30</div>
+        </div>
+      </a>
+      <a href="product.html?id=opener" class="mini-card">
+        <div class="mini-img"><img src="images/opener-shared-s-horata.png" alt="Opener"></div>
+        <div class="mini-body">
+          <div class="mini-name" data-en="Shared с хората Opener">Отварачка Shared с хората</div>
+          <div class="mini-price">€6</div>
         </div>
       </a>
       <a href="product.html?id=bundle-starter" class="mini-card">
-        <div class="mini-img"><img src="https://placehold.co/500x500/C8942A/1a1714?text=Bundle" alt="Bundle"></div>
+        <div class="mini-img"><img src="images/starter-bundle-shared-s-horata.png" alt="Bundle"></div>
         <div class="mini-body">
-          <div class="mini-name" data-en="Starter Bundle (T-Shirt + Book)">Starter Комплект</div>
-          <div class="mini-price">53 <span style="font-size:0.75rem; font-family:'DM Sans'; font-weight:400; color:var(--ink-muted);" data-en="BGN">лв</span></div>
+          <div class="mini-name" data-en="Starter Bundle (Opener + Pen)">Starter Комплект</div>
+          <div class="mini-price">€10</div>
         </div>
       </a>
     </div>
@@ -360,17 +360,65 @@
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // ─── PRODUCT DATA ───
   const PRODUCTS = {
-    // ─── TO ADD A PRODUCT IMAGE ───────────────────────────────────────────────
-    // 1. Put your image file inside the /images/ folder
-    // 2. Set img: 'images/your-filename.png' for that product below
+    // ─── TO ADD / UPDATE A PRODUCT ────────────────────────────────────────────
+    // 1. The key here must match the ?id= in shop.html links (e.g. ?id=tshirt)
+    // 2. Put product images in /images/ and update the img: field below
     // 3. For extra gallery angles, update the gallery-thumbs HTML above
     // ─────────────────────────────────────────────────────────────────────────
-    'tshirt':         { bg: 'Тениска Shared Podcast',      en: 'Shared Podcast T-Shirt',  price: '20 €', cat_bg: 'Облекло / Тениски',   cat_en: 'Apparel / T-Shirts', stripe: 'https://buy.stripe.com/YOUR_TSHIRT_STRIPE_LINK',  img: 'images/white-t-shirt-mirching.png',           breadcrumb_bg: 'Тениска',  breadcrumb_en: 'T-Shirt' },
-    'book':           { bg: 'Споделени Истории – Том 1',   en: 'Shared Stories – Vol. 1', price: '15 €', cat_bg: 'Книги',               cat_en: 'Books',              stripe: 'https://buy.stripe.com/YOUR_BOOK_STRIPE_LINK',    img: 'https://placehold.co/700x700/D4C8B8/3a3530?text=Книга',           breadcrumb_bg: 'Книга',    breadcrumb_en: 'Book' },
-    'cap':            { bg: 'Шапка Shared Podcast',        en: 'Shared Podcast Cap',      price: '13 €', cat_bg: 'Аксесоари',           cat_en: 'Accessories',        stripe: 'https://buy.stripe.com/YOUR_CAP_STRIPE_LINK',     img: 'images/pink-cap-mirching.png',                breadcrumb_bg: 'Шапка',    breadcrumb_en: 'Cap' },
-    'hoodie':         { bg: 'Суичър Shared Podcast',       en: 'Shared Podcast Hoodie',   price: '35 €', cat_bg: 'Облекло / Суичъри',   cat_en: 'Apparel / Hoodies',  stripe: 'https://buy.stripe.com/YOUR_HOODIE_STRIPE_LINK',  img: 'https://placehold.co/700x700/2a2522/FAF8F3?text=Суичър',          breadcrumb_bg: 'Суичър',   breadcrumb_en: 'Hoodie' },
-    'bundle-starter': { bg: 'Starter Комплект',            en: 'Starter Bundle',          price: '28 €', cat_bg: 'Комплекти',           cat_en: 'Bundles',            stripe: 'https://buy.stripe.com/YOUR_BUNDLE_STRIPE_LINK',  img: 'images/starter-bundle-shared-s-horata.png',   breadcrumb_bg: 'Комплект', breadcrumb_en: 'Bundle' },
-    'notebook':       { bg: 'Тефтер Shared',               en: 'Shared Notebook',         price: '11 €', cat_bg: 'Аксесоари',           cat_en: 'Accessories',        stripe: 'https://buy.stripe.com/YOUR_NOTEBOOK_STRIPE_LINK', img: 'images/pen-shared-s-horata.png',              breadcrumb_bg: 'Тефтер',   breadcrumb_en: 'Notebook' },
+    'tshirt': {
+      bg: 'Тениска Shared Podcast', en: 'Shared Podcast T-Shirt',
+      desc_bg: 'Премиум 100% органичен памук. Минималистично бродирано лого на гърдите. Налично в размери S–XXL.',
+      desc_en: 'Premium 100% organic cotton. Minimalist embroidered logo on chest. Available in sizes S–XXL.',
+      price: '€39', cat_bg: 'Облекло', cat_en: 'Apparel',
+      stripe: 'https://buy.stripe.com/YOUR_TSHIRT_STRIPE_LINK',
+      img: 'images/white-t-shirt-mirching.png',
+      breadcrumb_bg: 'Тениска', breadcrumb_en: 'T-Shirt'
+    },
+    'pens': {
+      bg: 'Химикалка - Shared с хората', en: 'Pen - Shared с хората',
+      desc_bg: 'Химикалката Shared е създадена за хората, които вярват, че най-добрите проекти се раждат в споделянето.',
+      desc_en: "The Shared Pen isn't just a writing instrument—it's a statement of collaboration.",
+      price: '€6', cat_bg: 'Аксесоари', cat_en: 'Accessories',
+      stripe: 'https://buy.stripe.com/YOUR_PENS_STRIPE_LINK',
+      img: 'images/pen-shared-s-horata.png',
+      breadcrumb_bg: 'Химикалка', breadcrumb_en: 'Pen'
+    },
+    'cap': {
+      bg: 'Шапка Shared Podcast', en: 'Shared Podcast Cap',
+      desc_bg: 'Класическа 6-панелна шапка. Принтирано лого отпред. Регулируема каишка. Един размер за всички.',
+      desc_en: 'Classic 6-panel structured cap. Printed logo on front. Adjustable strap. One size fits most.',
+      price: '€30', cat_bg: 'Аксесоари', cat_en: 'Accessories',
+      stripe: 'https://buy.stripe.com/YOUR_CAP_STRIPE_LINK',
+      img: 'images/pink-cap-mirching.png',
+      breadcrumb_bg: 'Шапка', breadcrumb_en: 'Cap'
+    },
+    'badge': {
+      bg: 'Значка Mirching', en: 'Badge Mirching',
+      desc_bg: 'Значката Shared с хората е малкият детайл с голямо послание.',
+      desc_en: 'The Shared с хората pin is the subtle detail that speaks volumes.',
+      price: '€10', cat_bg: 'Аксесоари', cat_en: 'Accessories',
+      stripe: 'https://buy.stripe.com/YOUR_BADGE_STRIPE_LINK',
+      img: 'images/badge-mirching.png',
+      breadcrumb_bg: 'Значка', breadcrumb_en: 'Badge'
+    },
+    'bundle-starter': {
+      bg: 'Starter Комплект (Отварачка + Химикалка)', en: 'Starter Bundle (Opener + Pen)',
+      desc_bg: 'Вземи Shared с хората отварачка и химикалка заедно на специална цена.',
+      desc_en: 'Get the Shared с хората Opener and the pen together at a special bundle price.',
+      price: '€10', cat_bg: 'Комплекти', cat_en: 'Bundles',
+      stripe: 'https://buy.stripe.com/YOUR_BUNDLE_STRIPE_LINK',
+      img: 'images/starter-bundle-shared-s-horata.png',
+      breadcrumb_bg: 'Комплект', breadcrumb_en: 'Bundle'
+    },
+    'opener': {
+      bg: 'Отварачка Shared с хората', en: 'Shared с хората Opener',
+      desc_bg: 'Стилна и винаги под ръка, тя е ключът към моментите на релакс с екипа или приятелите след края на работния ден.',
+      desc_en: "Sleek, and always ready for action, it's the key to those post-grind moments with the team.",
+      price: '€6', cat_bg: 'Аксесоари', cat_en: 'Accessories',
+      stripe: 'https://buy.stripe.com/YOUR_OPENER_STRIPE_LINK',
+      img: 'images/opener-shared-s-horata.png',
+      breadcrumb_bg: 'Отварачка', breadcrumb_en: 'Opener'
+    },
   };
 
   // Load product from URL param
@@ -380,6 +428,10 @@
   document.getElementById('product-title').textContent = prod.bg;
   document.getElementById('product-title').dataset.en = prod.en;
   document.getElementById('product-price').textContent = prod.price;
+  document.getElementById('product-cat').textContent = prod.cat_bg;
+  document.getElementById('product-cat').dataset.en = prod.cat_en;
+  var descEl = document.getElementById('product-desc');
+  if (prod.desc_bg) { descEl.textContent = prod.desc_bg; descEl.dataset.en = prod.desc_en; }
   document.getElementById('breadcrumb-product').textContent = prod.breadcrumb_bg;
   document.getElementById('breadcrumb-product').dataset.en = prod.breadcrumb_en;
   document.getElementById('main-img').src = prod.img;
