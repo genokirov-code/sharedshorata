@@ -222,8 +222,8 @@
           Премиум 100% органична памучна тениска с минималистично бродирано лого на Shared Podcast на лявото деколте. Свободна кройка, предварително изпрана за допълнителна мекота. Основен гардеробен артикул, направен да издържи.
         </p>
 
-        <!-- SIZE -->
-        <div class="variant-group">
+        <!-- SIZE — shown only for products with hasSizes:true -->
+        <div class="variant-group" id="variant-size">
           <div class="variant-label" data-en="Size:">Размер: <span id="selected-size">M</span></div>
           <div class="size-options">
             <button class="size-btn" onclick="selectSize(this,'XS')">XS</button>
@@ -232,16 +232,6 @@
             <button class="size-btn" onclick="selectSize(this,'L')">L</button>
             <button class="size-btn" onclick="selectSize(this,'XL')">XL</button>
             <button class="size-btn" onclick="selectSize(this,'XXL')">XXL</button>
-          </div>
-        </div>
-
-        <!-- COLOR -->
-        <div class="variant-group">
-          <div class="variant-label" data-en="Color:">Цвят: <span id="selected-color" data-en="Natural">Натурал</span></div>
-          <div class="color-options">
-            <button class="color-btn active" style="background:#E8E4DC;" title="Natural" onclick="selectColor(this,'Natural','Натурал')"></button>
-            <button class="color-btn" style="background:#141210;" title="Black" onclick="selectColor(this,'Black','Черен')"></button>
-            <button class="color-btn" style="background:#5A7060;" title="Sage" onclick="selectColor(this,'Sage','Маслина')"></button>
           </div>
         </div>
 
@@ -270,8 +260,8 @@
           <span data-en="Secure checkout powered by Stripe. You'll be redirected to complete payment.">Сигурно плащане чрез Stripe. Ще бъдете пренасочени за завършване на плащането.</span>
         </div>
 
-        <ul class="feature-list">
-          <li data-en="Free shipping over 60 BGN">Безплатна доставка над 60 лв</li>
+        <ul class="feature-list" id="feature-list">
+          <li data-en="Free shipping over €60">Безплатна доставка над €60</li>
           <li data-en="30-day returns — no questions asked">30-дневно връщане — без въпроси</li>
           <li data-en="100% organic cotton">100% органичен памук</li>
           <li data-en="Ships within 2–4 business days">Изпраща се в рамките на 2–4 работни дни</li>
@@ -281,22 +271,18 @@
         <div class="tabs">
           <div class="tab-nav">
             <button class="tab-btn active" onclick="switchTab('details')" data-en="Details">Детайли</button>
-            <button class="tab-btn" onclick="switchTab('sizing')" data-en="Size Guide">Размери</button>
+            <button class="tab-btn" id="tab-btn-sizing" onclick="switchTab('sizing')" data-en="Size Guide">Размери</button>
             <button class="tab-btn" onclick="switchTab('shipping')" data-en="Shipping">Доставка</button>
           </div>
           <div class="tab-content active" id="tab-details">
-            <p data-en="• 100% organic ring-spun cotton • 180 GSM weight • Pre-washed for softness • Embroidered logo (not printed) • Relaxed unisex fit • Machine wash cold, tumble dry low">
-              • 100% органичен памук • 180 г/м² тегло • Предварително изпрана за мекота • Бродирано лого (не принтирано) • Свободна унисекс кройка • Пера се машинно при студена вода
-            </p>
+            <p id="tab-details-text" data-en=""></p>
           </div>
           <div class="tab-content" id="tab-sizing">
-            <p data-en="XS: Chest 84–88cm · S: 88–92cm · M: 92–96cm · L: 96–100cm · XL: 100–104cm · XXL: 104–110cm. For a relaxed fit, size up one size.">
-              XS: Гърди 84–88см · S: 88–92см · M: 92–96см · L: 96–100см · XL: 100–104см · XXL: 104–110см. За свободна кройка вземете един размер по-голям.
-            </p>
+            <p id="tab-sizing-text" data-en=""></p>
           </div>
           <div class="tab-content" id="tab-shipping">
-            <p data-en="Standard delivery: 2–4 business days. Express: 1 business day. Free shipping on orders over 60 BGN. International shipping available.">
-              Стандартна доставка: 2–4 работни дни. Експрес: 1 работен ден. Безплатна доставка при поръчки над 60 лв. Международна доставка налична.
+            <p data-en="Standard delivery: 2–4 business days. Express: 1 business day. Free shipping on orders over €60. International shipping available.">
+              Стандартна доставка: 2–4 работни дни. Експрес: 1 работен ден. Безплатна доставка при поръчки над €60. Международна доставка налична.
             </p>
           </div>
         </div>
@@ -354,17 +340,19 @@
     // ─────────────────────────────────────────────────────────────────────────
     'tshirt': {
       bg: 'Тениска Shared Podcast', en: 'Shared Podcast T-Shirt',
-      desc_bg: 'Премиум 100% органичен памук. Минималистично бродирано лого на гърдите. Налично в размери S–XXL.',
-      desc_en: 'Premium 100% organic cotton. Minimalist embroidered logo on chest. Available in sizes S–XXL.',
+      desc_bg: 'Премиум 100% органичен памук. Минималистично бродирано лого на гърдите. Налично в размери XS–XXL.',
+      desc_en: 'Premium 100% organic cotton. Minimalist embroidered logo on chest. Available in sizes XS–XXL.',
       price: '€39', cat_bg: 'Облекло', cat_en: 'Apparel',
       stripe: 'https://buy.stripe.com/YOUR_TSHIRT_STRIPE_LINK',
       img: 'images/white-t-shirt-mirching.png',
-      thumbs: [
-        'images/white-t-shirt-mirching.png',
-        'images/back-t-shirt-mirching.png',
-        'images/details-marching-t-shirt.png',
-        'images/lifestyle-t-shirt-mirching.png',
-      ],
+      thumbs: ['images/white-t-shirt-mirching.png','images/back-t-shirt-mirching.png','images/details-marching-t-shirt.png','images/lifestyle-t-shirt-mirching.png'],
+      hasSizes: true,
+      details_bg: '• 100% органичен памук • 180 г/м² тегло • Предварително изпрана за мекота • Бродирано лого (не принтирано) • Свободна унисекс кройка • Цвят: бяло • Пере се машинно при студена вода',
+      details_en: '• 100% organic ring-spun cotton • 180 GSM weight • Pre-washed for softness • Embroidered logo (not printed) • Relaxed unisex fit • Colour: white • Machine wash cold, tumble dry low',
+      sizing_bg: 'XS: Гърди 84–88см · S: 88–92см · M: 92–96см · L: 96–100см · XL: 100–104см · XXL: 104–110см.\nЗа свободна кройка вземете един размер по-голям.',
+      sizing_en: 'XS: Chest 84–88cm · S: 88–92cm · M: 92–96cm · L: 96–100cm · XL: 100–104cm · XXL: 104–110cm.\nFor a relaxed fit, size up one size.',
+      features_bg: ['Безплатна доставка над €60','30-дневно връщане — без въпроси','100% органичен памук','Изпраща се в рамките на 2–4 работни дни'],
+      features_en: ['Free shipping over €60','30-day returns — no questions asked','100% organic cotton','Ships within 2–4 business days'],
       breadcrumb_bg: 'Тениска', breadcrumb_en: 'T-Shirt'
     },
     'pens': {
@@ -374,10 +362,12 @@
       price: '€6', cat_bg: 'Аксесоари', cat_en: 'Accessories',
       stripe: 'https://buy.stripe.com/YOUR_PENS_STRIPE_LINK',
       img: 'images/pen-shared-s-horata.png',
-      thumbs: [
-        'images/pen-shared-s-horata.png',
-        'images/pens-shared-s-horata.png',
-      ],
+      thumbs: ['images/pen-shared-s-horata.png','images/pens-shared-s-horata.png','images/lifestyle-pen-shared-s-horata.png'],
+      hasSizes: false,
+      details_bg: '• Метален корпус с мек гриф • Гравирано лого Shared с хората • Плавно писане • Един размер • Идеална за подарък',
+      details_en: '• Metal body with soft grip • Engraved Shared с хората logo • Smooth writing experience • One size • Perfect as a gift',
+      features_bg: ['Безплатна доставка над €60','30-дневно връщане — без въпроси','Изпраща се в рамките на 2–4 работни дни'],
+      features_en: ['Free shipping over €60','30-day returns — no questions asked','Ships within 2–4 business days'],
       breadcrumb_bg: 'Химикалка', breadcrumb_en: 'Pen'
     },
     'cap': {
@@ -387,12 +377,12 @@
       price: '€30', cat_bg: 'Аксесоари', cat_en: 'Accessories',
       stripe: 'https://buy.stripe.com/YOUR_CAP_STRIPE_LINK',
       img: 'images/pink-cap-mirching.png',
-      thumbs: [
-        'images/pink-cap-mirching.png',
-        'images/pink-mirching-cap.png',
-        'images/red-cap-mirching.png',
-        'images/red-mirching-cap.png',
-      ],
+      thumbs: ['images/pink-cap-mirching.png','images/pink-mirching-cap.png','images/red-cap-mirching.png','images/red-mirching-cap.png'],
+      hasSizes: false,
+      details_bg: '• Класическа 6-панелна конструкция • Принтирано лого #mirching отпред • Регулируема каишка отзад • Един размер за всички • Налична в розов и червен цвят',
+      details_en: '• Classic 6-panel construction • Printed #mirching logo on front • Adjustable strap at back • One size fits most • Available in pink and red',
+      features_bg: ['Безплатна доставка над €60','30-дневно връщане — без въпроси','Изпраща се в рамките на 2–4 работни дни'],
+      features_en: ['Free shipping over €60','30-day returns — no questions asked','Ships within 2–4 business days'],
       breadcrumb_bg: 'Шапка', breadcrumb_en: 'Cap'
     },
     'badge': {
@@ -402,11 +392,12 @@
       price: '€10', cat_bg: 'Аксесоари', cat_en: 'Accessories',
       stripe: 'https://buy.stripe.com/YOUR_BADGE_STRIPE_LINK',
       img: 'images/badge-mirching.png',
-      thumbs: [
-        'images/badge-mirching.png',
-        'images/badge-back.png',
-        'images/badge-shared-s-horata-podcast.png',
-      ],
+      thumbs: ['images/badge-mirching.png','images/badge-back.png','images/badge-shared-s-horata-podcast.png'],
+      hasSizes: false,
+      details_bg: '• Метална значка с висококачествено покритие • Игла за закрепване отзад • Диаметър 4 см • Един размер • Перфектна за якета, чанти и раници',
+      details_en: '• Metal pin with high-quality finish • Pin clasp at back • 4 cm diameter • One size • Perfect for jackets, bags and backpacks',
+      features_bg: ['Безплатна доставка над €60','30-дневно връщане — без въпроси','Изпраща се в рамките на 2–4 работни дни'],
+      features_en: ['Free shipping over €60','30-day returns — no questions asked','Ships within 2–4 business days'],
       breadcrumb_bg: 'Значка', breadcrumb_en: 'Badge'
     },
     'bundle-starter': {
@@ -416,9 +407,12 @@
       price: '€10', cat_bg: 'Комплекти', cat_en: 'Bundles',
       stripe: 'https://buy.stripe.com/YOUR_BUNDLE_STRIPE_LINK',
       img: 'images/starter-bundle-shared-s-horata.png',
-      thumbs: [
-        'images/starter-bundle-shared-s-horata.png',
-      ],
+      thumbs: ['images/starter-bundle-shared-s-horata.png'],
+      hasSizes: false,
+      details_bg: '• Включва: отварачка Shared с хората + химикалка Shared с хората • Специална цена при закупуване заедно • Красива опаковка — идеален подарък',
+      details_en: '• Includes: Shared с хората Opener + Shared с хората Pen • Special price when purchased together • Beautiful packaging — ideal as a gift',
+      features_bg: ['Безплатна доставка над €60','30-дневно връщане — без въпроси','Изпраща се в рамките на 2–4 работни дни'],
+      features_en: ['Free shipping over €60','30-day returns — no questions asked','Ships within 2–4 business days'],
       breadcrumb_bg: 'Комплект', breadcrumb_en: 'Bundle'
     },
     'opener': {
@@ -428,24 +422,27 @@
       price: '€6', cat_bg: 'Аксесоари', cat_en: 'Accessories',
       stripe: 'https://buy.stripe.com/YOUR_OPENER_STRIPE_LINK',
       img: 'images/opener-shared-s-horata.png',
-      thumbs: [
-        'images/opener-shared-s-horata.png',
-        'images/openers-shared-s-horata.png',
-        'images/openers-shared-s-horata-3.png',
-        'images/lifestyle-opener-shared-s-horata.png',
-      ],
+      thumbs: ['images/opener-shared-s-horata.png','images/openers-shared-s-horata.png','images/openers-shared-s-horata-3.png','images/lifestyle-opener-shared-s-horata.png'],
+      hasSizes: false,
+      details_bg: '• Метална отварачка с гравирано лого • Компактен размер — лесно се носи • Издръжлива конструкция • Перфектна за екипни моменти',
+      details_en: '• Metal opener with engraved logo • Compact size — easy to carry • Durable construction • Perfect for team moments',
+      features_bg: ['Безплатна доставка над €60','30-дневно връщане — без въпроси','Изпраща се в рамките на 2–4 работни дни'],
+      features_en: ['Free shipping over €60','30-day returns — no questions asked','Ships within 2–4 business days'],
       breadcrumb_bg: 'Отварачка', breadcrumb_en: 'Opener'
     },
     'denim-bag': {
       bg: 'Дънкова чанта Shared с хората', en: 'Denim Bag Shared с хората',
-      desc_bg: 'Ръчно изработена дънкова чанта с уникален характер. Всяка чанта е различна и носи собствена история — точно като хората, за които е създадена. Издръжлива, стилна и изцяло ръчна изработка.',
-      desc_en: 'Handmade denim bag with unique character. Each bag is one-of-a-kind and carries its own story — just like the people it\'s made for. Durable, stylish, and entirely handcrafted.',
+      desc_bg: 'Ръчно изработена дънкова чанта с уникален характер. Всяка чанта е различна и носи собствена история — точно като хората, за които е създадена.',
+      desc_en: "Handmade denim bag with unique character. Each bag is one-of-a-kind and carries its own story — just like the people it's made for.",
       price: '€95', cat_bg: 'Аксесоари', cat_en: 'Accessories',
       stripe: 'https://buy.stripe.com/YOUR_DENIMBAG_STRIPE_LINK',
       img: 'images/denim-handmade-bag-shared-s-horata-2.png',
-      thumbs: [
-        'images/denim-handmade-bag-shared-s-horata-2.png',
-      ],
+      thumbs: ['images/denim-handmade-bag-shared-s-horata-2.png'],
+      hasSizes: false,
+      details_bg: 'Функционалност\n• Пространство: Чантата предлага достатъчно обем за всичките ви ежедневни вещи – портфейл, телефон, козметика и дори таблет или книга.\n• Джобове: Снабдена с удобни външни джобове за бърз достъп до най-важните неща.\n• Дръжки: Проектирани за удобно носене както в ръка, така и на рамо.',
+      details_en: "Designed for your day\n• Room for it all: From your tech to your must-have beauty kit, there's a spot for everything (yes, even that paperback you're reading).\n• Easy-access pockets: Keep your phone and keys right where you need them with handy outer compartments.\n• Carry it your way: Sturdy handles made for effortless hand-carrying or effortless shoulder wear.",
+      features_bg: ['Безплатна доставка над €60','30-дневно връщане — без въпроси','Ръчна изработка — всяка чанта е уникална','Изпраща се в рамките на 2–4 работни дни'],
+      features_en: ['Free shipping over €60','30-day returns — no questions asked','Handmade — every bag is unique','Ships within 2–4 business days'],
       breadcrumb_bg: 'Дънкова чанта', breadcrumb_en: 'Denim Bag'
     },
   };
@@ -463,6 +460,30 @@
   if (prod.desc_bg) { descEl.textContent = prod.desc_bg; descEl.dataset.en = prod.desc_en; }
   document.getElementById('breadcrumb-product').textContent = prod.breadcrumb_bg;
   document.getElementById('breadcrumb-product').dataset.en = prod.breadcrumb_en;
+
+  // SIZE selector — only show for products with hasSizes:true
+  document.getElementById('variant-size').style.display = prod.hasSizes ? '' : 'none';
+  // Sizing tab — only show for products with hasSizes:true
+  document.getElementById('tab-btn-sizing').style.display = prod.hasSizes ? '' : 'none';
+
+  // Details tab content
+  if (prod.details_bg) {
+    document.getElementById('tab-details-text').textContent = prod.details_bg;
+    document.getElementById('tab-details-text').dataset.en = prod.details_en;
+  }
+  // Sizing tab content
+  if (prod.sizing_bg) {
+    document.getElementById('tab-sizing-text').textContent = prod.sizing_bg;
+    document.getElementById('tab-sizing-text').dataset.en = prod.sizing_en;
+  }
+
+  // Feature list — render per-product bullets
+  if (prod.features_bg) {
+    var featureList = document.getElementById('feature-list');
+    featureList.innerHTML = prod.features_bg.map(function(f, i) {
+      return '<li data-en="' + (prod.features_en[i] || f) + '">' + f + '</li>';
+    }).join('');
+  }
   document.getElementById('main-img').src = prod.img;
   // Render gallery thumbnails from the product's thumbs array
   var thumbsContainer = document.getElementById('gallery-thumbs');
