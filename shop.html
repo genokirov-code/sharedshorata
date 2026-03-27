@@ -15,7 +15,7 @@
     }
     html { scroll-behavior: smooth; }
     body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; }
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: rgba(250,248,243,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: rgba(250,248,243,0.92); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
     .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 900; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
     .nav-logo span { color: var(--gold); }
     .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
@@ -50,7 +50,7 @@
     .product-card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
     .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.09); }
 
-    .product-img { aspect-ratio: 1/1; background: #F0EDE6; overflow: hidden; position: relative; }
+    .product-img { aspect-ratio: 1/1; min-height: 200px; background: #F0EDE6; overflow: hidden; position: relative; }
     .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
     .product-card:hover .product-img img { transform: scale(1.04); }
     .product-badge { position: absolute; top: 12px; right: 12px; background: var(--rust, #C44B2B); color: white; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; }
@@ -210,7 +210,7 @@
           <div class="product-badge" data-en="New">Ново</div>
         </div>
         <div class="product-body">
-          <div class="product-cat" data-en=""Accessories">Аксесоари</div>
+          <div class="product-cat" data-en="Accessories">Аксесоари</div>
           <div class="product-name" data-en="Badge Mirching">Значка Mirching</div>
           <div class="product-excerpt" data-en="The Shared с хората pin is the subtle detail that speaks volumes.">Значката Shared с хората е малкият детайл с голямо послание.</div>
           <div class="product-foot">
@@ -258,31 +258,17 @@
 
 <div id="shared-footer"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  let currentLang = 'bg';
-  function setLang(lang) {
-    currentLang = lang;
-    document.querySelectorAll('.lang-toggle button').forEach((btn, i) => { btn.classList.toggle('active', (i===0&&lang==='bg')||(i===1&&lang==='en')); });
-    document.querySelectorAll('[data-en]').forEach(el => {
-      if (lang==='en') { if (!el.dataset.bgText) el.dataset.bgText=el.textContent; el.textContent=el.dataset.en; }
-      else { if (el.dataset.bgText) el.textContent=el.dataset.bgText; }
-    });
-  }
-  const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }); });
-  function toggleMenu() {
-    const l = document.getElementById('nav-links');
-    l.style.display = l.style.display === 'flex' ? 'none' : 'flex';
-    if(l.style.display==='flex'){l.style.flexDirection='column';l.style.position:'fixed',top:'72px',left:'0',right:'0',background:'var(--cream)',padding:'24px 40px 40px',borderBottom:'1px solid var(--border)',gap:'20px'});
-    links.dataset.open = 'true';
-  }
-}
-</script>
-<div id="shared-footer"></div>
-
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script src="shared.js"></script>
 <script src="components.js"></script>
+<script>
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
 
 </body>
 </html>

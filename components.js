@@ -206,7 +206,7 @@ const SHOP_CSS = `
   .shared-shop-section .shop-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
   .shared-shop-section .product-card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
   .shared-shop-section .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.09); }
-  .shared-shop-section .product-img { aspect-ratio: 1/1; background: #F0EDE6; overflow: hidden; position: relative; }
+  .shared-shop-section .product-img { aspect-ratio: 1/1; min-height: 200px; background: #F0EDE6; overflow: hidden; position: relative; }
   .shared-shop-section .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; display: block; }
   .shared-shop-section .product-card:hover .product-img img { transform: scale(1.04); }
   .shared-shop-section .product-badge { position: absolute; top: 12px; right: 12px; background: #C44B2B; color: white; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; }
