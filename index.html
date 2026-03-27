@@ -638,7 +638,7 @@ if (document.readyState === 'loading') {
 // After deploying your Google Apps Script (see newsletter-script.gs),
 // paste your web app URL below and remove the placeholder text.
 (function() {
-  var NEWSLETTER_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+  var NEWSLETTER_URL = 'https://script.google.com/macros/s/AKfycbxGZRzVGQ-VxxvnhWLM4k9hygfCCfv0xHMeqMHEGhufrelF4zFTRmbZay_Quls1yYLdZA/exec';
 
   var btn      = document.getElementById('newsletter-btn');
   var input    = document.getElementById('newsletter-email');
@@ -676,8 +676,8 @@ if (document.readyState === 'loading') {
     btn.textContent = isBg ? 'Изпращане…' : 'Sending…';
     errorEl.style.display = 'none';
 
-    // No URL yet — show success immediately (useful while testing)
-    if (!NEWSLETTER_URL || NEWSLETTER_URL === 'https://script.google.com/macros/s/AKfycbxGZRzVGQ-VxxvnhWLM4k9hygfCCfv0xHMeqMHEGhufrelF4zFTRmbZay_Quls1yYLdZA/exec') {
+    // No URL configured — show success immediately (testing fallback)
+    if (!NEWSLETTER_URL || NEWSLETTER_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
       showSuccess();
       return;
     }
