@@ -10,7 +10,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root { --cream: #FAF8F3; --warm-white: #FFFFFF; --ink: #141210; --ink-soft: #3a3530; --ink-muted: #7a746e; --gold: #C8942A; --gold-light: #E8B84B; --border: #E5E0D8; --nav-h: 72px; --sage: #5A7060; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: clip; min-height: 100vh; display: flex; flex-direction: column; }
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: rgba(250,248,243,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
     .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 900; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
     .nav-logo span { color: var(--gold); }

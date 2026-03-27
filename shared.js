@@ -1,3 +1,7 @@
+// Progressive enhancement: mark JS as available immediately.
+// CSS uses .js to hide .reveal elements; without this class content is always visible.
+document.documentElement.classList.add('js');
+
 /* ═══════════════════════════════════════════════════
    shared.js — Shared с Хората
    Utilities: Analytics · Language · Reveal · Videos
@@ -303,9 +307,15 @@ function ytUrl(videoId) {
     _init(); // DOMContentLoaded already fired — run immediately
   }
 
-  // Safety net: re-check after window.load when viewport height
-  // is guaranteed settled (covers Safari timing edge cases)
+  // Safety net: re-check after window.load when viewport height is settled
   window.addEventListener('load', function() {
     reObserveReveal();
+    // Hard fallback: reveal everything after 1s in case IntersectionObserver
+    // never fires (known iOS Safari bug with overflow:hidden scroll containers)
+    setTimeout(function() {
+      document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) {
+        el.classList.add('visible');
+      });
+    }, 1000);
   });
 })();

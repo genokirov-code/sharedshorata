@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shared с Хората — Подкаст</title>
+  <script data-cfasync="false">document.documentElement.classList.add('js');</script>
   <!-- GA injected by shared.js — set GA_ID = 'G-XXXXXXXXXX' in shared.js -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +18,7 @@
       --border: #E5E0D8; --nav-h: 72px;
     }
     html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: clip; }
 
     /* ─── NAV — transparent over hero, solid on scroll ─── */
     nav {
@@ -294,8 +295,9 @@
     /* footer styles → components.js */
 
     /* ─── SCROLL REVEAL ─── */
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal { transition: opacity 0.7s ease, transform 0.7s ease; }
+    .js .reveal { opacity: 0; transform: translateY(28px); }
+    .js .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* ─── SKELETON LOADER ─── */
     .skel { background: linear-gradient(90deg,#eee 25%,#f5f5f5 50%,#eee 75%); background-size: 200%; animation: shimmer 1.4s infinite; border-radius: 4px; }
