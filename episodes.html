@@ -15,7 +15,7 @@
       --border: #E5E0D8; --nav-h: 72px;
     }
     html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: clip; }
 
     /* ─── NAV ─── */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: rgba(250,248,243,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
@@ -44,7 +44,8 @@
     /* ─── FILTER BAR ─── */
     .filter-bar { background: var(--warm-white); border-bottom: 1px solid var(--border); padding: 0 40px; position: sticky; top: var(--nav-h); z-index: 50; }
     .filter-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .filter-tabs { display: flex; overflow-x: auto; }
+    .filter-tabs { display: flex; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+    .filter-tabs::-webkit-scrollbar { display: none; }
     .filter-btn { background: none; border: none; cursor: pointer; padding: 18px 20px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap; }
     .filter-btn:hover, .filter-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
     .ep-count-label { font-size: 0.78rem; color: var(--ink-muted); white-space: nowrap; flex-shrink: 0; padding: 0 4px; }
@@ -116,8 +117,6 @@
     .page-ellipsis { padding: 0 4px; color: var(--ink-muted); font-size: 0.85rem; user-select: none; }
 
     /* ─── REVEAL ─── */
-    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* footer styles → components.js */
 
@@ -131,20 +130,24 @@
     @media(max-width:768px) {
       .nav-links { display: none; }
       .hamburger { display: flex; }
-      nav, .filter-bar { padding-left: 24px; padding-right: 24px; }
+      nav { padding-left: 24px; padding-right: 24px; }
       .container { padding: 0 24px; }
       .episodes-section { padding: 48px 0 60px; }
       .episodes-grid { grid-template-columns: 1fr; }
       .featured-ep-body { padding: 28px 24px; }
       .featured-ep-title { font-size: 1.4rem; }
       .footer-grid { grid-template-columns: 1fr; }
-      /* Filter bar — horizontal scroll contained inside tabs only */
+      /* Filter bar: remove side padding so tabs scroll edge-to-edge */
       .filter-bar { padding-left: 0; padding-right: 0; }
-      .filter-inner { flex-direction: row; align-items: center; gap: 0; overflow: hidden; }
-      .filter-tabs { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; overscroll-behavior-x: contain; padding: 0 24px; flex: 1; }
-      .filter-tabs::-webkit-scrollbar { display: none; }
-      .filter-btn { scroll-snap-align: start; flex-shrink: 0; padding: 16px 16px; }
-      .ep-count-label { display: none; }
+      .filter-inner { flex-direction: column; align-items: flex-start; gap: 0; }
+      .filter-tabs {
+        width: 100%;
+        min-width: 0;
+        touch-action: pan-x;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 24px;   /* visual indent matching the rest of the page */
+      }
+      .ep-count-label { padding: 10px 24px; border-top: 1px solid var(--border); width: 100%; }
     }
   </style>
 </head>
@@ -158,7 +161,6 @@
     <li><a href="episodes.html" class="active" data-en="Episodes">Епизоди</a></li>
     <li><a href="about.html" data-en="About">За нас</a></li>
     <li><a href="shop.html" data-en="Shop">Магазин</a></li>
-    <li><a href="shop.html" class="nav-cta" data-en="Shop Now">Купи сега</a></li>
   </ul>
   <div class="nav-right">
     <div class="lang-toggle">
@@ -188,10 +190,10 @@
     <div class="filter-tabs">
       <button class="filter-btn active" data-cat="all" data-en="All">Всички</button>
       <button class="filter-btn" data-cat="Бизнес"              data-en="Business">Бизнес</button>
-      <button class="filter-btn" data-cat="Личностно развитие"  data-en="Personal Growth">Личностно развитие</button>
-      <button class="filter-btn" data-cat="Изкуство"            data-en="Arts & Culture">Изкуство</button>
-      <button class="filter-btn" data-cat="Здраве"              data-en="Health">Здраве</button>
-      <button class="filter-btn" data-cat="Финанси"             data-en="Finance">Финанси</button>
+      <button class="filter-btn" data-cat="Мистика"             data-en="Mystic">Мистика</button>
+      <button class="filter-btn" data-cat="Експертиза"          data-en="Savvy">Експертиза</button>
+      <button class="filter-btn" data-cat="Уелнес"              data-en="Wellness">Уелнес</button>
+      <button class="filter-btn" data-cat="Хедонизъм"             data-en="Leisure">Хедонизъм</button>
     </div>
     <span class="ep-count-label" id="ep-count-label">Зареждане...</span>
   </div>
@@ -221,11 +223,9 @@
 </section>
 
 <!-- ─── FOOTER ─── -->
-<div id="shared-newsletter"></div>
-
 <div id="shared-footer"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="shared.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="shared.js"></script>
 <script>
 // ═══════════════════════════════════════════════════
 // STATE
@@ -292,8 +292,6 @@ function renderPage() {
   // 8. Render pagination
   renderPagination(safePage, totalPages, pool.length, lang);
 
-  // 9. Re-run reveal on new cards
-  reObserveReveal();
 }
 
 
@@ -450,9 +448,10 @@ function renderPagination(page, totalPages, totalItems, lang) {
 function goToPage(page) {
   currentPage = page;
   renderPage();
-  // Scroll smoothly to just below the filter bar
+  // Scroll to just below the filter bar using document position (offsetTop),
+  // not getBoundingClientRect which returns sticky/viewport position.
   const filterBar = document.querySelector('.filter-bar');
-  const top = filterBar ? filterBar.getBoundingClientRect().bottom + window.scrollY + 16 : 0;
+  const top = filterBar ? filterBar.offsetTop + filterBar.offsetHeight : 0;
   window.scrollTo({ top, behavior: 'smooth' });
 }
 
@@ -480,14 +479,14 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 // START
 /// START
 // ═══════════════════════════════════════════════════
-document.addEventListener('DOMContentLoaded', init);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
 </script>
-<div id="shared-newsletter"></div>
-
 <div id="shared-footer"></div>
-
-<script src="shared.js"></script>
-<script src="components.js"></script>
+<script data-cfasync="false" src="components.js"></script>
 
 </body>
 </html>
