@@ -447,12 +447,12 @@ function renderPagination(page, totalPages, totalItems, lang) {
 // ═══════════════════════════════════════════════════
 function goToPage(page) {
   currentPage = page;
-  renderPage();
-  // Scroll to just below the filter bar using document position (offsetTop),
-  // not getBoundingClientRect which returns sticky/viewport position.
+  // Set scroll position BEFORE renderPage() so Safari's scroll anchoring
+  // can't override it when the DOM is replaced. Both run before the next paint.
   const filterBar = document.querySelector('.filter-bar');
   const top = filterBar ? filterBar.offsetTop + filterBar.offsetHeight : 0;
-  window.scrollTo({ top, behavior: 'smooth' });
+  window.scrollTo(0, top);
+  renderPage();
 }
 
 function setFilter(cat) {
