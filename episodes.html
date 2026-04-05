@@ -447,12 +447,25 @@ function renderPagination(page, totalPages, totalItems, lang) {
 // ═══════════════════════════════════════════════════
 function goToPage(page) {
   currentPage = page;
-  // Set scroll position BEFORE renderPage() so Safari's scroll anchoring
-  // can't override it when the DOM is replaced. Both run before the next paint.
-  const filterBar = document.querySelector('.filter-bar');
-  const top = filterBar ? filterBar.offsetTop + filterBar.offsetHeight : 0;
-  window.scrollTo(0, top);
+
+  // 1. Remove focus from the clicked button — Safari scrolls to keep focused
+  //    elements visible after DOM changes, which fights our scroll target.
+  if (document.activeElement) document.activeElement.blur();
+
+  // 2. Reset to absolute top first so that if page 2 is shorter than page 1,
+  //    Safari can't clamp our scroll target to the new shorter max scroll height.
+  window.scrollTo(0, 0);
+
+  // 3. Render new content with scroll already at 0.
   renderPage();
+
+  // 4. Scroll to just below the filter bar.
+  var filterBar = document.querySelector('.filter-bar');
+  var top = filterBar ? filterBar.offsetTop + filterBar.offsetHeight : 0;
+  window.scrollTo(0, top);
+
+  // 5. Re-assert in the next frame in case Safari adjusts after paint.
+  requestAnimationFrame(function() { window.scrollTo(0, top); });
 }
 
 function setFilter(cat) {
