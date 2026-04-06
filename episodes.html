@@ -53,7 +53,7 @@
 
     /* ─── CONTAINER ─── */
     .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
-    .episodes-section { padding: 72px 0 80px; }
+    .episodes-section { padding: 72px 0 80px; scroll-margin-top: 140px; }
 
     /* ─── FEATURED EPISODE ─── */
     .featured-ep { background: var(--ink); border-radius: 10px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 56px; }
@@ -447,25 +447,27 @@ function renderPagination(page, totalPages, totalItems, lang) {
 // ═══════════════════════════════════════════════════
 function goToPage(page) {
   currentPage = page;
-
-  // 1. Remove focus from the clicked button — Safari scrolls to keep focused
-  //    elements visible after DOM changes, which fights our scroll target.
   if (document.activeElement) document.activeElement.blur();
-
-  // 2. Reset to absolute top first so that if page 2 is shorter than page 1,
-  //    Safari can't clamp our scroll target to the new shorter max scroll height.
-  window.scrollTo(0, 0);
-
-  // 3. Render new content with scroll already at 0.
   renderPage();
 
-  // 4. Scroll to just below the filter bar.
-  var filterBar = document.querySelector('.filter-bar');
-  var top = filterBar ? filterBar.offsetTop + filterBar.offsetHeight : 0;
-  window.scrollTo(0, top);
+  var section = document.querySelector('.episodes-section');
+  if (!section) return;
 
-  // 5. Re-assert in the next frame in case Safari adjusts after paint.
-  requestAnimationFrame(function() { window.scrollTo(0, top); });
+  // Set scroll-margin-top dynamically so it matches the actual sticky
+  // nav + filter bar height (varies between mobile and desktop).
+  var navH = (document.querySelector('nav') || {}).offsetHeight || 72;
+  var filterH = (document.querySelector('.filter-bar') || {}).offsetHeight || 68;
+  section.style.scrollMarginTop = (navH + filterH) + 'px';
+
+  // Disable CSS smooth-scroll so scrollIntoView is instant — avoids Safari
+  // momentum-scroll interference during the animation.
+  document.documentElement.style.scrollBehavior = 'auto';
+  section.scrollIntoView({ block: 'start' });
+
+  // Restore smooth-scroll after the frame has painted.
+  requestAnimationFrame(function() {
+    document.documentElement.style.scrollBehavior = '';
+  });
 }
 
 function setFilter(cat) {
