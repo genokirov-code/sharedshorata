@@ -83,7 +83,7 @@ const SHOP_PRODUCTS = [
     desc:   'Значката Shared с хората е малкият детайл с голямо послание.',
     descEn: 'The Shared с хората pin is the subtle detail that speaks volumes.',
     price:  '€10',
-    link:   'product.html?id=hoodie',
+    link:   'product.html?id=badge',
   },
 
   // ── Product 5 ──────────────────────────────────────
@@ -96,7 +96,7 @@ const SHOP_PRODUCTS = [
     catEn:  'Bundles',
     name:   'Starter Комплект (Отварачка + Химикалка)',
     nameEn: 'Starter Bundle (Opener + Pen)',
-    desc:   'Вземи Shared s хората отварачка и химикалка заедно на специална цена.',
+    desc:   'Вземи Shared с хората отварачка и химикалка заедно на специална цена.',
     descEn: 'Get the Shared с хората Opener and the pen together at a special bundle price.',
     price:  '€10',
     link:   'product.html?id=bundle-starter',
@@ -118,6 +118,54 @@ const SHOP_PRODUCTS = [
     link:   'product.html?id=opener',
   },
 
+  // ── Product 7 ──────────────────────────────────────
+  {
+    id: 'denim-bag',
+    image: 'images/denim-handmade-bag-shared-s-horata-2.png',
+    badge:   'Ръчна изработка',
+    badgeEn: 'Handmade',
+    cat:    'Аксесоари',
+    catEn:  'Accessories',
+    name:   'Дънкова чанта Shared с хората',
+    nameEn: 'Denim Bag Shared с хората',
+    desc:   'Ръчно изработена дънкова чанта с уникален характер. Всяка чанта е различна и носи собствена история.',
+    descEn: 'Handmade denim bag with unique character. Each bag is one-of-a-kind and carries its own story.',
+    price:  '€95',
+    link:   'product.html?id=denim-bag',
+  },
+
+  // ── Product 8 ──────────────────────────────────────
+  {
+    id: 'mug',
+    image: 'images/cup-shared-s-horata-black.png',
+    badge:   'Ново',
+    badgeEn: 'New',
+    cat:    'Аксесоари',
+    catEn:  'Accessories',
+    name:   'Порцеланова чаша Shared с хората',
+    nameEn: 'Shared с хората Porcelain Mug',
+    desc:   'Порцеланова чаша с лого на Shared с хората. Перфектна за сутрешното кафе или вечерния чай.',
+    descEn: 'Porcelain mug with the Shared с хората logo. Perfect for your morning coffee or evening tea.',
+    price:  '€39',
+    link:   'product.html?id=mug',
+  },
+
+  // ── Product 9 ──────────────────────────────────────
+  {
+    id: 'beach-bag',
+    image: 'images/shared-s-horata-embroidery-beach-bag.png',
+    badge:   'Ново',
+    badgeEn: 'New',
+    cat:    'Аксесоари',
+    catEn:  'Accessories',
+    name:   'Плетена плажна чанта Shared с хората',
+    nameEn: 'Shared с хората Knitted Beach Bag',
+    desc:   'Плетена плажна чанта с бродирано лого. Изработена от рециклиран полиестер — стилна, лека и екологична.',
+    descEn: 'Knitted beach bag with embroidered logo. Made from recycled polyester — stylish, lightweight and eco-friendly.',
+    price:  '€99',
+    link:   'product.html?id=beach-bag',
+  },
+
 ];
 
 
@@ -132,7 +180,7 @@ const FOOTER_HTML = `
 
       <div class="footer-brand">
         <a href="index.html" class="footer-logo">Shared <span>с Хората</span></a>
-        <p data-en="Real conversations with remarkable people.">Истински разговори със забележителни хора.</p>
+        <p data-en="Real conversations with remarkable people">Истински разговори със забележителни хора</p>
       </div>
 
       <div class="footer-col">

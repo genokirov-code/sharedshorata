@@ -144,65 +144,70 @@ function toggleMenu() {
 // ─────────────────────────────────────────────────
 const VIDEOS_FALLBACK = [
   {
-    id: "ep52", youtubeId: "YOUTUBE_VIDEO_ID_52", episode: 52,
-    title: "Как да изградим живот, който си заслужава да се живее",
-    titleEn: "How to Build a Life Worth Living",
-    guest: "Иван Георгиев", guestEn: "Ivan Georgiev",
+    id: "ep25", youtubeId: "_fYizt8-HYU", episode: 25,
+    title: "Самотата когато си на 30: имаш всичко и пак ти липсва нещо",
+    titleEn: "Loneliness in Your 30s: You Have Everything and Still Something Is Missing",
+    guest: "Добри", guestEn: "Dobri",
+    category: "Личностно развитие", categoryEn: "Personal Growth",
+    duration: "52мин", durationEn: "52min",
+    description: "Имаш работа, приятели, може би дори семейство — и все пак нощем ти е самотно. Добри разказва как е да си на 30 с всичко наред отвън и с огромна празнота отвътре.",
+    descriptionEn: "You have a job, friends, maybe even a family — and still feel lonely at night. Dobri shares what it's like to be in your 30s with everything looking fine on the outside, and a huge void on the inside.",
+    featured: true, date: "2026-05-07"
+  },
+  {
+    id: "ep24", youtubeId: "t-2BonX9_OU", episode: 24,
+    title: "Как се гледа на кафе? Баба Донка за символите, ритуалите и истината в Shared с хората #24",
+    titleEn: "Coffee Fortune Telling: Symbols, Rituals, and Truth with Grandma Donka | Shared with People #24",
+    guest: "Баба Донка", guestEn: "Grandma Donka",
+    category: "Мистика", categoryEn: "Mystic",
+    duration: "28мин", durationEn: "28min",
+    description: "В този епизод се потапяме в света на тасеографията (гледане на кафе) заедно с баба Донка.",
+    descriptionEn: "Join us for a captivating journey into the aromatic world of tasseography with the venerable Grandma Donka.",
+    featured: false, date: "2026-03-20"
+  },
+  {
+    id: "ep23", youtubeId: "SXJbmpg1rCs", episode: 23,
+    title: "Изкуственият интелект ще ти вземе ли работата? Ето какво казва експертът Мира в Shared с хората #23",
+    titleEn: "The Future of Work: Expert Mira discusses AI job replacement in Shared with People #23",
+    guest: "Мирена Митева - Мира", guestEn: "Mirena Miteva - Mira",
     category: "Бизнес", categoryEn: "Business",
-    duration: "1ч 32мин", durationEn: "1h 32min",
-    description: "Честен и открит разговор за успеха, провала и за това, което наистина има значение.",
-    descriptionEn: "An honest and vulnerable conversation about success, failure, and what really matters.",
-    featured: true, date: "2025-03-10"
+    duration: "53мин", durationEn: "53min",
+    description: "Изкуственият интелект вече не е бъдеще – той е тук и променя правилата на играта.",
+    descriptionEn: "AI isn't the future — it's the present, and it's rewriting the rulebook.",
+    featured: false, date: "2025-06-01"
   },
   {
-    id: "ep51", youtubeId: "YOUTUBE_VIDEO_ID_51", episode: 51,
-    title: "Изкуството да започнеш отначало", titleEn: "The Art of Starting Over",
-    guest: "Мария Петрова", guestEn: "Maria Petrova",
-    category: "Личностно развитие", categoryEn: "Personal Growth",
-    duration: "1ч 24мин", durationEn: "1h 24min",
-    description: "Прераждане, устойчивост и смелост да опиташ отново след провал.",
-    descriptionEn: "Reinvention, resilience and the courage to try again after failure.",
-    featured: false, date: "2025-03-03"
+    id: "ep22", youtubeId: "jzyI81vqA5g", episode: 22,
+    title: "Апитерапия и пчелна къща за здраве, красота и дълголетие с Боряна Първанова в Shared с хората #22",
+    titleEn: "Unlocking Health, Beauty, and Longevity through Apitherapy with Boryana Parvanova | Shared with People #22",
+    guest: "Боряна Първанова", guestEn: "Boryana Parvanova",
+    category: "Уелнес", categoryEn: "Wellness",
+    duration: "1ч 17мин", durationEn: "1h 17min",
+    description: "Потопете се в удивителния свят на апитерапията и разкрийте как пчелните съкровища могат да бъдат ключът към вашето здраве и красота.",
+    descriptionEn: "Explore the transformative power of apitherapy and see how bee-derived products can be the key to longevity and wellness.",
+    featured: false, date: "2025-03-25"
   },
   {
-    id: "ep50", youtubeId: "YOUTUBE_VIDEO_ID_50", episode: 50,
-    title: "Пари, Мислене и Свобода", titleEn: "Money, Mindset & Freedom",
-    guest: "Димитър Илиев", guestEn: "Dimitar Iliev",
-    category: "Финанси", categoryEn: "Finance",
-    duration: "1ч 08мин", durationEn: "1h 08min",
-    description: "Психологията зад богатството и истинското щастие.",
-    descriptionEn: "The psychology behind wealth and true happiness.",
-    featured: false, date: "2025-02-24"
+    id: "ep21", youtubeId: "gQHrobLY6t8", episode: 21,
+    title: "Българската нумерология е ключът към тайните на живота и нашата същност Пламен в Shared с хората #21",
+    titleEn: "Bulgarian Numerology: The key to life's secrets and our true essence | Plamen in 'Shared with People' #21",
+    guest: "Пламен Ангелов", guestEn: "Plamen Angelov - Plabo",
+    category: "Мистика", categoryEn: "Mystic",
+    duration: "43мин", durationEn: "43min",
+    description: "В този епизод на подкаста ви срещам с Пламен Ангелов, посветен в тайните на българската нумерология.",
+    descriptionEn: "Can numbers really change your life? Plamen Angelov talks about the hidden power of Bulgarian numerology.",
+    featured: false, date: "2025-02-20"
   },
   {
-    id: "ep49", youtubeId: "YOUTUBE_VIDEO_ID_49", episode: 49,
-    title: "Намиране на смисъл след 40", titleEn: "Finding Purpose After 40",
-    guest: "Елена Стоянова", guestEn: "Elena Stoyanova",
-    category: "Личностно развитие", categoryEn: "Personal Growth",
-    duration: "58мин", durationEn: "58min",
-    description: "Животът няма срок на годност за прераждане.",
-    descriptionEn: "Life doesn't have an expiry date for reinvention.",
-    featured: false, date: "2025-02-17"
-  },
-  {
-    id: "ep48", youtubeId: "YOUTUBE_VIDEO_ID_48", episode: 48,
-    title: "Максимална ефективност и психично здраве", titleEn: "Peak Performance & Mental Health",
-    guest: "Георги Колев", guestEn: "Georgi Kolev",
-    category: "Здраве", categoryEn: "Health",
-    duration: "1ч 15мин", durationEn: "1h 15min",
-    description: "Какво елитните спортисти могат да ни научат за устойчивостта.",
-    descriptionEn: "What elite athletes can teach us about resilience.",
-    featured: false, date: "2025-02-10"
-  },
-  {
-    id: "ep47", youtubeId: "YOUTUBE_VIDEO_ID_47", episode: 47,
-    title: "Създаване от болка", titleEn: "Creating From Pain",
-    guest: "Нина Андреева", guestEn: "Nina Andreeva",
-    category: "Изкуство", categoryEn: "Arts & Culture",
-    duration: "1ч 02мин", durationEn: "1h 02min",
-    description: "Как уязвимостта се превръща в най-мощното творческо гориво.",
-    descriptionEn: "How vulnerability becomes the most powerful creative fuel.",
-    featured: false, date: "2025-02-03"
+    id: "ep19", youtubeId: "CUpMZPGXGc4", episode: 19,
+    title: "Предсказания за бъдещето на човечеството, дигитализацията и AI - Силва Дончева в Shared с хората #19",
+    titleEn: "Predictions for the Future of Humanity, Digitalization, and AI – Silva Doncheva on 'Shared with People' #19",
+    guest: "Силва Дончева", guestEn: "Silva Doncheva",
+    category: "Мистика", categoryEn: "Mystic",
+    duration: "1ч 04мин", durationEn: "1h 04min",
+    description: "Готови ли сте за пътешествие в бъдещето? Силва Дончева ни разкрива какво ни очаква.",
+    descriptionEn: "Ever wonder what the future actually looks like? Silva Doncheva joins us to talk about the road ahead.",
+    featured: false, date: "2024-09-17"
   }
 ];
 
