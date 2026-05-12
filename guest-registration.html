@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guest Registration — Modern Old Town Apartment</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #FAF8F3; --warm-white: #FFFFFF; --ink: #141210;
+      --ink-soft: #3a3530; --ink-muted: #7a746e;
+      --gold: #C8942A; --gold-light: #E8B84B;
+      --border: #E5E0D8; --sage: #5A7060; --sage-light: #e8f0eb;
+      --red: #C0392B; --red-light: #fdecea;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream); color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ─── */
+    .gr-header {
+      background: var(--ink);
+      padding: 28px 40px;
+      text-align: center;
+      border-bottom: 3px solid var(--gold);
+    }
+    .gr-header-inner {
+      max-width: 720px; margin: 0 auto;
+    }
+    .gr-logo {
+      margin-bottom: 10px;
+    }
+    .gr-logo img {
+      height: 64px;
+      width: auto;
+    }
+    .gr-apt-name {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 12px;
+    }
+    .gr-address {
+      font-size: 0.82rem; color: rgba(250,248,243,0.5);
+      line-height: 1.5;
+    }
+    .gr-lang-toggle {
+      display: inline-flex; background: rgba(255,255,255,0.12);
+      border-radius: 20px; overflow: hidden; margin-top: 14px;
+    }
+    .gr-lang-toggle button {
+      border: none; background: none;
+      padding: 5px 14px; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.05em; cursor: pointer;
+      color: rgba(250,248,243,0.5); transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .gr-lang-toggle button.active {
+      background: var(--gold); color: var(--ink); border-radius: 20px;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    .gr-main {
+      max-width: 720px; margin: 0 auto;
+      padding: 48px 40px 80px;
+    }
+
+    /* INFO BANNER */
+    .info-banner {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 36px;
+      margin-bottom: 40px;
+      border-left: 4px solid var(--gold);
+    }
+    .info-banner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem; font-weight: 700;
+      color: var(--ink); margin-bottom: 14px;
+      line-height: 1.3;
+    }
+    .info-banner p {
+      font-size: 0.92rem; color: var(--ink-muted);
+      line-height: 1.75; margin-bottom: 10px;
+    }
+    .info-banner p:last-child { margin-bottom: 0; }
+    .info-banner .law-ref {
+      font-size: 0.8rem; color: var(--ink-muted);
+      font-style: italic;
+      border-top: 1px solid var(--border);
+      padding-top: 14px; margin-top: 14px;
+    }
+
+    /* FORM */
+    .gr-form-section {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 36px;
+      margin-bottom: 28px;
+    }
+    .gr-form-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--ink); margin-bottom: 6px;
+    }
+    .gr-section-desc {
+      font-size: 0.82rem; color: var(--ink-muted);
+      margin-bottom: 24px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .form-row.single {
+      grid-template-columns: 1fr;
+    }
+    .form-row.triple {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .form-group {
+      display: flex; flex-direction: column;
+    }
+    .form-group label {
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 6px;
+    }
+    .form-group label .req {
+      color: var(--red); margin-left: 2px;
+    }
+    .form-group label .optional {
+      font-weight: 400; text-transform: none;
+      color: var(--ink-muted); font-size: 0.75rem;
+      letter-spacing: 0;
+    }
+    .form-group input,
+    .form-group select {
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.92rem;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a746e' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(200,148,42,0.12);
+    }
+    .form-group input.error,
+    .form-group select.error {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(192,57,43,0.1);
+    }
+    .error-msg {
+      font-size: 0.75rem; color: var(--red);
+      margin-top: 4px; display: none;
+    }
+    .error-msg.visible { display: block; }
+    .form-group .field-hint {
+      font-size: 0.72rem; color: var(--ink-muted);
+      margin-top: 4px;
+    }
+
+    /* CHECKBOX & PRIVACY */
+    .privacy-section {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 36px;
+      margin-bottom: 28px;
+    }
+    .privacy-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--ink); margin-bottom: 12px;
+    }
+    .privacy-section p {
+      font-size: 0.82rem; color: var(--ink-muted);
+      line-height: 1.7; margin-bottom: 8px;
+    }
+    .privacy-section p:last-of-type { margin-bottom: 0; }
+    .consent-row {
+      display: flex; gap: 12px; align-items: flex-start;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .consent-row input[type="checkbox"] {
+      margin-top: 3px;
+      width: 18px; height: 18px;
+      accent-color: var(--gold);
+      flex-shrink: 0;
+    }
+    .consent-row label {
+      font-size: 0.85rem; color: var(--ink-soft);
+      line-height: 1.6;
+      cursor: pointer;
+    }
+
+    /* SUBMIT */
+    .submit-row {
+      text-align: center;
+    }
+    .btn-submit {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--ink); color: var(--cream);
+      border: 2px solid var(--ink);
+      padding: 16px 48px;
+      font-size: 0.92rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.25s;
+    }
+    .btn-submit:hover {
+      background: var(--gold); border-color: var(--gold);
+      color: var(--ink);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(200,148,42,0.3);
+    }
+    .btn-submit:disabled {
+      opacity: 0.5; cursor: not-allowed;
+      transform: none; box-shadow: none;
+    }
+    .btn-submit .spinner {
+      display: none;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(250,248,243,0.3);
+      border-top-color: var(--cream);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    .btn-submit.loading .spinner { display: inline-block; }
+    .btn-submit.loading .btn-text { display: none; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* SUCCESS STATE */
+    .success-card {
+      display: none;
+      text-align: center;
+      padding: 60px 36px;
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .success-card.visible { display: block; }
+    .check-wrap {
+      width: 80px; height: 80px;
+      background: var(--sage); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 28px;
+      animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .check-wrap svg {
+      width: 36px; height: 36px; stroke: white; stroke-width: 3;
+      fill: none; stroke-linecap: round; stroke-linejoin: round;
+      stroke-dasharray: 60; stroke-dashoffset: 60;
+      animation: drawCheck 0.5s 0.3s ease forwards;
+    }
+    @keyframes drawCheck { to { stroke-dashoffset: 0; } }
+    .success-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 900;
+      color: var(--ink); margin-bottom: 12px;
+    }
+    .success-card p {
+      font-size: 0.95rem; color: var(--ink-muted);
+      line-height: 1.7; margin-bottom: 8px;
+    }
+    .success-card .apt-info {
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      line-height: 1.7;
+    }
+    .success-card .apt-info strong {
+      color: var(--ink);
+    }
+
+    /* ERROR STATE */
+    .error-banner {
+      display: none;
+      background: var(--red-light);
+      border: 1px solid rgba(192,57,43,0.2);
+      border-radius: 8px;
+      padding: 14px 20px;
+      margin-bottom: 20px;
+      font-size: 0.88rem;
+      color: var(--red);
+    }
+    .error-banner.visible { display: block; }
+
+    /* FOOTER */
+    .gr-footer {
+      text-align: center;
+      padding: 28px 40px;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+    }
+    .gr-footer a {
+      color: var(--gold); text-decoration: none;
+    }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 768px) {
+      .gr-header { padding: 24px; }
+      .gr-main { padding: 32px 20px 60px; }
+      .info-banner { padding: 24px 20px; }
+      .gr-form-section { padding: 24px 20px; }
+      .privacy-section { padding: 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-row.triple { grid-template-columns: 1fr; }
+      .btn-submit { width: 100%; justify-content: center; }
+      .gr-footer { padding: 24px 20px; }
+    }
+    @media (max-width: 480px) {
+      .gr-apt-name { font-size: 0.65rem; letter-spacing: 0.12em; }
+      .gr-logo img { height: 52px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header class="gr-header">
+  <div class="gr-header-inner">
+    <div class="gr-logo"><img src="images/Shared с хората 3.jpg" alt="Shared с Хората"></div>
+    <div class="gr-apt-name" data-en="Modern Old Town Apartment">Modern Old Town Apartment</div>
+    <div class="gr-address">
+      <span data-en="Plovdiv, Central District, 2 Aleksandar Pushkin St., floor 4, apt. 7">
+        гр. Пловдив, адм. район „Централен", ул. „Александър Пушкин" №2, ет. 4, ап. 7
+      </span>
+    </div>
+    <div class="gr-lang-toggle">
+      <button class="active" onclick="setLang('bg')">БГ</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<!-- ─── MAIN ─── -->
+<div class="gr-main">
+
+  <!-- INFO BANNER -->
+  <div class="info-banner">
+    <h2 data-en="Guest Registration Form">Регистрационна форма за гости</h2>
+    <p data-en="Welcome! As required by Bulgarian law, all guests staying at a licensed accommodation must be registered in the national tourism system (ESTI). Please fill in the form below so we can complete your registration. This takes about 2 minutes.">
+      Добре дошли! Съгласно българското законодателство, всички гости, настанени в лицензиран обект за настаняване, трябва да бъдат регистрирани в националната туристическа система (ЕСТИ). Моля, попълнете формата по-долу, за да завършим вашата регистрация. Отнема около 2 минути.
+    </p>
+    <p data-en="Each guest must fill in the form individually. If you are travelling with other guests, please share this page with them.">
+      Всеки гост трябва да попълни формата лично. Ако пътувате с други гости, моля споделете тази страница с тях.
+    </p>
+    <p class="law-ref" data-en="Legal basis: Bulgarian Tourism Act, Art. 116, para. 5 — requires accommodation providers to register all guests and submit data to the Unified Tourism Information System (ESTI) operated by the Ministry of Tourism.">
+      Правно основание: Закон за туризма, чл. 116, ал. 5 — задължава лицата, извършващи хотелиерство, да регистрират всички настанени туристи и да подават данните в Единната система за туристическа информация (ЕСТИ), управлявана от Министерство на туризма.
+    </p>
+  </div>
+
+  <!-- FORM -->
+  <form id="guestForm" novalidate autocomplete="on">
+
+    <!-- SECTION 1: Personal Information -->
+    <div class="gr-form-section">
+      <h3 data-en="Personal Information">Лични данни</h3>
+      <p class="gr-section-desc" data-en="Please enter your name exactly as it appears on your ID document.">Моля, въведете имената си точно както са в документа ви за самоличност.</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName"><span data-en="First Name">Собствено име</span> <span class="req">*</span></label>
+          <input type="text" id="firstName" name="firstName" required maxlength="150" autocomplete="given-name" placeholder="">
+          <span class="error-msg" id="err-firstName" data-en="First name is required.">Собственото име е задължително.</span>
+        </div>
+        <div class="form-group">
+          <label for="middleName"><span data-en="Middle Name">Бащино име</span> <span class="optional" data-en="(optional)">(незадължително)</span></label>
+          <input type="text" id="middleName" name="middleName" maxlength="150" autocomplete="additional-name" placeholder="">
+        </div>
+      </div>
+
+      <div class="form-row single">
+        <div class="form-group">
+          <label for="lastName"><span data-en="Last Name">Фамилно име</span> <span class="req">*</span></label>
+          <input type="text" id="lastName" name="lastName" required maxlength="150" autocomplete="family-name" placeholder="">
+          <span class="error-msg" id="err-lastName" data-en="Last name is required.">Фамилното име е задължително.</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="birthDate"><span data-en="Date of Birth">Дата на раждане</span> <span class="req">*</span></label>
+          <input type="date" id="birthDate" name="birthDate" required autocomplete="bday">
+          <span class="error-msg" id="err-birthDate" data-en="Date of birth is required.">Датата на раждане е задължителна.</span>
+        </div>
+        <div class="form-group">
+          <label for="gender"><span data-en="Gender">Пол</span> <span class="req">*</span></label>
+          <select id="gender" name="gender" required autocomplete="sex">
+            <option value="" disabled selected data-en="— Select —">— Изберете —</option>
+            <option value="M" data-en="Male">Мъж</option>
+            <option value="F" data-en="Female">Жена</option>
+          </select>
+          <span class="error-msg" id="err-gender" data-en="Please select your gender.">Моля, изберете пол.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: Identity Document -->
+    <div class="gr-form-section">
+      <h3 data-en="Identity Document">Документ за самоличност</h3>
+      <p class="gr-section-desc" data-en="Please provide the details from the document you will use for your stay.">Моля, въведете данните от документа, който ще използвате по време на престоя си.</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="docType"><span data-en="Document Type">Тип документ</span> <span class="req">*</span></label>
+          <select id="docType" name="docType" required>
+            <option value="" disabled selected data-en="— Select —">— Изберете —</option>
+            <option value="PAS" data-en="Passport">Паспорт</option>
+            <option value="ICA" data-en="ID Card">Лична карта</option>
+            <option value="DRL" data-en="Driver's License">Шофьорска книжка</option>
+          </select>
+          <span class="error-msg" id="err-docType" data-en="Please select a document type.">Моля, изберете тип документ.</span>
+        </div>
+        <div class="form-group">
+          <label for="docNumber"><span data-en="Document Number">Номер на документ</span> <span class="req">*</span></label>
+          <input type="text" id="docNumber" name="docNumber" required maxlength="20" placeholder="">
+          <span class="error-msg" id="err-docNumber" data-en="Document number is required.">Номерът на документа е задължителен.</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="docCountry"><span data-en="Issuing Country">Държава, издала документа</span> <span class="req">*</span></label>
+          <select id="docCountry" name="docCountry" required>
+            <option value="" disabled selected data-en="— Select country —">— Изберете държава —</option>
+          </select>
+          <span class="error-msg" id="err-docCountry" data-en="Please select the issuing country.">Моля, изберете държава.</span>
+        </div>
+        <div class="form-group">
+          <label for="identityNumber"><span data-en="ЕГН / Personal ID Number">ЕГН / ЛНЧ</span> <span class="optional" data-en="(Bulgarian citizens only)">(само за български граждани)</span></label>
+          <input type="text" id="identityNumber" name="identityNumber" maxlength="10" placeholder="">
+          <span class="field-hint" data-en="Required only for Bulgarian citizens or foreign residents with ЛНЧ.">Задължително само за български граждани или чужденци с ЛНЧ.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: Stay Details -->
+    <div class="gr-form-section">
+      <h3 data-en="Stay Details">Данни за престоя</h3>
+      <p class="gr-section-desc" data-en="Please enter the dates of your stay as confirmed in your booking.">Моля, въведете датите на престоя ви, както са потвърдени в резервацията.</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="checkIn"><span data-en="Check-in Date">Дата на настаняване</span> <span class="req">*</span></label>
+          <input type="date" id="checkIn" name="checkIn" required>
+          <span class="error-msg" id="err-checkIn" data-en="Check-in date is required.">Датата на настаняване е задължителна.</span>
+        </div>
+        <div class="form-group">
+          <label for="checkOut"><span data-en="Check-out Date">Дата на напускане</span> <span class="req">*</span></label>
+          <input type="date" id="checkOut" name="checkOut" required>
+          <span class="error-msg" id="err-checkOut" data-en="Check-out date is required.">Датата на напускане е задължителна.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRIVACY & CONSENT -->
+    <div class="privacy-section">
+      <h3 data-en="Privacy & Data Protection">Поверителност и защита на данните</h3>
+      <p data-en="Your personal data is collected solely to comply with Bulgarian tourism legislation (Tourism Act, Art. 116). The data will be submitted to the Unified Tourism Information System (ESTI) operated by the Ministry of Tourism of the Republic of Bulgaria.">
+        Вашите лични данни се събират единствено с цел спазване на българското туристическо законодателство (Закон за туризма, чл. 116). Данните ще бъдат подадени в Единната система за туристическа информация (ЕСТИ), управлявана от Министерство на туризма на Република България.
+      </p>
+      <p data-en="Your data will be stored securely and will not be shared with third parties beyond what is required by law. Data is retained only for the legally mandated period, after which it is permanently deleted.">
+        Данните ви ще бъдат съхранявани сигурно и няма да бъдат споделяни с трети страни извън изискваното по закон. Данните се съхраняват само за законово определения срок, след което се изтриват окончателно.
+      </p>
+      <div class="consent-row">
+        <input type="checkbox" id="consent" name="consent" required>
+        <label for="consent" data-en="I understand that my data is being collected as required by Bulgarian law for guest registration purposes, and I consent to its submission to ESTI.">
+          Разбирам, че данните ми се събират съгласно българското законодателство за целите на регистрация на гости и давам съгласието си за подаването им в ЕСТИ.
+        </label>
+      </div>
+      <span class="error-msg" id="err-consent" data-en="You must agree to proceed." style="margin-left: 30px;">Трябва да се съгласите, за да продължите.</span>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="error-banner" id="errorBanner" data-en="Please correct the highlighted fields above.">Моля, коригирайте маркираните полета по-горе.</div>
+
+    <div class="submit-row">
+      <button type="submit" class="btn-submit" id="submitBtn">
+        <span class="spinner"></span>
+        <span class="btn-text" data-en="Submit Registration">Изпрати регистрацията</span>
+      </button>
+    </div>
+  </form>
+
+  <!-- SUCCESS -->
+  <div class="success-card" id="successCard">
+    <div class="check-wrap">
+      <svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"/></svg>
+    </div>
+    <h2 data-en="Registration Complete!">Регистрацията е завършена!</h2>
+    <p data-en="Thank you for completing your guest registration. Your data has been securely submitted.">
+      Благодарим ви, че завършихте регистрацията. Данните ви бяха изпратени успешно и сигурно.
+    </p>
+    <p data-en="If you are travelling with other guests, please share this page with them so they can register too.">
+      Ако пътувате с други гости, моля споделете тази страница с тях, за да се регистрират и те.
+    </p>
+    <div class="apt-info">
+      <strong data-en="Modern Old Town Apartment Shared с хората">Modern Old Town Apartment Shared с хората</strong><br>
+      <span data-en="Plovdiv, Central District, 2 Aleksandar Pushkin St., floor 4, apt. 7">
+        гр. Пловдив, адм. район „Централен", ул. „Александър Пушкин" №2, ет. 4, ап. 7
+      </span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer class="gr-footer">
+  <span data-en="&copy; 2025 Shared с Хората. All rights reserved.">&copy; 2025 Shared с Хората. Всички права запазени.</span>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════
+   GUEST REGISTRATION — Script
+   ═══════════════════════════════════════════════ */
+
+// ─── Google Apps Script URL ───
+// SETUP:
+// 1. Create a new Google Sheet with these column headers (row 1):
+//    Timestamp | FirstName | MiddleName | LastName | BirthDate | Gender |
+//    DocType | DocNumber | DocCountry | IdentityNumber | CheckIn | CheckOut
+//
+// 2. Go to Extensions → Apps Script, paste the code below, deploy as web app:
+//
+//    function doPost(e) {
+//      var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+//      var p = e.parameter;
+//      sheet.appendRow([
+//        new Date(),
+//        p.firstName,
+//        p.middleName,
+//        p.lastName,
+//        p.birthDate,
+//        p.gender,
+//        p.docType,
+//        p.docNumber,
+//        p.docCountry,
+//        p.identityNumber,
+//        p.checkIn,
+//        p.checkOut
+//      ]);
+//      return ContentService.createTextOutput(
+//        JSON.stringify({ result: 'success' })
+//      ).setMimeType(ContentService.MimeType.JSON);
+//    }
+//
+// 3. Deploy → New deployment → Web app
+//    Execute as: Me | Who has access: Anyone
+//    Copy the URL and paste it below.
+//
+// 4. Share the Google Sheet with mirchingram@gmail.com (Editor access)
+//
+var SHEET_URL = 'https://script.google.com/macros/s/AKfycbzVvYOii17JlSCe7OdcMj2zXsBZvM2RoVRGWSYSC0LM9jMrkBXCgfyZfvJvPVvlQWPR3A/exec';
+
+// ─── LANGUAGE ───
+var currentLang = localStorage.getItem('lang') || 'bg';
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  document.documentElement.lang = lang === 'bg' ? 'bg' : 'en';
+
+  document.querySelectorAll('.gr-lang-toggle button').forEach(function(btn, i) {
+    btn.classList.toggle('active', (i === 0 && lang === 'bg') || (i === 1 && lang === 'en'));
+  });
+
+  document.querySelectorAll('[data-en]').forEach(function(el) {
+    if (!el._originalBG) el._originalBG = el.innerHTML;
+    el.innerHTML = lang === 'en' ? el.dataset.en : el._originalBG;
+  });
+
+  // Update select option texts
+  updateSelectOptions();
+}
+
+function updateSelectOptions() {
+  var selects = document.querySelectorAll('select');
+  selects.forEach(function(sel) {
+    sel.querySelectorAll('option[data-en]').forEach(function(opt) {
+      if (!opt._originalBG) opt._originalBG = opt.textContent;
+      opt.textContent = currentLang === 'en' ? opt.dataset.en : opt._originalBG;
+    });
+  });
+}
+
+// ─── COUNTRIES (ISO 3166-1 alpha-2) ───
+var COUNTRIES = [
+  {code:'AF',bg:'Афганистан',en:'Afghanistan'},{code:'AL',bg:'Албания',en:'Albania'},
+  {code:'DZ',bg:'Алжир',en:'Algeria'},{code:'AD',bg:'Андора',en:'Andorra'},
+  {code:'AO',bg:'Ангола',en:'Angola'},{code:'AR',bg:'Аржентина',en:'Argentina'},
+  {code:'AM',bg:'Армения',en:'Armenia'},{code:'AU',bg:'Австралия',en:'Australia'},
+  {code:'AT',bg:'Австрия',en:'Austria'},{code:'AZ',bg:'Азербайджан',en:'Azerbaijan'},
+  {code:'BS',bg:'Бахами',en:'Bahamas'},{code:'BH',bg:'Бахрейн',en:'Bahrain'},
+  {code:'BD',bg:'Бангладеш',en:'Bangladesh'},{code:'BY',bg:'Беларус',en:'Belarus'},
+  {code:'BE',bg:'Белгия',en:'Belgium'},{code:'BZ',bg:'Белиз',en:'Belize'},
+  {code:'BA',bg:'Босна и Херцеговина',en:'Bosnia and Herzegovina'},
+  {code:'BR',bg:'Бразилия',en:'Brazil'},{code:'BG',bg:'България',en:'Bulgaria'},
+  {code:'KH',bg:'Камбоджа',en:'Cambodia'},{code:'CA',bg:'Канада',en:'Canada'},
+  {code:'CL',bg:'Чили',en:'Chile'},{code:'CN',bg:'Китай',en:'China'},
+  {code:'CO',bg:'Колумбия',en:'Colombia'},{code:'HR',bg:'Хърватия',en:'Croatia'},
+  {code:'CU',bg:'Куба',en:'Cuba'},{code:'CY',bg:'Кипър',en:'Cyprus'},
+  {code:'CZ',bg:'Чехия',en:'Czech Republic'},{code:'DK',bg:'Дания',en:'Denmark'},
+  {code:'EC',bg:'Еквадор',en:'Ecuador'},{code:'EG',bg:'Египет',en:'Egypt'},
+  {code:'EE',bg:'Естония',en:'Estonia'},{code:'FI',bg:'Финландия',en:'Finland'},
+  {code:'FR',bg:'Франция',en:'France'},{code:'GE',bg:'Грузия',en:'Georgia'},
+  {code:'DE',bg:'Германия',en:'Germany'},{code:'GR',bg:'Гърция',en:'Greece'},
+  {code:'HU',bg:'Унгария',en:'Hungary'},{code:'IS',bg:'Исландия',en:'Iceland'},
+  {code:'IN',bg:'Индия',en:'India'},{code:'ID',bg:'Индонезия',en:'Indonesia'},
+  {code:'IR',bg:'Иран',en:'Iran'},{code:'IQ',bg:'Ирак',en:'Iraq'},
+  {code:'IE',bg:'Ирландия',en:'Ireland'},{code:'IL',bg:'Израел',en:'Israel'},
+  {code:'IT',bg:'Италия',en:'Italy'},{code:'JP',bg:'Япония',en:'Japan'},
+  {code:'JO',bg:'Йордания',en:'Jordan'},{code:'KZ',bg:'Казахстан',en:'Kazakhstan'},
+  {code:'KE',bg:'Кения',en:'Kenya'},{code:'KR',bg:'Южна Корея',en:'South Korea'},
+  {code:'KW',bg:'Кувейт',en:'Kuwait'},{code:'LV',bg:'Латвия',en:'Latvia'},
+  {code:'LB',bg:'Ливан',en:'Lebanon'},{code:'LY',bg:'Либия',en:'Libya'},
+  {code:'LI',bg:'Лихтенщайн',en:'Liechtenstein'},{code:'LT',bg:'Литва',en:'Lithuania'},
+  {code:'LU',bg:'Люксембург',en:'Luxembourg'},{code:'MK',bg:'Северна Македония',en:'North Macedonia'},
+  {code:'MY',bg:'Малайзия',en:'Malaysia'},{code:'MT',bg:'Малта',en:'Malta'},
+  {code:'MX',bg:'Мексико',en:'Mexico'},{code:'MD',bg:'Молдова',en:'Moldova'},
+  {code:'MC',bg:'Монако',en:'Monaco'},{code:'ME',bg:'Черна гора',en:'Montenegro'},
+  {code:'MA',bg:'Мароко',en:'Morocco'},{code:'NL',bg:'Нидерландия',en:'Netherlands'},
+  {code:'NZ',bg:'Нова Зеландия',en:'New Zealand'},{code:'NG',bg:'Нигерия',en:'Nigeria'},
+  {code:'NO',bg:'Норвегия',en:'Norway'},{code:'PK',bg:'Пакистан',en:'Pakistan'},
+  {code:'PA',bg:'Панама',en:'Panama'},{code:'PE',bg:'Перу',en:'Peru'},
+  {code:'PH',bg:'Филипини',en:'Philippines'},{code:'PL',bg:'Полша',en:'Poland'},
+  {code:'PT',bg:'Португалия',en:'Portugal'},{code:'QA',bg:'Катар',en:'Qatar'},
+  {code:'RO',bg:'Румъния',en:'Romania'},{code:'RU',bg:'Русия',en:'Russia'},
+  {code:'SA',bg:'Саудитска Арабия',en:'Saudi Arabia'},{code:'RS',bg:'Сърбия',en:'Serbia'},
+  {code:'SG',bg:'Сингапур',en:'Singapore'},{code:'SK',bg:'Словакия',en:'Slovakia'},
+  {code:'SI',bg:'Словения',en:'Slovenia'},{code:'ZA',bg:'Южна Африка',en:'South Africa'},
+  {code:'ES',bg:'Испания',en:'Spain'},{code:'SE',bg:'Швеция',en:'Sweden'},
+  {code:'CH',bg:'Швейцария',en:'Switzerland'},{code:'TH',bg:'Тайланд',en:'Thailand'},
+  {code:'TN',bg:'Тунис',en:'Tunisia'},{code:'TR',bg:'Турция',en:'Turkey'},
+  {code:'UA',bg:'Украйна',en:'Ukraine'},{code:'AE',bg:'ОАЕ',en:'United Arab Emirates'},
+  {code:'GB',bg:'Великобритания',en:'United Kingdom'},{code:'US',bg:'САЩ',en:'United States'},
+  {code:'UY',bg:'Уругвай',en:'Uruguay'},{code:'UZ',bg:'Узбекистан',en:'Uzbekistan'},
+  {code:'VE',bg:'Венецуела',en:'Venezuela'},{code:'VN',bg:'Виетнам',en:'Vietnam'}
+];
+
+function populateCountries() {
+  var sel = document.getElementById('docCountry');
+  // Sort: Bulgaria first, then alphabetical
+  var sorted = COUNTRIES.slice().sort(function(a, b) {
+    if (a.code === 'BG') return -1;
+    if (b.code === 'BG') return 1;
+    var nameA = currentLang === 'en' ? a.en : a.bg;
+    var nameB = currentLang === 'en' ? b.en : b.bg;
+    return nameA.localeCompare(nameB);
+  });
+  sorted.forEach(function(c) {
+    var opt = document.createElement('option');
+    opt.value = c.code;
+    opt.textContent = currentLang === 'en' ? c.en : c.bg;
+    opt.dataset.en = c.en;
+    opt._originalBG = c.bg;
+    sel.appendChild(opt);
+  });
+}
+
+// ─── VALIDATION ───
+function validateForm() {
+  var valid = true;
+  var requiredFields = ['firstName', 'lastName', 'birthDate', 'gender', 'docType', 'docNumber', 'docCountry', 'checkIn', 'checkOut'];
+
+  // Clear all errors
+  document.querySelectorAll('.error').forEach(function(el) { el.classList.remove('error'); });
+  document.querySelectorAll('.error-msg').forEach(function(el) { el.classList.remove('visible'); });
+  document.getElementById('errorBanner').classList.remove('visible');
+
+  requiredFields.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el.value || el.value === '') {
+      el.classList.add('error');
+      var errEl = document.getElementById('err-' + id);
+      if (errEl) errEl.classList.add('visible');
+      valid = false;
+    }
+  });
+
+  // Consent checkbox
+  var consent = document.getElementById('consent');
+  if (!consent.checked) {
+    document.getElementById('err-consent').classList.add('visible');
+    valid = false;
+  }
+
+  // Date of birth validation
+  var birthVal = document.getElementById('birthDate').value;
+  if (birthVal) {
+    var birthDate = new Date(birthVal);
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    var ageDiff = today.getFullYear() - birthDate.getFullYear();
+    var monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      ageDiff--;
+    }
+
+    if (birthDate >= today) {
+      document.getElementById('birthDate').classList.add('error');
+      var errBirth = document.getElementById('err-birthDate');
+      errBirth.textContent = currentLang === 'en'
+        ? 'Date of birth cannot be in the future.'
+        : 'Датата на раждане не може да бъде в бъдещето.';
+      errBirth.classList.add('visible');
+      valid = false;
+    } else if (ageDiff > 120) {
+      document.getElementById('birthDate').classList.add('error');
+      var errBirth = document.getElementById('err-birthDate');
+      errBirth.textContent = currentLang === 'en'
+        ? 'Please check the year — the date seems incorrect.'
+        : 'Моля, проверете годината — датата изглежда неправилна.';
+      errBirth.classList.add('visible');
+      valid = false;
+    } else if (ageDiff < 0) {
+      document.getElementById('birthDate').classList.add('error');
+      var errBirth = document.getElementById('err-birthDate');
+      errBirth.textContent = currentLang === 'en'
+        ? 'Date of birth cannot be in the future.'
+        : 'Датата на раждане не може да бъде в бъдещето.';
+      errBirth.classList.add('visible');
+      valid = false;
+    }
+  }
+
+  // Check-out must be after check-in
+  var checkIn = document.getElementById('checkIn').value;
+  var checkOut = document.getElementById('checkOut').value;
+  if (checkIn && checkOut && checkOut <= checkIn) {
+    document.getElementById('checkOut').classList.add('error');
+    var errOut = document.getElementById('err-checkOut');
+    if (errOut) {
+      errOut.textContent = currentLang === 'en'
+        ? 'Check-out must be after check-in.'
+        : 'Датата на напускане трябва да е след настаняването.';
+      errOut.classList.add('visible');
+    }
+    valid = false;
+  }
+
+  // Check-in should not be in the past (more than 7 days ago)
+  if (checkIn) {
+    var checkInDate = new Date(checkIn);
+    var weekAgo = new Date();
+    weekAgo.setDate(weekAgo.getDate() - 7);
+    weekAgo.setHours(0, 0, 0, 0);
+    if (checkInDate < weekAgo) {
+      document.getElementById('checkIn').classList.add('error');
+      var errIn = document.getElementById('err-checkIn');
+      if (errIn) {
+        errIn.textContent = currentLang === 'en'
+          ? 'Check-in date seems too far in the past. Please verify.'
+          : 'Датата на настаняване изглежда твърде далеч в миналото. Моля, проверете.';
+        errIn.classList.add('visible');
+      }
+      valid = false;
+    }
+  }
+
+  if (!valid) {
+    document.getElementById('errorBanner').classList.add('visible');
+    // Scroll to first error
+    var firstError = document.querySelector('.error');
+    if (firstError) {
+      firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  return valid;
+}
+
+// ─── SUBMIT ───
+function submitForm(e) {
+  e.preventDefault();
+  if (!validateForm()) return;
+
+  var btn = document.getElementById('submitBtn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  var data = {
+    firstName: document.getElementById('firstName').value.trim(),
+    middleName: document.getElementById('middleName').value.trim(),
+    lastName: document.getElementById('lastName').value.trim(),
+    birthDate: document.getElementById('birthDate').value,
+    gender: document.getElementById('gender').value,
+    docType: document.getElementById('docType').value,
+    docNumber: document.getElementById('docNumber').value.trim(),
+    docCountry: document.getElementById('docCountry').value,
+    identityNumber: document.getElementById('identityNumber').value.trim(),
+    checkIn: document.getElementById('checkIn').value,
+    checkOut: document.getElementById('checkOut').value
+  };
+
+  // Check if URL is configured
+  if (!SHEET_URL || SHEET_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+    console.warn('Google Sheets URL not configured. Data:', data);
+    showSuccess();
+    return;
+  }
+
+  // Use hidden form + iframe to avoid CORS issues with Google Apps Script
+  // (Apps Script redirects POST → GET with fetch/no-cors, losing data)
+  var iframeName = 'gr-submit-' + Date.now();
+  var iframe = document.createElement('iframe');
+  iframe.name = iframeName;
+  iframe.style.display = 'none';
+  document.body.appendChild(iframe);
+
+  var form = document.createElement('form');
+  form.method = 'POST';
+  form.action = SHEET_URL;
+  form.target = iframeName;
+  form.style.display = 'none';
+
+  Object.keys(data).forEach(function(key) {
+    var input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = key;
+    input.value = data[key];
+    form.appendChild(input);
+  });
+
+  document.body.appendChild(form);
+  form.submit();
+
+  // Show success after a short delay (iframe loads silently)
+  setTimeout(function() {
+    showSuccess();
+    // Clean up
+    document.body.removeChild(form);
+    document.body.removeChild(iframe);
+  }, 1500);
+}
+
+function showSuccess() {
+  document.getElementById('guestForm').style.display = 'none';
+  document.querySelector('.info-banner').style.display = 'none';
+  var card = document.getElementById('successCard');
+  card.classList.add('visible');
+  card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Re-apply language to success card
+  if (currentLang === 'en') {
+    card.querySelectorAll('[data-en]').forEach(function(el) {
+      el.innerHTML = el.dataset.en;
+    });
+  }
+}
+
+// ─── INIT ───
+document.addEventListener('DOMContentLoaded', function() {
+  populateCountries();
+  setLang(currentLang);
+  document.getElementById('guestForm').addEventListener('submit', submitForm);
+
+  // Clear error on input
+  document.querySelectorAll('input, select').forEach(function(el) {
+    el.addEventListener('input', function() {
+      el.classList.remove('error');
+      var errEl = document.getElementById('err-' + el.id);
+      if (errEl) errEl.classList.remove('visible');
+      document.getElementById('errorBanner').classList.remove('visible');
+    });
+    el.addEventListener('change', function() {
+      el.classList.remove('error');
+      var errEl = document.getElementById('err-' + el.id);
+      if (errEl) errEl.classList.remove('visible');
+    });
+  });
+});
+</script>
+
+</body>
+</html>
