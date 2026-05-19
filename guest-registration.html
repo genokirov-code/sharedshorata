@@ -461,9 +461,10 @@
           <span class="error-msg" id="err-docCountry" data-en="Please select the issuing country.">Моля, изберете държава.</span>
         </div>
         <div class="form-group">
-          <label for="identityNumber"><span data-en="ЕГН / Personal ID Number">ЕГН / ЛНЧ</span> <span class="optional" data-en="(Bulgarian citizens only)">(само за български граждани)</span></label>
-          <input type="text" id="identityNumber" name="identityNumber" maxlength="10" placeholder="">
-          <span class="field-hint" data-en="Required only for Bulgarian citizens or foreign residents with ЛНЧ.">Задължително само за български граждани или чужденци с ЛНЧ.</span>
+          <label for="identityNumber"><span data-en="ЕГН / Personal Number">ЕГН / ЛНЧ</span><span id="egn-req" class="req" style="display:none"> *</span><span id="egn-opt" class="optional" data-en=" (Bulgarian citizens only)"> (само за български граждани)</span></label>
+          <input type="text" id="identityNumber" name="identityNumber" maxlength="10" inputmode="numeric" placeholder="">
+          <span class="field-hint" id="egn-hint" data-en="Required for Bulgarian citizens — exactly 10 digits. Optional for other nationalities.">Задължително за български граждани — точно 10 цифри. Незадължително за останалите.</span>
+          <span class="error-msg" id="err-identityNumber"></span>
         </div>
       </div>
     </div>
@@ -550,9 +551,13 @@
 
 // ─── Google Apps Script URL ───
 // SETUP:
-// 1. Create a new Google Sheet with these column headers (row 1):
-//    Timestamp | FirstName | MiddleName | LastName | BirthDate | Gender |
-//    DocType | DocNumber | DocCountry | IdentityNumber | CheckIn | CheckOut
+// 1. Create a new Google Sheet with these column headers in row 1
+//    (matches the ESTI Регистър column order):
+//
+//    Timestamp | RegDate | EGN | FirstName | MiddleName | LastName |
+//    BirthDate | Gender | DocType | DocNumber | DocCountry |
+//    Floor | Apartment | CheckIn | CheckOut |
+//    TouristPackage | PricePerNight | CancelledRegistration
 //
 // 2. Go to Extensions → Apps Script, paste the code below, deploy as web app:
 //
@@ -560,18 +565,24 @@
 //      var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
 //      var p = e.parameter;
 //      sheet.appendRow([
-//        new Date(),
+//        new Date(),              // Timestamp (submission time)
+//        p.registrationDate,      // RegDate (YYYY-MM-DD)
+//        p.egn,                   // EГН / ЛНЧ (Bulgarian citizens)
 //        p.firstName,
 //        p.middleName,
 //        p.lastName,
 //        p.birthDate,
-//        p.gender,
-//        p.docType,
+//        p.gender,                // M or F
+//        p.docType,               // PAS / ICA / DRL
 //        p.docNumber,
-//        p.docCountry,
-//        p.identityNumber,
+//        p.docCountry,            // ISO 2-letter code (e.g. BG, DE)
+//        p.floor,                 // Always 4
+//        p.apartment,             // Always 7
 //        p.checkIn,
-//        p.checkOut
+//        p.checkOut,
+//        p.touristPackage,        // Always "Не"
+//        p.pricePerNight,         // Always 75
+//        p.cancelledRegistration  // Always "Не"
 //      ]);
 //      return ContentService.createTextOutput(
 //        JSON.stringify({ result: 'success' })
@@ -581,10 +592,12 @@
 // 3. Deploy → New deployment → Web app
 //    Execute as: Me | Who has access: Anyone
 //    Copy the URL and paste it below.
+//    ⚠️  If you already had a deployment, create a NEW deployment (not a new version)
+//        so the URL changes — old deployments ignore new parameter names.
 //
 // 4. Share the Google Sheet with mirchingram@gmail.com (Editor access)
 //
-var SHEET_URL = 'https://script.google.com/macros/s/AKfycbzVvYOii17JlSCe7OdcMj2zXsBZvM2RoVRGWSYSC0LM9jMrkBXCgfyZfvJvPVvlQWPR3A/exec';
+var SHEET_URL = 'https://script.google.com/macros/s/AKfycbxg3QHqUCbA5FytFY3g953DCCy1J4P04ggr87Kg0IkUWAlLSp_D9izkZSRMw6zvsEac/exec';
 
 // ─── LANGUAGE ───
 var currentLang = localStorage.getItem('lang') || 'bg';
@@ -757,6 +770,29 @@ function validateForm() {
     }
   }
 
+  // EGN/LNČ — mandatory for Bulgarian citizens, 10 digits
+  var docCountryVal = document.getElementById('docCountry').value;
+  var egnVal = document.getElementById('identityNumber').value.trim();
+  if (docCountryVal === 'BG') {
+    if (!egnVal) {
+      document.getElementById('identityNumber').classList.add('error');
+      var errEgn = document.getElementById('err-identityNumber');
+      errEgn.textContent = currentLang === 'en'
+        ? 'ЕГН is required for Bulgarian citizens.'
+        : 'ЕГН е задължително за български граждани.';
+      errEgn.classList.add('visible');
+      valid = false;
+    } else if (!/^\d{10}$/.test(egnVal)) {
+      document.getElementById('identityNumber').classList.add('error');
+      var errEgn2 = document.getElementById('err-identityNumber');
+      errEgn2.textContent = currentLang === 'en'
+        ? 'ЕГН must be exactly 10 digits.'
+        : 'ЕГН трябва да съдържа точно 10 цифри.';
+      errEgn2.classList.add('visible');
+      valid = false;
+    }
+  }
+
   // Check-out must be after check-in
   var checkIn = document.getElementById('checkIn').value;
   var checkOut = document.getElementById('checkOut').value;
@@ -812,7 +848,22 @@ function submitForm(e) {
   btn.classList.add('loading');
   btn.disabled = true;
 
+  // Auto-generate registration date (submission timestamp)
+  var now = new Date();
+  var regDate = now.getFullYear() + '-' +
+    String(now.getMonth() + 1).padStart(2, '0') + '-' +
+    String(now.getDate()).padStart(2, '0');
+
   var data = {
+    // Auto / fixed fields (guests don't fill these)
+    registrationDate: regDate,
+    floor: '4',
+    apartment: '7',
+    touristPackage: 'Не',
+    pricePerNight: '75',
+    cancelledRegistration: 'Не',
+    // Guest-entered fields
+    egn: document.getElementById('identityNumber').value.trim(),
     firstName: document.getElementById('firstName').value.trim(),
     middleName: document.getElementById('middleName').value.trim(),
     lastName: document.getElementById('lastName').value.trim(),
@@ -821,7 +872,6 @@ function submitForm(e) {
     docType: document.getElementById('docType').value,
     docNumber: document.getElementById('docNumber').value.trim(),
     docCountry: document.getElementById('docCountry').value,
-    identityNumber: document.getElementById('identityNumber').value.trim(),
     checkIn: document.getElementById('checkIn').value,
     checkOut: document.getElementById('checkOut').value
   };
@@ -887,6 +937,22 @@ document.addEventListener('DOMContentLoaded', function() {
   populateCountries();
   setLang(currentLang);
   document.getElementById('guestForm').addEventListener('submit', submitForm);
+
+  // Toggle EGN required indicator based on issuing country
+  document.getElementById('docCountry').addEventListener('change', function() {
+    var isBG = this.value === 'BG';
+    document.getElementById('egn-req').style.display = isBG ? 'inline' : 'none';
+    document.getElementById('egn-opt').style.display = isBG ? 'none' : 'inline';
+    var egnInput = document.getElementById('identityNumber');
+    egnInput.placeholder = isBG
+      ? (currentLang === 'en' ? 'e.g. 9001011234' : 'напр. 9001011234')
+      : '';
+    // Clear EGN error if country changed away from BG
+    if (!isBG) {
+      egnInput.classList.remove('error');
+      document.getElementById('err-identityNumber').classList.remove('visible');
+    }
+  });
 
   // Clear error on input
   document.querySelectorAll('input, select').forEach(function(el) {
