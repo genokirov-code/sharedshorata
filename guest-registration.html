@@ -184,6 +184,17 @@
       margin-top: 4px;
     }
 
+    /* DATE SELECT GROUPS */
+    .date-selects {
+      display: grid;
+      grid-template-columns: 70px 1fr 92px;
+      gap: 8px;
+    }
+    .date-selects select { min-width: 0; }
+    @media (max-width: 360px) {
+      .date-selects { grid-template-columns: 58px 1fr 80px; gap: 6px; }
+    }
+
     /* CHECKBOX & PRIVACY */
     .privacy-section {
       background: var(--warm-white);
@@ -413,9 +424,19 @@
 
       <div class="form-row">
         <div class="form-group">
-          <label for="birthDate"><span data-en="Date of Birth">Дата на раждане</span> <span class="req">*</span></label>
-          <input type="date" id="birthDate" name="birthDate" required autocomplete="bday">
-          <span class="error-msg" id="err-birthDate" data-en="Date of birth is required.">Датата на раждане е задължителна.</span>
+          <label><span data-en="Date of Birth">Дата на раждане</span> <span class="req">*</span></label>
+          <div class="date-selects">
+            <select id="birthDate-day" name="birthDate-day">
+              <option value="" disabled selected data-en="Day">Ден</option>
+            </select>
+            <select id="birthDate-month" name="birthDate-month">
+              <option value="" disabled selected data-en="Month">Месец</option>
+            </select>
+            <select id="birthDate-year" name="birthDate-year">
+              <option value="" disabled selected data-en="Year">Година</option>
+            </select>
+          </div>
+          <span class="error-msg" id="err-birthDate"></span>
         </div>
         <div class="form-group">
           <label for="gender"><span data-en="Gender">Пол</span> <span class="req">*</span></label>
@@ -476,14 +497,34 @@
 
       <div class="form-row">
         <div class="form-group">
-          <label for="checkIn"><span data-en="Check-in Date">Дата на настаняване</span> <span class="req">*</span></label>
-          <input type="date" id="checkIn" name="checkIn" required>
-          <span class="error-msg" id="err-checkIn" data-en="Check-in date is required.">Датата на настаняване е задължителна.</span>
+          <label><span data-en="Check-in Date">Дата на настаняване</span> <span class="req">*</span></label>
+          <div class="date-selects">
+            <select id="checkIn-day" name="checkIn-day">
+              <option value="" disabled selected data-en="Day">Ден</option>
+            </select>
+            <select id="checkIn-month" name="checkIn-month">
+              <option value="" disabled selected data-en="Month">Месец</option>
+            </select>
+            <select id="checkIn-year" name="checkIn-year">
+              <option value="" disabled selected data-en="Year">Година</option>
+            </select>
+          </div>
+          <span class="error-msg" id="err-checkIn"></span>
         </div>
         <div class="form-group">
-          <label for="checkOut"><span data-en="Check-out Date">Дата на напускане</span> <span class="req">*</span></label>
-          <input type="date" id="checkOut" name="checkOut" required>
-          <span class="error-msg" id="err-checkOut" data-en="Check-out date is required.">Датата на напускане е задължителна.</span>
+          <label><span data-en="Check-out Date">Дата на напускане</span> <span class="req">*</span></label>
+          <div class="date-selects">
+            <select id="checkOut-day" name="checkOut-day">
+              <option value="" disabled selected data-en="Day">Ден</option>
+            </select>
+            <select id="checkOut-month" name="checkOut-month">
+              <option value="" disabled selected data-en="Month">Месец</option>
+            </select>
+            <select id="checkOut-year" name="checkOut-year">
+              <option value="" disabled selected data-en="Year">Година</option>
+            </select>
+          </div>
+          <span class="error-msg" id="err-checkOut"></span>
         </div>
       </div>
     </div>
@@ -616,6 +657,9 @@ function setLang(lang) {
     el.innerHTML = lang === 'en' ? el.dataset.en : el._originalBG;
   });
 
+  // Refresh month names in date selects (language-sensitive)
+  ['birthDate', 'checkIn', 'checkOut'].forEach(function(p) { buildMonths(p); });
+
   // Update select option texts
   updateSelectOptions();
 }
@@ -628,6 +672,99 @@ function updateSelectOptions() {
       opt.textContent = currentLang === 'en' ? opt.dataset.en : opt._originalBG;
     });
   });
+}
+
+// ─── MONTH NAMES (bilingual) ───
+var MONTHS = {
+  bg: ['Януари','Февруари','Март','Април','Май','Юни','Юли','Август','Септември','Октомври','Ноември','Декември'],
+  en: ['January','February','March','April','May','June','July','August','September','October','November','December']
+};
+
+// ─── DATE SELECT HELPERS ───
+function buildDays(prefix) {
+  var el = document.getElementById(prefix + '-day');
+  if (!el || el.options.length > 1) return;
+  for (var d = 1; d <= 31; d++) {
+    var opt = document.createElement('option');
+    opt.value = String(d).padStart(2, '0');
+    opt.textContent = d;
+    el.appendChild(opt);
+  }
+}
+
+function buildMonths(prefix) {
+  var el = document.getElementById(prefix + '-month');
+  if (!el) return;
+  var cur = el.value;
+  while (el.options.length > 1) el.remove(1);
+  (MONTHS[currentLang] || MONTHS.bg).forEach(function(name, i) {
+    var opt = document.createElement('option');
+    opt.value = String(i + 1).padStart(2, '0');
+    opt.textContent = name;
+    el.appendChild(opt);
+  });
+  if (cur) el.value = cur;
+}
+
+function buildYears(prefix, start, end) {
+  var el = document.getElementById(prefix + '-year');
+  if (!el || el.options.length > 1) return;
+  for (var y = end; y >= start; y--) {
+    var opt = document.createElement('option');
+    opt.value = String(y);
+    opt.textContent = y;
+    el.appendChild(opt);
+  }
+}
+
+function setDateSelectValue(prefix, yyyy, mm, dd) {
+  var y = document.getElementById(prefix + '-year');
+  var m = document.getElementById(prefix + '-month');
+  var d = document.getElementById(prefix + '-day');
+  if (y) y.value = String(yyyy);
+  if (m) m.value = String(mm).padStart(2, '0');
+  if (d) d.value = String(dd).padStart(2, '0');
+}
+
+function getDateValue(prefix) {
+  var d = document.getElementById(prefix + '-day').value;
+  var m = document.getElementById(prefix + '-month').value;
+  var y = document.getElementById(prefix + '-year').value;
+  if (!d || !m || !y) return '';
+  return y + '-' + m + '-' + d;
+}
+
+function validateDateGroup(prefix, errId, msg) {
+  var d = document.getElementById(prefix + '-day');
+  var m = document.getElementById(prefix + '-month');
+  var y = document.getElementById(prefix + '-year');
+  var ok = d.value && m.value && y.value;
+  if (!ok) {
+    if (!d.value) d.classList.add('error');
+    if (!m.value) m.classList.add('error');
+    if (!y.value) y.classList.add('error');
+    var errEl = document.getElementById(errId);
+    if (errEl) { errEl.textContent = msg; errEl.classList.add('visible'); }
+  }
+  return !!ok;
+}
+
+function initDateSelects() {
+  var now = new Date();
+  var cy = now.getFullYear(), cm = now.getMonth() + 1, cd = now.getDate();
+  var tomorrow = new Date(now); tomorrow.setDate(cd + 1);
+  var ty = tomorrow.getFullYear(), tm = tomorrow.getMonth() + 1, td = tomorrow.getDate();
+
+  // Birth date: 1920 → current year, no default (force user to choose)
+  buildDays('birthDate'); buildMonths('birthDate'); buildYears('birthDate', 1920, cy);
+
+  // Check-in: last year → next year, default = today
+  buildDays('checkIn'); buildMonths('checkIn'); buildYears('checkIn', cy - 1, cy + 1);
+  setDateSelectValue('checkIn', cy, cm, cd);
+
+  // Check-out: last year → next year, default = tomorrow
+  buildDays('checkOut'); buildMonths('checkOut'); buildYears('checkOut', cy - 1, cy + 1);
+  setDateSelectValue('checkOut', ty, tm, td);
 }
 
 // ─── COUNTRIES (ISO 3166-1 alpha-2) ───
@@ -707,7 +844,7 @@ function populateCountries() {
 // ─── VALIDATION ───
 function validateForm() {
   var valid = true;
-  var requiredFields = ['firstName', 'lastName', 'birthDate', 'gender', 'docType', 'docNumber', 'docCountry', 'checkIn', 'checkOut'];
+  var requiredFields = ['firstName', 'lastName', 'gender', 'docType', 'docNumber', 'docCountry'];
 
   // Clear all errors
   document.querySelectorAll('.error').forEach(function(el) { el.classList.remove('error'); });
@@ -724,6 +861,14 @@ function validateForm() {
     }
   });
 
+  // Date group validation
+  if (!validateDateGroup('birthDate', 'err-birthDate',
+      currentLang === 'en' ? 'Please select your date of birth.' : 'Моля, изберете дата на раждане.')) valid = false;
+  if (!validateDateGroup('checkIn', 'err-checkIn',
+      currentLang === 'en' ? 'Check-in date is required.' : 'Датата на настаняване е задължителна.')) valid = false;
+  if (!validateDateGroup('checkOut', 'err-checkOut',
+      currentLang === 'en' ? 'Check-out date is required.' : 'Датата на напускане е задължителна.')) valid = false;
+
   // Consent checkbox
   var consent = document.getElementById('consent');
   if (!consent.checked) {
@@ -731,8 +876,8 @@ function validateForm() {
     valid = false;
   }
 
-  // Date of birth validation
-  var birthVal = document.getElementById('birthDate').value;
+  // Date of birth business logic
+  var birthVal = getDateValue('birthDate');
   if (birthVal) {
     var birthDate = new Date(birthVal);
     var today = new Date();
@@ -743,8 +888,8 @@ function validateForm() {
       ageDiff--;
     }
 
-    if (birthDate >= today) {
-      document.getElementById('birthDate').classList.add('error');
+    if (birthDate >= today || ageDiff < 0) {
+      document.getElementById('birthDate-year').classList.add('error');
       var errBirth = document.getElementById('err-birthDate');
       errBirth.textContent = currentLang === 'en'
         ? 'Date of birth cannot be in the future.'
@@ -752,19 +897,11 @@ function validateForm() {
       errBirth.classList.add('visible');
       valid = false;
     } else if (ageDiff > 120) {
-      document.getElementById('birthDate').classList.add('error');
+      document.getElementById('birthDate-year').classList.add('error');
       var errBirth = document.getElementById('err-birthDate');
       errBirth.textContent = currentLang === 'en'
         ? 'Please check the year — the date seems incorrect.'
         : 'Моля, проверете годината — датата изглежда неправилна.';
-      errBirth.classList.add('visible');
-      valid = false;
-    } else if (ageDiff < 0) {
-      document.getElementById('birthDate').classList.add('error');
-      var errBirth = document.getElementById('err-birthDate');
-      errBirth.textContent = currentLang === 'en'
-        ? 'Date of birth cannot be in the future.'
-        : 'Датата на раждане не може да бъде в бъдещето.';
       errBirth.classList.add('visible');
       valid = false;
     }
@@ -794,10 +931,12 @@ function validateForm() {
   }
 
   // Check-out must be after check-in
-  var checkIn = document.getElementById('checkIn').value;
-  var checkOut = document.getElementById('checkOut').value;
+  var checkIn = getDateValue('checkIn');
+  var checkOut = getDateValue('checkOut');
   if (checkIn && checkOut && checkOut <= checkIn) {
-    document.getElementById('checkOut').classList.add('error');
+    ['checkOut-day','checkOut-month','checkOut-year'].forEach(function(id) {
+      document.getElementById(id).classList.add('error');
+    });
     var errOut = document.getElementById('err-checkOut');
     if (errOut) {
       errOut.textContent = currentLang === 'en'
@@ -815,7 +954,9 @@ function validateForm() {
     weekAgo.setDate(weekAgo.getDate() - 7);
     weekAgo.setHours(0, 0, 0, 0);
     if (checkInDate < weekAgo) {
-      document.getElementById('checkIn').classList.add('error');
+      ['checkIn-day','checkIn-month','checkIn-year'].forEach(function(id) {
+        document.getElementById(id).classList.add('error');
+      });
       var errIn = document.getElementById('err-checkIn');
       if (errIn) {
         errIn.textContent = currentLang === 'en'
@@ -867,13 +1008,13 @@ function submitForm(e) {
     firstName: document.getElementById('firstName').value.trim(),
     middleName: document.getElementById('middleName').value.trim(),
     lastName: document.getElementById('lastName').value.trim(),
-    birthDate: document.getElementById('birthDate').value,
+    birthDate: getDateValue('birthDate'),
     gender: document.getElementById('gender').value,
     docType: document.getElementById('docType').value,
     docNumber: document.getElementById('docNumber').value.trim(),
     docCountry: document.getElementById('docCountry').value,
-    checkIn: document.getElementById('checkIn').value,
-    checkOut: document.getElementById('checkOut').value
+    checkIn: getDateValue('checkIn'),
+    checkOut: getDateValue('checkOut')
   };
 
   // Check if URL is configured
@@ -935,6 +1076,7 @@ function showSuccess() {
 // ─── INIT ───
 document.addEventListener('DOMContentLoaded', function() {
   populateCountries();
+  initDateSelects();
   setLang(currentLang);
   document.getElementById('guestForm').addEventListener('submit', submitForm);
 
@@ -954,19 +1096,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Clear error on input
+  // Clear error on input — handles both regular fields and date select parts
   document.querySelectorAll('input, select').forEach(function(el) {
-    el.addEventListener('input', function() {
+    function clearErr() {
       el.classList.remove('error');
-      var errEl = document.getElementById('err-' + el.id);
+      // Date select parts map back to group error (e.g. "birthDate-day" → "err-birthDate")
+      var baseId = el.id.replace(/-(day|month|year)$/, '');
+      var errEl = document.getElementById('err-' + baseId) || document.getElementById('err-' + el.id);
       if (errEl) errEl.classList.remove('visible');
       document.getElementById('errorBanner').classList.remove('visible');
-    });
-    el.addEventListener('change', function() {
-      el.classList.remove('error');
-      var errEl = document.getElementById('err-' + el.id);
-      if (errEl) errEl.classList.remove('visible');
-    });
+    }
+    el.addEventListener('input', clearErr);
+    el.addEventListener('change', clearErr);
   });
 });
 </script>
