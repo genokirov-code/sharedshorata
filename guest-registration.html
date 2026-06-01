@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bg">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -365,13 +365,13 @@
     <div class="gr-logo"><img src="images/Shared с хората 3.jpg" alt="Shared с Хората"></div>
     <div class="gr-apt-name" data-en="Modern Old Town Apartment">Modern Old Town Apartment</div>
     <div class="gr-address">
-      <span data-en="Plovdiv, Central District, 2 Aleksandar Pushkin St., floor 4, apt. 7">
-        гр. Пловдив, адм. район „Централен", ул. „Александър Пушкин" №2, ет. 4, ап. 7
+      <span data-en="TsentarPlovdiv Center, ul. Aleksander S. Pushkin 2">
+        гр. Пловдив, улица Александър С. Пушкин 2
       </span>
     </div>
     <div class="gr-lang-toggle">
-      <button class="active" onclick="setLang('bg')">БГ</button>
-      <button onclick="setLang('en')">EN</button>
+      <button onclick="setLang('bg')">БГ</button>
+      <button class="active" onclick="setLang('en')">EN</button>
     </div>
   </div>
 </header>
@@ -640,7 +640,7 @@
 var SHEET_URL = 'https://script.google.com/macros/s/AKfycbxg3QHqUCbA5FytFY3g953DCCy1J4P04ggr87Kg0IkUWAlLSp_D9izkZSRMw6zvsEac/exec';
 
 // ─── LANGUAGE ───
-var currentLang = localStorage.getItem('lang') || 'bg';
+var currentLang = localStorage.getItem('lang') || 'en';
 
 function setLang(lang) {
   currentLang = lang;
@@ -1074,6 +1074,17 @@ function showSuccess() {
 
 // ─── INIT ───
 document.addEventListener('DOMContentLoaded', function() {
+  // Prevent browser from auto-focusing the first input on mobile,
+  // which would pop the keyboard before the guest reads the intro text.
+  if (document.activeElement && document.activeElement.tagName !== 'BODY') {
+    document.activeElement.blur();
+  }
+  setTimeout(function() {
+    if (document.activeElement && document.activeElement.tagName !== 'BODY') {
+      document.activeElement.blur();
+    }
+  }, 150);
+
   populateCountries();
   initDateSelects();
   setLang(currentLang);
